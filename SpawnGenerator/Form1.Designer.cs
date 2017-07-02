@@ -57,7 +57,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.txt_movementType = new System.Windows.Forms.TextBox();
             this.txt_spawndist = new System.Windows.Forms.TextBox();
-            this.btn_generate = new System.Windows.Forms.Button();
             this.txt_result = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -71,6 +70,7 @@
             this.txt_creatureEntry.TabIndex = 0;
             this.txt_creatureEntry.Text = "Creature Entry";
             this.txt_creatureEntry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txt_creatureEntry_MouseClick);
+            this.txt_creatureEntry.TextChanged += new System.EventHandler(this.txt_creatureEntry_TextChanged);
             // 
             // txt_creatureGUID
             // 
@@ -80,6 +80,7 @@
             this.txt_creatureGUID.TabIndex = 1;
             this.txt_creatureGUID.Text = "Creature GUID";
             this.txt_creatureGUID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txt_creatureGUID_MouseClick);
+            this.txt_creatureGUID.TextChanged += new System.EventHandler(this.txt_creatureGUID_TextChanged);
             // 
             // txt_positionString
             // 
@@ -89,6 +90,7 @@
             this.txt_positionString.TabIndex = 2;
             this.txt_positionString.Text = "[0] Position: X: XXX.XXX Y: XXX.XXX Z: XXX.XXX";
             this.txt_positionString.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txt_positionString_MouseClick);
+            this.txt_positionString.TextChanged += new System.EventHandler(this.txt_positionString_TextChanged);
             // 
             // txt_orientation
             // 
@@ -98,6 +100,7 @@
             this.txt_orientation.TabIndex = 3;
             this.txt_orientation.Text = "[0] Orientation: X.XXXX";
             this.txt_orientation.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txt_orientation_MouseClick);
+            this.txt_orientation.TextChanged += new System.EventHandler(this.txt_orientation_TextChanged);
             // 
             // txt_map
             // 
@@ -106,6 +109,7 @@
             this.txt_map.Size = new System.Drawing.Size(33, 20);
             this.txt_map.TabIndex = 4;
             this.txt_map.Text = "530";
+            this.txt_map.TextChanged += new System.EventHandler(this.txt_map_TextChanged);
             // 
             // txt_spawnMask
             // 
@@ -114,6 +118,7 @@
             this.txt_spawnMask.Size = new System.Drawing.Size(59, 20);
             this.txt_spawnMask.TabIndex = 5;
             this.txt_spawnMask.Text = "1";
+            this.txt_spawnMask.TextChanged += new System.EventHandler(this.txt_spawnMask_TextChanged);
             // 
             // txt_modelid
             // 
@@ -122,6 +127,7 @@
             this.txt_modelid.Size = new System.Drawing.Size(63, 20);
             this.txt_modelid.TabIndex = 6;
             this.txt_modelid.Text = "0";
+            this.txt_modelid.TextChanged += new System.EventHandler(this.txt_modelid_TextChanged);
             // 
             // txt_equipmentId
             // 
@@ -130,6 +136,7 @@
             this.txt_equipmentId.Size = new System.Drawing.Size(67, 20);
             this.txt_equipmentId.TabIndex = 7;
             this.txt_equipmentId.Text = "0";
+            this.txt_equipmentId.TextChanged += new System.EventHandler(this.txt_equipmentId_TextChanged);
             // 
             // txt_spawnMin
             // 
@@ -138,6 +145,7 @@
             this.txt_spawnMin.Size = new System.Drawing.Size(57, 20);
             this.txt_spawnMin.TabIndex = 8;
             this.txt_spawnMin.Text = "300";
+            this.txt_spawnMin.TextChanged += new System.EventHandler(this.txt_spawnMin_TextChanged);
             // 
             // txt_spawnMax
             // 
@@ -146,6 +154,7 @@
             this.txt_spawnMax.Size = new System.Drawing.Size(57, 20);
             this.txt_spawnMax.TabIndex = 9;
             this.txt_spawnMax.Text = "300";
+            this.txt_spawnMax.TextChanged += new System.EventHandler(this.txt_spawnMax_TextChanged);
             // 
             // txt_curhealth
             // 
@@ -155,6 +164,7 @@
             this.txt_curhealth.TabIndex = 10;
             this.txt_curhealth.Text = "XXXX";
             this.txt_curhealth.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txt_curhealth_MouseClick);
+            this.txt_curhealth.TextChanged += new System.EventHandler(this.txt_curhealth_TextChanged);
             // 
             // txt_curmana
             // 
@@ -164,6 +174,7 @@
             this.txt_curmana.TabIndex = 11;
             this.txt_curmana.Text = "XXXX";
             this.txt_curmana.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txt_curmana_MouseClick);
+            this.txt_curmana.TextChanged += new System.EventHandler(this.txt_curmana_TextChanged);
             // 
             // label1
             // 
@@ -181,6 +192,7 @@
             this.txt_currentWaypoint.Size = new System.Drawing.Size(79, 20);
             this.txt_currentWaypoint.TabIndex = 13;
             this.txt_currentWaypoint.Text = "0";
+            this.txt_currentWaypoint.TextChanged += new System.EventHandler(this.txt_currentWaypoint_TextChanged);
             // 
             // label2
             // 
@@ -198,6 +210,7 @@
             this.txt_deathState.Size = new System.Drawing.Size(79, 20);
             this.txt_deathState.TabIndex = 15;
             this.txt_deathState.Text = "0";
+            this.txt_deathState.TextChanged += new System.EventHandler(this.txt_deathState_TextChanged);
             // 
             // label3
             // 
@@ -296,6 +309,7 @@
             this.txt_movementType.Size = new System.Drawing.Size(100, 20);
             this.txt_movementType.TabIndex = 26;
             this.txt_movementType.Text = "0";
+            this.txt_movementType.TextChanged += new System.EventHandler(this.txt_movementType_TextChanged);
             // 
             // txt_spawndist
             // 
@@ -304,16 +318,7 @@
             this.txt_spawndist.Size = new System.Drawing.Size(100, 20);
             this.txt_spawndist.TabIndex = 27;
             this.txt_spawndist.Text = "0";
-            // 
-            // btn_generate
-            // 
-            this.btn_generate.Location = new System.Drawing.Point(224, 238);
-            this.btn_generate.Name = "btn_generate";
-            this.btn_generate.Size = new System.Drawing.Size(75, 23);
-            this.btn_generate.TabIndex = 28;
-            this.btn_generate.Text = "Generate";
-            this.btn_generate.UseVisualStyleBackColor = true;
-            this.btn_generate.Click += new System.EventHandler(this.btn_generate_Click);
+            this.txt_spawndist.TextChanged += new System.EventHandler(this.txt_spawndist_TextChanged);
             // 
             // txt_result
             // 
@@ -325,11 +330,11 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(236, 290);
+            this.label13.Location = new System.Drawing.Point(171, 290);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(37, 13);
+            this.label13.Size = new System.Drawing.Size(238, 13);
             this.label13.TabIndex = 30;
-            this.label13.Text = "Result";
+            this.label13.Text = "Result: (Generates automatically on field change)";
             // 
             // richTextBox1
             // 
@@ -347,7 +352,6 @@
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txt_result);
-            this.Controls.Add(this.btn_generate);
             this.Controls.Add(this.txt_spawndist);
             this.Controls.Add(this.txt_movementType);
             this.Controls.Add(this.label12);
@@ -413,7 +417,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txt_movementType;
         private System.Windows.Forms.TextBox txt_spawndist;
-        private System.Windows.Forms.Button btn_generate;
         private System.Windows.Forms.TextBox txt_result;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.RichTextBox richTextBox1;
