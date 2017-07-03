@@ -32,6 +32,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,16 +50,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Saltgurka SQL Generator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Saltgurka SQL Generator.Designer.cs">
+      <DependentUpon>Saltgurka SQL Generator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpawnGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpawnGenerator.Designer.cs">
+      <DependentUpon>SpawnGenerator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pool.Designer.cs">
+      <DependentUpon>Pool.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Saltgurka SQL Generator.resx">
+      <DependentUpon>Saltgurka SQL Generator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpawnGenerator.resx">
+      <DependentUpon>SpawnGenerator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pool.resx">
+      <DependentUpon>Pool.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

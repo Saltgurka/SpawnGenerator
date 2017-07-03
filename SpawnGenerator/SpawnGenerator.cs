@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SpawnGenerator
 {
-    public partial class Form1 : Form
+    public partial class SpawnGenerator : Form
     {
-        public Form1()
+        public SpawnGenerator()
         {
             InitializeComponent();
         }
