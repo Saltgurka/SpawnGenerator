@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pool_X.cs" />
     <Compile Include="Saltgurka SQL Generator.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -18,6 +18,14 @@ namespace SpawnGenerator
             InitializeComponent();
         }
 
+        public class Pool_X
+        {
+            public int CreatureIndex { get; set; }
+            public int Guid { get; set; }
+            public int Chance { get; set; }
+            public string Description { get; set; }
+        }
+
         private void btn_generateTemplate_Click(object sender, EventArgs e)
         {
             int startEntry = 0;
