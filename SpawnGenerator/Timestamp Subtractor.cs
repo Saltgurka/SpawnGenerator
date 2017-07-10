@@ -16,10 +16,10 @@ namespace SpawnGenerator
         {
             InitializeComponent();
         }
-        
+
         private int[] SplitTimestampString(string timestampString)
         {
-            string[] timestampStrings = timestampString.Split(':','.');
+            string[] timestampStrings = timestampString.Split(':', '.');
 
             int hours;
             int minutes;
@@ -88,22 +88,18 @@ namespace SpawnGenerator
         {
             CalculateDiff();
 
-            if (box_wipe.Checked)
-            {
-                lbl_lastChanged1.Text = "Last Changed";
-                lbl_lastChanged2.Text = "";
-            }
+            lbl_lastChanged1.Text = "Last Changed";
+            lbl_lastChanged2.Text = "";
+
         }
 
         private void txt_timestamp2_TextChanged(object sender, EventArgs e)
         {
             CalculateDiff();
 
-            if (box_wipe.Checked)
-            {
-                lbl_lastChanged2.Text = "Last Changed";
-                lbl_lastChanged1.Text = "";
-            }
+            lbl_lastChanged2.Text = "Last Changed";
+            lbl_lastChanged1.Text = "";
+
         }
 
         private void txt_difference_TextChanged(object sender, EventArgs e)
@@ -113,12 +109,20 @@ namespace SpawnGenerator
 
         private void txt_timestamp1_Click(object sender, EventArgs e)
         {
-            txt_timestamp1.Text = "";
+
+            if (box_wipe.Checked)
+            {
+                txt_timestamp1.Text = "";
+            }
         }
 
         private void txt_timestamp2_Click(object sender, EventArgs e)
         {
-            txt_timestamp2.Text = "";
+
+            if (box_wipe.Checked)
+            {
+                txt_timestamp2.Text = "";
+            }
         }
 
         private void rdb_diffAsSeconds_CheckedChanged(object sender, EventArgs e)
