@@ -34,6 +34,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.rdb_diffAsSeconds = new System.Windows.Forms.RadioButton();
+            this.rdb_diffAsMilliseconds = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // txt_timestamp1
@@ -56,7 +58,7 @@
             // 
             // txt_difference
             // 
-            this.txt_difference.Location = new System.Drawing.Point(83, 57);
+            this.txt_difference.Location = new System.Drawing.Point(83, 84);
             this.txt_difference.Name = "txt_difference";
             this.txt_difference.Size = new System.Drawing.Size(183, 20);
             this.txt_difference.TabIndex = 3;
@@ -83,17 +85,43 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 57);
+            this.label3.Location = new System.Drawing.Point(7, 84);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Difference (s)";
             // 
+            // rdb_diffAsSeconds
+            // 
+            this.rdb_diffAsSeconds.AutoSize = true;
+            this.rdb_diffAsSeconds.Checked = true;
+            this.rdb_diffAsSeconds.Location = new System.Drawing.Point(83, 60);
+            this.rdb_diffAsSeconds.Name = "rdb_diffAsSeconds";
+            this.rdb_diffAsSeconds.Size = new System.Drawing.Size(67, 17);
+            this.rdb_diffAsSeconds.TabIndex = 7;
+            this.rdb_diffAsSeconds.TabStop = true;
+            this.rdb_diffAsSeconds.Text = "Seconds";
+            this.rdb_diffAsSeconds.UseVisualStyleBackColor = true;
+            this.rdb_diffAsSeconds.CheckedChanged += new System.EventHandler(this.rdb_diffAsSeconds_CheckedChanged);
+            // 
+            // rdb_diffAsMilliseconds
+            // 
+            this.rdb_diffAsMilliseconds.AutoSize = true;
+            this.rdb_diffAsMilliseconds.Location = new System.Drawing.Point(175, 60);
+            this.rdb_diffAsMilliseconds.Name = "rdb_diffAsMilliseconds";
+            this.rdb_diffAsMilliseconds.Size = new System.Drawing.Size(82, 17);
+            this.rdb_diffAsMilliseconds.TabIndex = 8;
+            this.rdb_diffAsMilliseconds.Text = "Milliseconds";
+            this.rdb_diffAsMilliseconds.UseVisualStyleBackColor = true;
+            this.rdb_diffAsMilliseconds.CheckedChanged += new System.EventHandler(this.rdb_diffAsMilliseconds_CheckedChanged);
+            // 
             // Timestamp_Subtractor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(278, 89);
+            this.ClientSize = new System.Drawing.Size(278, 119);
+            this.Controls.Add(this.rdb_diffAsMilliseconds);
+            this.Controls.Add(this.rdb_diffAsSeconds);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -116,5 +144,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton rdb_diffAsSeconds;
+        private System.Windows.Forms.RadioButton rdb_diffAsMilliseconds;
     }
 }

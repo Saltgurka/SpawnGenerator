@@ -74,9 +74,14 @@ namespace SpawnGenerator
             // diff1 gets 185 days, 14 hours, and 47 minutes.
             TimeSpan diff = t1.Subtract(t2);
 
-            double diffsec = diff.TotalSeconds;
+            double diffResult;
 
-            txt_difference.Text = diffsec.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            if (rdb_diffAsMilliseconds.Checked)
+                diffResult = diff.TotalMilliseconds;
+            else
+                diffResult = diff.TotalSeconds;
+
+            txt_difference.Text = diffResult.ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
         private void txt_timestamp1_TextChanged(object sender, EventArgs e)
@@ -102,6 +107,16 @@ namespace SpawnGenerator
         private void txt_timestamp2_Click(object sender, EventArgs e)
         {
             txt_timestamp2.Text = "";
+        }
+
+        private void rdb_diffAsSeconds_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateDiff();
+        }
+
+        private void rdb_diffAsMilliseconds_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateDiff();
         }
     }
 }
