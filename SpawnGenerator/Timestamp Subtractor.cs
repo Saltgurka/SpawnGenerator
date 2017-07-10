@@ -87,11 +87,15 @@ namespace SpawnGenerator
         private void txt_timestamp1_TextChanged(object sender, EventArgs e)
         {
             CalculateDiff();
+            lbl_lastChanged1.Text = "Last Changed";
+            lbl_lastChanged2.Text = "";
         }
 
         private void txt_timestamp2_TextChanged(object sender, EventArgs e)
         {
             CalculateDiff();
+            lbl_lastChanged2.Text = "Last Changed";
+            lbl_lastChanged1.Text = "";
         }
 
         private void txt_difference_TextChanged(object sender, EventArgs e)

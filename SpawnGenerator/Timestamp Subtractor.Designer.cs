@@ -36,6 +36,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.rdb_diffAsSeconds = new System.Windows.Forms.RadioButton();
             this.rdb_diffAsMilliseconds = new System.Windows.Forms.RadioButton();
+            this.lbl_lastChanged1 = new System.Windows.Forms.Label();
+            this.lbl_lastChanged2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txt_timestamp1
@@ -115,11 +117,29 @@
             this.rdb_diffAsMilliseconds.UseVisualStyleBackColor = true;
             this.rdb_diffAsMilliseconds.CheckedChanged += new System.EventHandler(this.rdb_diffAsMilliseconds_CheckedChanged);
             // 
+            // lbl_lastChanged1
+            // 
+            this.lbl_lastChanged1.AutoSize = true;
+            this.lbl_lastChanged1.Location = new System.Drawing.Point(273, 11);
+            this.lbl_lastChanged1.Name = "lbl_lastChanged1";
+            this.lbl_lastChanged1.Size = new System.Drawing.Size(0, 13);
+            this.lbl_lastChanged1.TabIndex = 9;
+            // 
+            // lbl_lastChanged2
+            // 
+            this.lbl_lastChanged2.AutoSize = true;
+            this.lbl_lastChanged2.Location = new System.Drawing.Point(273, 34);
+            this.lbl_lastChanged2.Name = "lbl_lastChanged2";
+            this.lbl_lastChanged2.Size = new System.Drawing.Size(0, 13);
+            this.lbl_lastChanged2.TabIndex = 10;
+            // 
             // Timestamp_Subtractor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(278, 119);
+            this.ClientSize = new System.Drawing.Size(352, 119);
+            this.Controls.Add(this.lbl_lastChanged2);
+            this.Controls.Add(this.lbl_lastChanged1);
             this.Controls.Add(this.rdb_diffAsMilliseconds);
             this.Controls.Add(this.rdb_diffAsSeconds);
             this.Controls.Add(this.label3);
@@ -146,5 +166,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RadioButton rdb_diffAsSeconds;
         private System.Windows.Forms.RadioButton rdb_diffAsMilliseconds;
+        private System.Windows.Forms.Label lbl_lastChanged1;
+        private System.Windows.Forms.Label lbl_lastChanged2;
     }
 }
