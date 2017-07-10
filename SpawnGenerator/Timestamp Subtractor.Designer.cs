@@ -38,6 +38,7 @@
             this.rdb_diffAsMilliseconds = new System.Windows.Forms.RadioButton();
             this.lbl_lastChanged1 = new System.Windows.Forms.Label();
             this.lbl_lastChanged2 = new System.Windows.Forms.Label();
+            this.box_wipe = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // txt_timestamp1
@@ -133,11 +134,24 @@
             this.lbl_lastChanged2.Size = new System.Drawing.Size(0, 13);
             this.lbl_lastChanged2.TabIndex = 10;
             // 
+            // box_wipe
+            // 
+            this.box_wipe.AutoSize = true;
+            this.box_wipe.Checked = true;
+            this.box_wipe.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.box_wipe.Location = new System.Drawing.Point(263, 60);
+            this.box_wipe.Name = "box_wipe";
+            this.box_wipe.Size = new System.Drawing.Size(92, 17);
+            this.box_wipe.TabIndex = 11;
+            this.box_wipe.Text = "Wipe on Click";
+            this.box_wipe.UseVisualStyleBackColor = true;
+            // 
             // Timestamp_Subtractor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(352, 119);
+            this.Controls.Add(this.box_wipe);
             this.Controls.Add(this.lbl_lastChanged2);
             this.Controls.Add(this.lbl_lastChanged1);
             this.Controls.Add(this.rdb_diffAsMilliseconds);
@@ -168,5 +182,6 @@
         private System.Windows.Forms.RadioButton rdb_diffAsMilliseconds;
         private System.Windows.Forms.Label lbl_lastChanged1;
         private System.Windows.Forms.Label lbl_lastChanged2;
+        private System.Windows.Forms.CheckBox box_wipe;
     }
 }
