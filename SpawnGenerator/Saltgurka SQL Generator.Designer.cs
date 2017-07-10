@@ -45,6 +45,7 @@
             this.btn_loginAddDatabase = new System.Windows.Forms.Button();
             this.btn_loginRemoveDatabase = new System.Windows.Forms.Button();
             this.btn_loginSaveAndTest = new System.Windows.Forms.Button();
+            this.btn_openTimestampSubtractor = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_spawnGenerator
@@ -191,11 +192,22 @@
             this.btn_loginSaveAndTest.Text = "Save and Test Connection";
             this.btn_loginSaveAndTest.UseVisualStyleBackColor = true;
             // 
+            // btn_openTimestampSubtractor
+            // 
+            this.btn_openTimestampSubtractor.Location = new System.Drawing.Point(29, 137);
+            this.btn_openTimestampSubtractor.Name = "btn_openTimestampSubtractor";
+            this.btn_openTimestampSubtractor.Size = new System.Drawing.Size(154, 36);
+            this.btn_openTimestampSubtractor.TabIndex = 17;
+            this.btn_openTimestampSubtractor.Text = "Timestamp Subtractor";
+            this.btn_openTimestampSubtractor.UseVisualStyleBackColor = true;
+            this.btn_openTimestampSubtractor.Click += new System.EventHandler(this.btn_openTimestampSubtractor_Click);
+            // 
             // Saltgurka_SQL_Generator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 255);
+            this.Controls.Add(this.btn_openTimestampSubtractor);
             this.Controls.Add(this.btn_loginSaveAndTest);
             this.Controls.Add(this.btn_loginRemoveDatabase);
             this.Controls.Add(this.btn_loginAddDatabase);
@@ -239,5 +251,6 @@
         private System.Windows.Forms.Button btn_loginAddDatabase;
         private System.Windows.Forms.Button btn_loginRemoveDatabase;
         private System.Windows.Forms.Button btn_loginSaveAndTest;
+        private System.Windows.Forms.Button btn_openTimestampSubtractor;
     }
 }

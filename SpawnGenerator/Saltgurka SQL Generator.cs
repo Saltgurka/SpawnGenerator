@@ -28,5 +28,11 @@ namespace SpawnGenerator
             Form Pool = new Pool();
             Pool.Show();
         }
+
+        private void btn_openTimestampSubtractor_Click(object sender, EventArgs e)
+        {
+            Form TimestampSubtractor = new Timestamp_Subtractor();
+            TimestampSubtractor.Show();
+        }
     }
 }

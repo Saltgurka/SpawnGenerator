@@ -72,6 +72,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Timestamp Subtractor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Timestamp Subtractor.Designer.cs">
+      <DependentUpon>Timestamp Subtractor.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Saltgurka SQL Generator.resx">
       <DependentUpon>Saltgurka SQL Generator.cs</DependentUpon>
     </EmbeddedResource>
@@ -90,6 +96,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Timestamp Subtractor.resx">
+      <DependentUpon>Timestamp Subtractor.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
