@@ -46,6 +46,7 @@
             this.btn_loginRemoveDatabase = new System.Windows.Forms.Button();
             this.btn_loginSaveAndTest = new System.Windows.Forms.Button();
             this.btn_openTimestampSubtractor = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_spawnGenerator
@@ -70,6 +71,7 @@
             // 
             // cmb_loginDatabases
             // 
+            this.cmb_loginDatabases.Enabled = false;
             this.cmb_loginDatabases.FormattingEnabled = true;
             this.cmb_loginDatabases.Location = new System.Drawing.Point(549, 170);
             this.cmb_loginDatabases.Name = "cmb_loginDatabases";
@@ -87,6 +89,7 @@
             // 
             // txt_loginUser
             // 
+            this.txt_loginUser.Enabled = false;
             this.txt_loginUser.Location = new System.Drawing.Point(549, 40);
             this.txt_loginUser.Name = "txt_loginUser";
             this.txt_loginUser.Size = new System.Drawing.Size(121, 20);
@@ -94,6 +97,7 @@
             // 
             // txt_loginPassword
             // 
+            this.txt_loginPassword.Enabled = false;
             this.txt_loginPassword.Location = new System.Drawing.Point(549, 66);
             this.txt_loginPassword.Name = "txt_loginPassword";
             this.txt_loginPassword.Size = new System.Drawing.Size(121, 20);
@@ -101,6 +105,7 @@
             // 
             // txt_loginHost
             // 
+            this.txt_loginHost.Enabled = false;
             this.txt_loginHost.Location = new System.Drawing.Point(549, 92);
             this.txt_loginHost.Name = "txt_loginHost";
             this.txt_loginHost.Size = new System.Drawing.Size(121, 20);
@@ -108,6 +113,7 @@
             // 
             // txt_loginPort
             // 
+            this.txt_loginPort.Enabled = false;
             this.txt_loginPort.Location = new System.Drawing.Point(549, 118);
             this.txt_loginPort.Name = "txt_loginPort";
             this.txt_loginPort.Size = new System.Drawing.Size(121, 20);
@@ -160,6 +166,7 @@
             // 
             // txt_loginDatabases
             // 
+            this.txt_loginDatabases.Enabled = false;
             this.txt_loginDatabases.Location = new System.Drawing.Point(549, 144);
             this.txt_loginDatabases.Name = "txt_loginDatabases";
             this.txt_loginDatabases.Size = new System.Drawing.Size(121, 20);
@@ -167,6 +174,7 @@
             // 
             // btn_loginAddDatabase
             // 
+            this.btn_loginAddDatabase.Enabled = false;
             this.btn_loginAddDatabase.Location = new System.Drawing.Point(676, 144);
             this.btn_loginAddDatabase.Name = "btn_loginAddDatabase";
             this.btn_loginAddDatabase.Size = new System.Drawing.Size(75, 23);
@@ -176,6 +184,7 @@
             // 
             // btn_loginRemoveDatabase
             // 
+            this.btn_loginRemoveDatabase.Enabled = false;
             this.btn_loginRemoveDatabase.Location = new System.Drawing.Point(676, 170);
             this.btn_loginRemoveDatabase.Name = "btn_loginRemoveDatabase";
             this.btn_loginRemoveDatabase.Size = new System.Drawing.Size(75, 23);
@@ -185,6 +194,7 @@
             // 
             // btn_loginSaveAndTest
             // 
+            this.btn_loginSaveAndTest.Enabled = false;
             this.btn_loginSaveAndTest.Location = new System.Drawing.Point(490, 212);
             this.btn_loginSaveAndTest.Name = "btn_loginSaveAndTest";
             this.btn_loginSaveAndTest.Size = new System.Drawing.Size(261, 31);
@@ -202,11 +212,22 @@
             this.btn_openTimestampSubtractor.UseVisualStyleBackColor = true;
             this.btn_openTimestampSubtractor.Click += new System.EventHandler(this.btn_openTimestampSubtractor_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(189, 137);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(154, 36);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "Sniff Packet Filterer";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Saltgurka_SQL_Generator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 255);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_openTimestampSubtractor);
             this.Controls.Add(this.btn_loginSaveAndTest);
             this.Controls.Add(this.btn_loginRemoveDatabase);
@@ -252,5 +273,6 @@
         private System.Windows.Forms.Button btn_loginRemoveDatabase;
         private System.Windows.Forms.Button btn_loginSaveAndTest;
         private System.Windows.Forms.Button btn_openTimestampSubtractor;
+        private System.Windows.Forms.Button button1;
     }
 }

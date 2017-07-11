@@ -51,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frm_Filterer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Filterer.Designer.cs">
+      <DependentUpon>frm_Filterer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saltgurka SQL Generator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +83,9 @@
     <Compile Include="Timestamp Subtractor.Designer.cs">
       <DependentUpon>Timestamp Subtractor.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="frm_Filterer.resx">
+      <DependentUpon>frm_Filterer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Saltgurka SQL Generator.resx">
       <DependentUpon>Saltgurka SQL Generator.cs</DependentUpon>
     </EmbeddedResource>

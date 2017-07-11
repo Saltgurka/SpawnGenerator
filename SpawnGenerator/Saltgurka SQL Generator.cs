@@ -34,5 +34,11 @@ namespace SpawnGenerator
             Form TimestampSubtractor = new Timestamp_Subtractor();
             TimestampSubtractor.Show();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form Filterer = new frm_Filterer();
+            Filterer.Show();
+        }
     }
 }

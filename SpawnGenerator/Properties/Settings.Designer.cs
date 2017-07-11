@@ -81,5 +81,27 @@ namespace SpawnGenerator.Properties {
                 this["Databases"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Generic.List<System.String> Blacklist {
+            get {
+                return ((global::System.Collections.Generic.List<System.String>)(this["Blacklist"]));
+            }
+            set {
+                this["Blacklist"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Generic.List<System.String> Whitelist {
+            get {
+                return ((global::System.Collections.Generic.List<System.String>)(this["Whitelist"]));
+            }
+            set {
+                this["Whitelist"] = value;
+            }
+        }
     }
 }
