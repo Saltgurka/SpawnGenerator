@@ -69,7 +69,22 @@ namespace SpawnGenerator
 
         private void multiSpawnGenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (multiSpawn == null)
+            {
+                multiSpawn = new frm_multiSpawnGen();
+                multiSpawn.MdiParent = this;
+                multiSpawn.FormClosed += MultiSpawn_FormClosed;
+                multiSpawn.Show();
+            }
+            else
+            {
+                multiSpawn.Activate();
+            }
+        }
 
+        private void MultiSpawn_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            multiSpawn = null;
         }
 
         private void timestampSubtractorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -128,7 +143,8 @@ namespace SpawnGenerator
 
         private void multiSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
+            Form MultiSpawn = new frm_multiSpawnGen();
+            MultiSpawn.Show();
         }
 
         private void timestampSubtractorToolStripMenuItem1_Click(object sender, EventArgs e)

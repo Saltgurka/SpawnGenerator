@@ -50,11 +50,11 @@
             this.multiSpawnGenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.timestampSubtractorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sniffPacketFiltererToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.poolGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.singleSpawnGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiSpawnGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timestampSubtractorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sniffPacketFiltererToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.poolGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.poolGeneratorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +67,7 @@
             this.cmb_loginDatabases.Name = "cmb_loginDatabases";
             this.cmb_loginDatabases.Size = new System.Drawing.Size(121, 21);
             this.cmb_loginDatabases.TabIndex = 2;
+            this.cmb_loginDatabases.Visible = false;
             // 
             // label1
             // 
@@ -76,6 +77,7 @@
             this.label1.Size = new System.Drawing.Size(241, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "DB Login (Optional, passwords are not encrypted)";
+            this.label1.Visible = false;
             // 
             // txt_loginUser
             // 
@@ -84,6 +86,7 @@
             this.txt_loginUser.Name = "txt_loginUser";
             this.txt_loginUser.Size = new System.Drawing.Size(121, 20);
             this.txt_loginUser.TabIndex = 4;
+            this.txt_loginUser.Visible = false;
             // 
             // txt_loginPassword
             // 
@@ -92,6 +95,7 @@
             this.txt_loginPassword.Name = "txt_loginPassword";
             this.txt_loginPassword.Size = new System.Drawing.Size(121, 20);
             this.txt_loginPassword.TabIndex = 5;
+            this.txt_loginPassword.Visible = false;
             // 
             // txt_loginHost
             // 
@@ -100,6 +104,7 @@
             this.txt_loginHost.Name = "txt_loginHost";
             this.txt_loginHost.Size = new System.Drawing.Size(121, 20);
             this.txt_loginHost.TabIndex = 6;
+            this.txt_loginHost.Visible = false;
             // 
             // txt_loginPort
             // 
@@ -108,6 +113,7 @@
             this.txt_loginPort.Name = "txt_loginPort";
             this.txt_loginPort.Size = new System.Drawing.Size(121, 20);
             this.txt_loginPort.TabIndex = 7;
+            this.txt_loginPort.Visible = false;
             // 
             // label2
             // 
@@ -117,6 +123,7 @@
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 9;
             this.label2.Text = "User:";
+            this.label2.Visible = false;
             // 
             // label3
             // 
@@ -126,6 +133,7 @@
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "Password:";
+            this.label3.Visible = false;
             // 
             // label4
             // 
@@ -135,6 +143,7 @@
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 11;
             this.label4.Text = "Host:";
+            this.label4.Visible = false;
             // 
             // label5
             // 
@@ -144,6 +153,7 @@
             this.label5.Size = new System.Drawing.Size(29, 13);
             this.label5.TabIndex = 12;
             this.label5.Text = "Port:";
+            this.label5.Visible = false;
             // 
             // label6
             // 
@@ -153,6 +163,7 @@
             this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 13;
             this.label6.Text = "Databases:";
+            this.label6.Visible = false;
             // 
             // txt_loginDatabases
             // 
@@ -161,6 +172,7 @@
             this.txt_loginDatabases.Name = "txt_loginDatabases";
             this.txt_loginDatabases.Size = new System.Drawing.Size(121, 20);
             this.txt_loginDatabases.TabIndex = 8;
+            this.txt_loginDatabases.Visible = false;
             // 
             // btn_loginAddDatabase
             // 
@@ -171,6 +183,7 @@
             this.btn_loginAddDatabase.TabIndex = 14;
             this.btn_loginAddDatabase.Text = "Add";
             this.btn_loginAddDatabase.UseVisualStyleBackColor = true;
+            this.btn_loginAddDatabase.Visible = false;
             // 
             // btn_loginRemoveDatabase
             // 
@@ -181,6 +194,7 @@
             this.btn_loginRemoveDatabase.TabIndex = 15;
             this.btn_loginRemoveDatabase.Text = "Remove";
             this.btn_loginRemoveDatabase.UseVisualStyleBackColor = true;
+            this.btn_loginRemoveDatabase.Visible = false;
             // 
             // btn_loginSaveAndTest
             // 
@@ -191,6 +205,7 @@
             this.btn_loginSaveAndTest.TabIndex = 16;
             this.btn_loginSaveAndTest.Text = "Save and Test Connection";
             this.btn_loginSaveAndTest.UseVisualStyleBackColor = true;
+            this.btn_loginSaveAndTest.Visible = false;
             // 
             // menuStrip1
             // 
@@ -203,7 +218,7 @@
             this.poolGeneratorToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(787, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1478, 24);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -253,6 +268,13 @@
             this.sniffPacketFiltererToolStripMenuItem1.Text = "Sniff Packet Filterer";
             this.sniffPacketFiltererToolStripMenuItem1.Click += new System.EventHandler(this.sniffPacketFiltererToolStripMenuItem1_Click);
             // 
+            // poolGeneratorToolStripMenuItem
+            // 
+            this.poolGeneratorToolStripMenuItem.Name = "poolGeneratorToolStripMenuItem";
+            this.poolGeneratorToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.poolGeneratorToolStripMenuItem.Text = "Pool Generator";
+            this.poolGeneratorToolStripMenuItem.Click += new System.EventHandler(this.poolGeneratorToolStripMenuItem_Click);
+            // 
             // singleSpawnGenToolStripMenuItem
             // 
             this.singleSpawnGenToolStripMenuItem.Name = "singleSpawnGenToolStripMenuItem";
@@ -281,13 +303,6 @@
             this.sniffPacketFiltererToolStripMenuItem.Text = "Sniff Packet Filterer";
             this.sniffPacketFiltererToolStripMenuItem.Click += new System.EventHandler(this.sniffPacketFiltererToolStripMenuItem_Click);
             // 
-            // poolGeneratorToolStripMenuItem
-            // 
-            this.poolGeneratorToolStripMenuItem.Name = "poolGeneratorToolStripMenuItem";
-            this.poolGeneratorToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.poolGeneratorToolStripMenuItem.Text = "Pool Generator";
-            this.poolGeneratorToolStripMenuItem.Click += new System.EventHandler(this.poolGeneratorToolStripMenuItem_Click);
-            // 
             // poolGeneratorToolStripMenuItem1
             // 
             this.poolGeneratorToolStripMenuItem1.Name = "poolGeneratorToolStripMenuItem1";
@@ -299,7 +314,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(787, 482);
+            this.ClientSize = new System.Drawing.Size(1478, 858);
             this.Controls.Add(this.btn_loginSaveAndTest);
             this.Controls.Add(this.btn_loginRemoveDatabase);
             this.Controls.Add(this.btn_loginAddDatabase);

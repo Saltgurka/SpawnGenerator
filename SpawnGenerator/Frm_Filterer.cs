@@ -72,7 +72,7 @@ namespace SpawnGenerator
                 string filenameNoPath = Path.GetFileNameWithoutExtension(fileName);
                 TextWriter tw = new StreamWriter(filenameNoPath + "_filtered.txt");
 
-                foreach (String s in packetFiltering.GetDataSourceFromSniffFile(fileName,rdb_blacklist.Checked,GetCheckedFilterList()))
+                foreach (String s in packetFiltering.FilterSniffFile(fileName,rdb_blacklist.Checked,GetCheckedFilterList()))
                     tw.WriteLine(s);
 
                 tw.Close();
