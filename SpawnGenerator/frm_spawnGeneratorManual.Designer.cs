@@ -1,6 +1,6 @@
 ﻿namespace SpawnGenerator
 {
-    partial class SpawnGenerator
+    partial class frm_spawnGeneratorManual
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpawnGenerator));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_spawnGeneratorManual));
             this.txt_creatureEntry = new System.Windows.Forms.TextBox();
             this.txt_creatureGUID = new System.Windows.Forms.TextBox();
             this.txt_positionString = new System.Windows.Forms.TextBox();

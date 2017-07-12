@@ -11,11 +11,11 @@ using System.IO;
 
 namespace SpawnGenerator
 {
-    public partial class frm_Filterer : Form
+    public partial class frm_filterer : Form
     {
         //static DataTable packets = new DataTable();
 
-        public frm_Filterer()
+        public frm_filterer()
         {
             InitializeComponent();
 

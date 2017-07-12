@@ -1,6 +1,6 @@
 ﻿namespace SpawnGenerator
 {
-    partial class Timestamp_Subtractor
+    partial class frm_timestampSubtractor
     {
         /// <summary>
         /// Required designer variable.

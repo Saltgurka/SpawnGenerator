@@ -51,49 +51,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frm_Filterer.cs">
+    <Compile Include="frm_filterer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_Filterer.Designer.cs">
-      <DependentUpon>frm_Filterer.cs</DependentUpon>
+    <Compile Include="frm_filterer.Designer.cs">
+      <DependentUpon>frm_filterer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Saltgurka SQL Generator.cs">
+    <Compile Include="frm_startScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Saltgurka SQL Generator.Designer.cs">
-      <DependentUpon>Saltgurka SQL Generator.cs</DependentUpon>
+    <Compile Include="frm_startScreen.Designer.cs">
+      <DependentUpon>frm_startScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpawnGenerator.cs">
+    <Compile Include="frm_spawnGeneratorManual.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SpawnGenerator.Designer.cs">
-      <DependentUpon>SpawnGenerator.cs</DependentUpon>
+    <Compile Include="frm_spawnGeneratorManual.Designer.cs">
+      <DependentUpon>frm_spawnGeneratorManual.cs</DependentUpon>
     </Compile>
-    <Compile Include="Pool.cs">
+    <Compile Include="frm_poolGenerator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Pool.Designer.cs">
-      <DependentUpon>Pool.cs</DependentUpon>
+    <Compile Include="frm_poolGenerator.Designer.cs">
+      <DependentUpon>frm_poolGenerator.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Timestamp Subtractor.cs">
+    <Compile Include="frm_timestampSubtractor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Timestamp Subtractor.Designer.cs">
-      <DependentUpon>Timestamp Subtractor.cs</DependentUpon>
+    <Compile Include="frm_timestampSubtractor.Designer.cs">
+      <DependentUpon>frm_timestampSubtractor.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="frm_Filterer.resx">
-      <DependentUpon>frm_Filterer.cs</DependentUpon>
+    <EmbeddedResource Include="frm_filterer.resx">
+      <DependentUpon>frm_filterer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Saltgurka SQL Generator.resx">
-      <DependentUpon>Saltgurka SQL Generator.cs</DependentUpon>
+    <EmbeddedResource Include="frm_startScreen.resx">
+      <DependentUpon>frm_startScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpawnGenerator.resx">
-      <DependentUpon>SpawnGenerator.cs</DependentUpon>
+    <EmbeddedResource Include="frm_spawnGeneratorManual.resx">
+      <DependentUpon>frm_spawnGeneratorManual.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pool.resx">
-      <DependentUpon>Pool.cs</DependentUpon>
+    <EmbeddedResource Include="frm_poolGenerator.resx">
+      <DependentUpon>frm_poolGenerator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -104,8 +104,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Timestamp Subtractor.resx">
-      <DependentUpon>Timestamp Subtractor.cs</DependentUpon>
+    <EmbeddedResource Include="frm_timestampSubtractor.resx">
+      <DependentUpon>frm_timestampSubtractor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

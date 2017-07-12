@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SpawnGenerator
 {
-    public partial class Timestamp_Subtractor : Form
+    public partial class frm_timestampSubtractor : Form
     {
-        public Timestamp_Subtractor()
+        public frm_timestampSubtractor()
         {
             InitializeComponent();
         }

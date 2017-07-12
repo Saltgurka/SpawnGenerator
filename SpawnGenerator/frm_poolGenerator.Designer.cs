@@ -1,6 +1,6 @@
 ﻿namespace SpawnGenerator
 {
-    partial class Pool
+    partial class frm_poolGenerator
     {
         /// <summary>
         /// Required designer variable.

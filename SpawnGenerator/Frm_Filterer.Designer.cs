@@ -1,6 +1,6 @@
 ﻿namespace SpawnGenerator
 {
-    partial class frm_Filterer
+    partial class frm_filterer
     {
         /// <summary>
         /// Required designer variable.

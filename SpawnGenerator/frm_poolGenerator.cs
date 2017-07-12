@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace SpawnGenerator
 {
-    public partial class Pool : Form
+    public partial class frm_poolGenerator : Form
     {
         List<Pool_X> pool_x = new List<Pool_X>();
-        public Pool()
+        public frm_poolGenerator()
         {
             InitializeComponent();
         }
