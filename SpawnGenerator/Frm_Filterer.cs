@@ -35,6 +35,8 @@ namespace SpawnGenerator
             clb_packetWhitelist.DataSource = Properties.Settings.Default.Whitelist;
         }
 
+        PacketFiltering packetFiltering = new PacketFiltering();
+
         private void btn_loadSource_Click(object sender, EventArgs e)
         {
             openFileDialog.Title = "Open File";
@@ -58,6 +60,9 @@ namespace SpawnGenerator
 
         private void ConvertSniffFile(string fileName)
         {
+            Cursor = Cursors.WaitCursor;
+            Application.DoEvents();
+
             System.IO.StreamReader file = new System.IO.StreamReader(fileName);
             var line = file.ReadLine();
             file.Close();
@@ -67,7 +72,7 @@ namespace SpawnGenerator
                 string filenameNoPath = Path.GetFileNameWithoutExtension(fileName);
                 TextWriter tw = new StreamWriter(filenameNoPath + "_filtered.txt");
 
-                foreach (String s in GetDataSourceFromSniffFile(fileName))
+                foreach (String s in packetFiltering.GetDataSourceFromSniffFile(fileName,rdb_blacklist.Checked,GetCheckedFilterList()))
                     tw.WriteLine(s);
 
                 tw.Close();
@@ -76,104 +81,116 @@ namespace SpawnGenerator
             {
                 MessageBox.Show(saveFileDialog.FileName + " is is not a valid TrinityCore parsed sniff file.", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
             }
+
+            Cursor = Cursors.Default;
         }
 
-        private List<string> GetDataSourceFromSniffFile(string fileName)
+        //public List<string> GetDataSourceFromSniffFile(string fileName)
+        //{
+        //    Cursor = Cursors.WaitCursor;
+        //    Application.DoEvents();
+
+        //    var lines = File.ReadAllLines(fileName);
+
+        //    string[] packets = new string[lines.Count()];
+        //    List<string> newFileStrings = new List<string>();
+
+        //    for (int i = 0; i < 7; i++) // Write the first lines without filtering
+        //    {
+        //        newFileStrings.Add(lines[i]);
+        //    }
+
+        //    // Add filter information
+        //    newFileStrings.Add("# This sniff file was filtered using Saltgurka's sniff filterer.");
+        //    newFileStrings.Add("# The following packets were " + (rdb_blacklist.Checked ? "BLACKLISTED:" : "WHITELISTED:"));
+        //    newFileStrings.Add("--------------------------------");
+
+        //    if (rdb_blacklist.Checked)
+        //    {
+        //        foreach (int i in clb_packetBlackList.CheckedIndices)
+        //        {
+        //            newFileStrings.Add(clb_packetBlackList.Items[i].ToString());
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (int i in clb_packetWhitelist.CheckedIndices)
+        //        {
+        //            newFileStrings.Add(clb_packetWhitelist.Items[i].ToString());
+        //        }
+        //    }
+
+        //    newFileStrings.Add("--------------------------------");
+        //    newFileStrings.Add("");
+
+        //    if (rdb_blacklist.Checked) // Filter by blacklist
+        //    {
+        //        List<string> blackList = GetCheckedBlacklist();
+
+        //        for (int i = 1; i < lines.Count(); i++)
+        //        {
+        //            if (lines[i - 1] == (""))
+        //            {
+        //                if (!blackList.Any(s => lines[i].Contains(s)))
+        //                {
+        //                    do
+        //                    {
+        //                        newFileStrings.Add(lines[i]);
+        //                        i++;
+
+        //                    } while (lines[i] != "");
+        //                    newFileStrings.Add("");
+        //                }
+
+        //            }
+        //        }
+        //    }
+        //    else // Filter by whitelist
+        //    {
+        //        List<string> whiteList = GetCheckedWhitelist();
+
+        //        for (int i = 1; i < lines.Count(); i++)
+        //        {
+        //            if (lines[i - 1] == (""))
+        //            {
+        //                if (whiteList.Any(s => lines[i].Contains(s)))
+        //                {
+        //                    do
+        //                    {
+        //                        newFileStrings.Add(lines[i]);
+        //                        i++;
+
+        //                    } while (lines[i] != "");
+        //                    newFileStrings.Add("");
+        //                }
+
+        //            }
+        //        }
+        //    }
+
+        //    Cursor = Cursors.Default;
+        //    return newFileStrings;
+        //}
+
+        private List<string> GetCheckedFilterList()
         {
-            Cursor = Cursors.WaitCursor;
-            Application.DoEvents();
-
-            var lines = File.ReadAllLines(fileName);
-
-            string[] packets = new string[lines.Count()];
-            List<string> newFileStrings = new List<string>();
-
-            for (int i = 0; i < 7; i++) // Write the first lines without filtering
-            {
-                newFileStrings.Add(lines[i]);
-            }
-
-            // Add filter information
-            newFileStrings.Add("# This sniff file was filtered using Saltgurka's sniff filterer.");
-            newFileStrings.Add("# The following packets were " + (rdb_blacklist.Checked ? "BLACKLISTED:" : "WHITELISTED:"));
-            newFileStrings.Add("--------------------------------");
+            List<string> checkedFilterList = new List<string>();
 
             if (rdb_blacklist.Checked)
             {
-                foreach (int i in clb_packetBlackList.CheckedIndices)
+                foreach (string s in clb_packetBlackList.CheckedItems)
                 {
-                    newFileStrings.Add(clb_packetBlackList.Items[i].ToString());
+                    checkedFilterList.Add(s);
                 }
             }
             else
             {
-                foreach (int i in clb_packetWhitelist.CheckedIndices)
+                foreach (string s in clb_packetWhitelist.CheckedItems)
                 {
-                    newFileStrings.Add(clb_packetWhitelist.Items[i].ToString());
+                    checkedFilterList.Add(s);
                 }
             }
-
-            newFileStrings.Add("--------------------------------");
-            newFileStrings.Add("");
-
-            if (rdb_blacklist.Checked) // Filter by blacklist
-            {
-                List<string> blackList = GetCheckedBlacklist();
-
-                for (int i = 1; i < lines.Count(); i++)
-                {
-                    if (lines[i - 1] == (""))
-                    {
-                        if (!blackList.Any(s => lines[i].Contains(s)))
-                        {
-                            do
-                            {
-                                newFileStrings.Add(lines[i]);
-                                i++;
-
-                            } while (lines[i] != "");
-                            newFileStrings.Add("");
-                        }
-
-                    }
-                }
-            }
-            else // Filter by whitelist
-            {
-                List<string> whiteList = GetCheckedWhitelist();
-
-                for (int i = 1; i < lines.Count(); i++)
-                {
-                    if (lines[i - 1] == (""))
-                    {
-                        if (whiteList.Any(s => lines[i].Contains(s)))
-                        {
-                            do
-                            {
-                                newFileStrings.Add(lines[i]);
-                                i++;
-
-                            } while (lines[i] != "");
-                            newFileStrings.Add("");
-                        }
-
-                    }
-                }
-            }
-
-            Cursor = Cursors.Default;
-            return newFileStrings;
-        }
-
-        private List<string> GetCheckedBlacklist()
-        {
-            List<string> checkedBlacklist = new List<string>();
-            foreach (string s in clb_packetBlackList.CheckedItems)
-            {
-                checkedBlacklist.Add(s);
-            }
-
-            return checkedBlacklist;
+            return checkedFilterList;
         }
 
         private List<string> GetBlacklist()
@@ -185,17 +202,6 @@ namespace SpawnGenerator
             }
 
             return defaultBlacklist;
-        }
-
-        private List<string> GetCheckedWhitelist()
-        {
-            List<string> checkedWhitelist = new List<string>();
-            foreach (string s in clb_packetWhitelist.CheckedItems)
-            {
-                checkedWhitelist.Add(s);
-            }
-
-            return checkedWhitelist;
         }
 
         private List<string> GetWhitelist()
