@@ -76,5 +76,49 @@ namespace SpawnGenerator
             dgv_grid.DataSource = spawns;
             Cursor = Cursors.Default;
         }
+
+        private void btn_generateMarked_Click(object sender, EventArgs e)
+        {
+            if (dgv_grid.SelectedRows.Count == 0)
+                return;
+
+            int guid;
+
+            if (!Int32.TryParse(txt_creatureGUID.Text, out guid))
+            {
+                rtxt_SQLResult.Text = "Creature GUID invalid!";
+                return;
+            }
+
+            string output;
+            output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
+
+            foreach (DataGridViewRow row in dgv_grid.SelectedRows)
+            {
+                output += "("
+                    + guid + ","
+                    + row.Cells[1].Value + ","
+                    + txt_map.Text + ","
+                    + txt_spawnMask.Text + ","
+                    + txt_modelid.Text + ","
+                    + txt_equipmentId.Text + ","
+                    + row.Cells[4].Value + ","
+                    + row.Cells[5].Value + ","
+                    + row.Cells[6].Value + ","
+                    + row.Cells[7].Value + ","
+                    + txt_spawnMin.Text + ","
+                    + txt_spawnMax.Text + ","
+                    + txt_spawndist.Text + ","
+                    + txt_currentWaypoint.Text + ","
+                    + txt_curhealth.Text + ","
+                    + txt_curmana.Text + ","
+                    + txt_deathState.Text + ","
+                    + txt_movementType.Text + "),\n";
+
+                guid++;
+            }
+
+            rtxt_SQLResult.Text = output;
+        }
     }
 }

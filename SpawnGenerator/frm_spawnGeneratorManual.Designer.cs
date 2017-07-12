@@ -344,7 +344,7 @@
             this.richTextBox1.TabIndex = 32;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
-            // SpawnGenerator
+            // frm_spawnGeneratorManual
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -380,7 +380,7 @@
             this.Controls.Add(this.txt_positionString);
             this.Controls.Add(this.txt_creatureGUID);
             this.Controls.Add(this.txt_creatureEntry);
-            this.Name = "SpawnGenerator";
+            this.Name = "frm_spawnGeneratorManual";
             this.Text = "Manual Creature Spawn Generator";
             this.ResumeLayout(false);
             this.PerformLayout();
