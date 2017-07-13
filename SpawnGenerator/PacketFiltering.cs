@@ -166,7 +166,7 @@ namespace SpawnGenerator
                                 sniff.o = orientationline[3];
                         }
 
-                    } while (lines[i] != "" && lines[i] != "CreateObject");
+                    } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
 
                     if (sniff.entry != "")
                     {
