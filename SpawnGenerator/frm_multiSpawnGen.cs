@@ -120,5 +120,68 @@ namespace SpawnGenerator
 
             rtxt_SQLResult.Text = output;
         }
+
+        /// <summary>
+        /// Remove creatures with identical entry,x,y,z,o
+        /// </summary>
+        private void RemoveDuplicateSpawns()
+        {
+            // This might be an inefficient way to do this, but it works
+
+            List<string> unfilteredEntry = spawns.AsEnumerable().Select(x => x[1].ToString()).ToList();
+            List<string> unfilteredX = spawns.AsEnumerable().Select(x => x[4].ToString()).ToList();
+            List<string> unfilteredY = spawns.AsEnumerable().Select(x => x[5].ToString()).ToList();
+            List<string> unfilteredZ = spawns.AsEnumerable().Select(x => x[6].ToString()).ToList();
+            List<string> unfilteredO = spawns.AsEnumerable().Select(x => x[7].ToString()).ToList();
+            List<string> unfilteredMap = spawns.AsEnumerable().Select(x => x[8].ToString()).ToList();
+
+            List<int> duplicates = new List<int>();
+
+            for (int i = 0; i < unfilteredX.Count; i++) // Check duplicate X
+            {
+                for (int j = i + 1; j < unfilteredX.Count; j++)
+                {
+                    if (unfilteredX[i] == unfilteredX[j]) // Duplicate X found
+                    {
+                        if (unfilteredEntry[i] == unfilteredEntry[j]) // Entry is also the same
+                        {
+                            if (unfilteredY[i] == unfilteredY[j]) // Y too
+                            {
+                                if (unfilteredZ[i] == unfilteredZ[j]) // Z too
+                                {
+                                    if (unfilteredO[i] == unfilteredO[j]) // O too
+                                    {
+                                        if (unfilteredMap[i] == unfilteredMap[j]) // Map too
+                                        {
+                                            // Duplicate found, add index to list
+                                            duplicates.Add(j);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Delete duplicates
+            for (int i = spawns.Rows.Count - 1; i >= 0; i--)
+            {
+                if (duplicates.Contains(i))
+                {
+                    DataRow dr = spawns.Rows[i];
+                    dr.Delete();
+                }
+            }
+            spawns.AcceptChanges();
+
+            dgv_grid.DataSource = null;
+            dgv_grid.DataSource = spawns;
+        }
+
+        private void btn_deleteDuplicate_Click(object sender, EventArgs e)
+        {
+            RemoveDuplicateSpawns();
+        }
     }
 }
