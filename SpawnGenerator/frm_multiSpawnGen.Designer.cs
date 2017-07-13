@@ -72,6 +72,7 @@
             this.txt_spawndist = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.btn_deleteDuplicate = new System.Windows.Forms.Button();
+            this.btn_moreFiles = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -198,7 +199,7 @@
             // 
             // btn_generateMarked
             // 
-            this.btn_generateMarked.Location = new System.Drawing.Point(999, 77);
+            this.btn_generateMarked.Location = new System.Drawing.Point(1000, 106);
             this.btn_generateMarked.Name = "btn_generateMarked";
             this.btn_generateMarked.Size = new System.Drawing.Size(117, 23);
             this.btn_generateMarked.TabIndex = 3;
@@ -429,7 +430,7 @@
             // 
             // btn_deleteDuplicate
             // 
-            this.btn_deleteDuplicate.Location = new System.Drawing.Point(999, 106);
+            this.btn_deleteDuplicate.Location = new System.Drawing.Point(1000, 135);
             this.btn_deleteDuplicate.Name = "btn_deleteDuplicate";
             this.btn_deleteDuplicate.Size = new System.Drawing.Size(117, 23);
             this.btn_deleteDuplicate.TabIndex = 44;
@@ -437,11 +438,23 @@
             this.btn_deleteDuplicate.UseVisualStyleBackColor = true;
             this.btn_deleteDuplicate.Click += new System.EventHandler(this.btn_deleteDuplicate_Click);
             // 
+            // btn_moreFiles
+            // 
+            this.btn_moreFiles.Enabled = false;
+            this.btn_moreFiles.Location = new System.Drawing.Point(999, 77);
+            this.btn_moreFiles.Name = "btn_moreFiles";
+            this.btn_moreFiles.Size = new System.Drawing.Size(117, 23);
+            this.btn_moreFiles.TabIndex = 45;
+            this.btn_moreFiles.Text = "Load More Files";
+            this.btn_moreFiles.UseVisualStyleBackColor = true;
+            this.btn_moreFiles.Click += new System.EventHandler(this.btn_moreFiles_Click);
+            // 
             // frm_multiSpawnGen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1128, 605);
+            this.Controls.Add(this.btn_moreFiles);
             this.Controls.Add(this.btn_deleteDuplicate);
             this.Controls.Add(this.txt_spawndist);
             this.Controls.Add(this.label13);
@@ -530,5 +543,6 @@
         private System.Windows.Forms.TextBox txt_spawndist;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btn_deleteDuplicate;
+        private System.Windows.Forms.Button btn_moreFiles;
     }
 }

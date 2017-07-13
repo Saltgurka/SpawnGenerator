@@ -39,6 +39,30 @@ namespace SpawnGenerator
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 FillDataTable(openFileDialog.FileName);
+                btn_moreFiles.Enabled = true;
+                btn_loadSniff.Enabled = false;
+            }
+            else
+            {
+                // This code runs if the dialog was cancelled
+                return;
+            }
+        }
+
+
+        private void btn_moreFiles_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Title = "Open File";
+            openFileDialog.Filter = "Parsed Sniff File (*.txt)|*.txt";
+            openFileDialog.FileName = "*.txt";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.ShowReadOnly = false;
+            openFileDialog.Multiselect = false;
+            openFileDialog.CheckFileExists = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                MergeAdditionalData(openFileDialog.FileName);
             }
             else
             {
@@ -73,6 +97,21 @@ namespace SpawnGenerator
             //}
 
 
+            dgv_grid.DataSource = spawns;
+            Cursor = Cursors.Default;
+        }
+
+        private void MergeAdditionalData(string filename)
+        {
+            Cursor = Cursors.WaitCursor;
+            Application.DoEvents();
+
+            List<string> filterList = new List<string>(new string[] { "SMSG_UPDATE_OBJECT" });
+            List<string> createObjectList = filter.FilterSniffFile(filename, false, filterList);
+
+            spawns.Merge(filter.GetDataTableForSpawns(createObjectList, true));
+
+            dgv_grid.DataSource = null;
             dgv_grid.DataSource = spawns;
             Cursor = Cursors.Default;
         }
@@ -183,5 +222,6 @@ namespace SpawnGenerator
         {
             RemoveDuplicateSpawns();
         }
+
     }
 }
