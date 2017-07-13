@@ -80,22 +80,8 @@ namespace SpawnGenerator
             List<string> createObjectList = filter.FilterSniffFile(filename, false, filterList);
             spawns = filter.GetDataTableForSpawns(createObjectList, true);
 
-            //spawnData = spawns.Clone();
-
-            //foreach (DataRow row in spawns.Rows)
-            //{
-            //    if (row.Field<string>(1) == creature_guid)
-            //        spawnData.ImportRow(row);
-            //}
-
             dgv_grid.Rows.Clear();
             dgv_grid.Columns.Clear();
-
-            //for (int i = 0; i < spawns.Rows.Count; i++)
-            //{
-            //    dgv_grid.Rows.Add(spawns.Columns[0]);
-            //}
-
 
             dgv_grid.DataSource = spawns;
             Cursor = Cursors.Default;

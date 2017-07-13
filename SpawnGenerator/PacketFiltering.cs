@@ -119,10 +119,6 @@ namespace SpawnGenerator
 
             for (int i = 1; i < lines.Count; i++)
             {
-                //string[] values = lines[i].Split(new char[] { ' ' });
-                //string[] time = values[9].Split(new char[] { '.' });
-                //sniff.time = time[0];
-
                 if (lines[i].Contains("CreateObject2"))
                 {
                     i++;
@@ -142,8 +138,6 @@ namespace SpawnGenerator
 
                         if (lines[i].Contains("Position: X:"))
                         {
-                            //string trimmedLine = lines[i].TrimStart('X');
-
                             string[] packetline = lines[i].Split(new char[] { ' ' });
                             if (packetline.Length == 8) // Creature
                             {
@@ -158,7 +152,6 @@ namespace SpawnGenerator
                                 sniff.z = packetline[8];
                             }
 
-                            //trimmedLine = lines[i + 1].TrimStart(':');
                             string[] orientationline = lines[i + 1].Split(new char[] { ' ' });
                             if (orientationline.Length == 3) // Creature
                                 sniff.o = orientationline[2];
