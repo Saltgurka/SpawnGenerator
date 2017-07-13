@@ -223,5 +223,14 @@ namespace SpawnGenerator
             RemoveDuplicateSpawns();
         }
 
+        private void dgv_grid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            lbl_rows.Text = "Rows: " + dgv_grid.Rows.Count;
+        }
+
+        private void dgv_grid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            lbl_rows.Text = "Rows: " + dgv_grid.Rows.Count;
+        }
     }
 }

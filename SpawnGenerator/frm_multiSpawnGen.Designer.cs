@@ -73,6 +73,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.btn_deleteDuplicate = new System.Windows.Forms.Button();
             this.btn_moreFiles = new System.Windows.Forms.Button();
+            this.lbl_rows = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -97,6 +98,8 @@
             this.dgv_grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_grid.Size = new System.Drawing.Size(982, 569);
             this.dgv_grid.TabIndex = 0;
+            this.dgv_grid.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgv_grid_RowsAdded);
+            this.dgv_grid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgv_grid_RowsRemoved);
             // 
             // gridColumn_type
             // 
@@ -449,11 +452,21 @@
             this.btn_moreFiles.UseVisualStyleBackColor = true;
             this.btn_moreFiles.Click += new System.EventHandler(this.btn_moreFiles_Click);
             // 
+            // lbl_rows
+            // 
+            this.lbl_rows.AutoSize = true;
+            this.lbl_rows.Location = new System.Drawing.Point(999, 13);
+            this.lbl_rows.Name = "lbl_rows";
+            this.lbl_rows.Size = new System.Drawing.Size(46, 13);
+            this.lbl_rows.TabIndex = 46;
+            this.lbl_rows.Text = "Rows: 0";
+            // 
             // frm_multiSpawnGen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1128, 605);
+            this.Controls.Add(this.lbl_rows);
             this.Controls.Add(this.btn_moreFiles);
             this.Controls.Add(this.btn_deleteDuplicate);
             this.Controls.Add(this.txt_spawndist);
@@ -544,5 +557,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btn_deleteDuplicate;
         private System.Windows.Forms.Button btn_moreFiles;
+        private System.Windows.Forms.Label lbl_rows;
     }
 }
