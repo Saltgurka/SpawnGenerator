@@ -157,7 +157,6 @@ namespace SpawnGenerator
             List<string> unfilteredX = spawns.AsEnumerable().Select(x => x[4].ToString()).ToList();
             List<string> unfilteredY = spawns.AsEnumerable().Select(x => x[5].ToString()).ToList();
             List<string> unfilteredZ = spawns.AsEnumerable().Select(x => x[6].ToString()).ToList();
-            List<string> unfilteredO = spawns.AsEnumerable().Select(x => x[7].ToString()).ToList();
             List<string> unfilteredMap = spawns.AsEnumerable().Select(x => x[8].ToString()).ToList();
 
             List<int> duplicates = new List<int>();
@@ -174,13 +173,10 @@ namespace SpawnGenerator
                             {
                                 if (unfilteredZ[i] == unfilteredZ[j]) // Z too
                                 {
-                                    if (unfilteredO[i] == unfilteredO[j]) // O too
+                                    if (unfilteredMap[i] == unfilteredMap[j]) // Map too
                                     {
-                                        if (unfilteredMap[i] == unfilteredMap[j]) // Map too
-                                        {
-                                            // Duplicate found, add index to list
-                                            duplicates.Add(j);
-                                        }
+                                        // Duplicate found, add index to list
+                                        duplicates.Add(j);
                                     }
                                 }
                             }
