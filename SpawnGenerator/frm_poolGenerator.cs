@@ -120,9 +120,9 @@ namespace SpawnGenerator
                 for (int j = 0; j < creatureAmount; j++)
                 {
                     if (i != poolAmount || !(j == creatureAmount - 1))
-                        rtxt_poolOutput.Text += "(" + (pool_x[j].Guid + i) + "," + (startEntry + i) + "," + pool_x[j].Chance + ",'" + pool_x[j].Description + (box_incrDescNum.Checked ? " " + i.ToString() : "") + "'),\n";
+                        rtxt_poolOutput.Text += "(" + (pool_x[j].Guid + i) + "," + (startEntry + i) + "," + pool_x[j].Chance + ",'" + pool_x[j].Description + (box_incrDescNum.Checked ? " " + (i + 1).ToString() : "") + "'),\n";
                     else if (j == creatureAmount - 1)// Semicolon if it's the last one
-                        rtxt_poolOutput.Text += "(" + (pool_x[j].Guid + i) + "," + (startEntry + i) + "," + pool_x[j].Chance + ",'" + pool_x[j].Description + (box_incrDescNum.Checked ? " " + i.ToString() : "") + "');\n";
+                        rtxt_poolOutput.Text += "(" + (pool_x[j].Guid + i) + "," + (startEntry + i) + "," + pool_x[j].Chance + ",'" + pool_x[j].Description + (box_incrDescNum.Checked ? " " + (i + 1).ToString() : "") + "');\n";
                 }
 
                 if (box_emptyRows.Checked)
