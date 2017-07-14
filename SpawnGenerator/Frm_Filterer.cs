@@ -255,5 +255,10 @@ namespace SpawnGenerator
             clb_packetWhitelist.DataSource = null;
             clb_packetWhitelist.DataSource = Properties.Settings.Default.Whitelist;
         }
+
+        private void btn_openDestination_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Application.StartupPath);
+        }
     }
 }

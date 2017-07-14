@@ -50,6 +50,7 @@
             this.btn_removeAllBlacklistEntries = new System.Windows.Forms.Button();
             this.btn_removeAllWhitelistEntries = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.btn_openDestination = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_addBlacklistedPacket
@@ -285,11 +286,22 @@
             this.label3.TabIndex = 21;
             this.label3.Text = "Filtered file saves to the program .exe folder";
             // 
-            // frm_Filterer
+            // btn_openDestination
+            // 
+            this.btn_openDestination.Location = new System.Drawing.Point(395, 134);
+            this.btn_openDestination.Name = "btn_openDestination";
+            this.btn_openDestination.Size = new System.Drawing.Size(114, 23);
+            this.btn_openDestination.TabIndex = 22;
+            this.btn_openDestination.Text = "Open Destination";
+            this.btn_openDestination.UseVisualStyleBackColor = true;
+            this.btn_openDestination.Click += new System.EventHandler(this.btn_openDestination_Click);
+            // 
+            // frm_filterer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(913, 489);
+            this.Controls.Add(this.btn_openDestination);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btn_removeAllWhitelistEntries);
             this.Controls.Add(this.btn_removeAllBlacklistEntries);
@@ -310,7 +322,7 @@
             this.Controls.Add(this.txt_addBlacklistEntry);
             this.Controls.Add(this.btn_removeBlacklistedPacket);
             this.Controls.Add(this.btn_addBlacklistedPacket);
-            this.Name = "frm_Filterer";
+            this.Name = "frm_filterer";
             this.Text = "Frm_Filterer";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -340,5 +352,6 @@
         private System.Windows.Forms.Button btn_removeAllBlacklistEntries;
         private System.Windows.Forms.Button btn_removeAllWhitelistEntries;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_openDestination;
     }
 }
