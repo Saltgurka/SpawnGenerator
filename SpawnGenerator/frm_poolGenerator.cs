@@ -56,9 +56,9 @@ namespace SpawnGenerator
             for (int i = 0; i < poolAmount + 1; i++)
             {
                 if (i != poolAmount)
-                    rtxt_templateOutput.Text += "(" + (startEntry + i) + "," + maxLimit + ",'" + txt_description.Text + (box_incDescNumTemplate.Checked ? " " + i.ToString() : "") + "'),\n";
+                    rtxt_templateOutput.Text += "(" + (startEntry + i) + "," + maxLimit + ",'" + txt_description.Text + (box_incDescNumTemplate.Checked ? " " + (i + 1).ToString() : "") + "'),\n";
                 else // Semicolon if it's the last one
-                    rtxt_templateOutput.Text += "(" + (startEntry + i) + "," + maxLimit + ",'" + txt_description.Text + (box_incDescNumTemplate.Checked ? " " + i.ToString() : "") + "');\n";
+                    rtxt_templateOutput.Text += "(" + (startEntry + i) + "," + maxLimit + ",'" + txt_description.Text + (box_incDescNumTemplate.Checked ? " " + (i + 1).ToString() : "") + "');\n";
             }
         }
 
