@@ -22,6 +22,7 @@ namespace SpawnGenerator
         Form poolGen;
         Form filterer;
         Form timestampSubtractor;
+        Form spellPacketTimer;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -130,6 +131,22 @@ namespace SpawnGenerator
             }
         }
 
+        private void spellPacketTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (spellPacketTimer == null)
+            {
+                spellPacketTimer = new frm_spellPacketTimer();
+                spellPacketTimer.MdiParent = this;
+                spellPacketTimer.FormClosed += SpellPacketTimer_FormClosed;
+                spellPacketTimer.Show();
+            }
+        }
+
+        private void SpellPacketTimer_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            spellPacketTimer = null;
+        }
+
         private void PoolGen_FormClosed(object sender, FormClosedEventArgs e)
         {
             poolGen = null;
@@ -164,5 +181,7 @@ namespace SpawnGenerator
             Form Pool = new frm_poolGenerator();
             Pool.Show();
         }
+
+
     }
 }

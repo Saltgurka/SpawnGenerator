@@ -56,6 +56,7 @@
             this.timestampSubtractorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sniffPacketFiltererToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.poolGeneratorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.spellPacketTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -215,7 +216,8 @@
             this.multiSpawnGenToolStripMenuItem,
             this.timestampSubtractorToolStripMenuItem,
             this.sniffPacketFiltererToolStripMenuItem,
-            this.poolGeneratorToolStripMenuItem1});
+            this.poolGeneratorToolStripMenuItem1,
+            this.spellPacketTimerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1478, 24);
@@ -310,6 +312,13 @@
             this.poolGeneratorToolStripMenuItem1.Text = "Pool Generator";
             this.poolGeneratorToolStripMenuItem1.Click += new System.EventHandler(this.poolGeneratorToolStripMenuItem1_Click);
             // 
+            // spellPacketTimerToolStripMenuItem
+            // 
+            this.spellPacketTimerToolStripMenuItem.Name = "spellPacketTimerToolStripMenuItem";
+            this.spellPacketTimerToolStripMenuItem.Size = new System.Drawing.Size(116, 20);
+            this.spellPacketTimerToolStripMenuItem.Text = "Spell Packet Timer";
+            this.spellPacketTimerToolStripMenuItem.Click += new System.EventHandler(this.spellPacketTimerToolStripMenuItem_Click);
+            // 
             // Saltgurka_SQL_Generator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -371,5 +380,6 @@
         private System.Windows.Forms.ToolStripMenuItem sniffPacketFiltererToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem poolGeneratorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem poolGeneratorToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem spellPacketTimerToolStripMenuItem;
     }
 }

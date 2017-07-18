@@ -10,7 +10,7 @@ namespace SpawnGenerator
 {
     class PacketFiltering
     {
-        struct Packet
+        struct SpawnPacket
         {
             public string objectType;
             public string entry;
@@ -22,6 +22,17 @@ namespace SpawnGenerator
             public string o;
             public string map;
         };
+
+        struct SpellPacket
+        {
+            public string spell;
+            public string casterType;
+            public string casterEntry;
+            public string casterGuid;
+            public string targetType;
+            public string targetEntry;
+            public string time;
+        }
 
         public List<string> FilterSniffFile(string fileName, bool blacklist, List<string> filterList)
         {
@@ -98,7 +109,7 @@ namespace SpawnGenerator
 
             DataTable dt = new DataTable("Spawns");
 
-            Packet sniff;
+            SpawnPacket sniff;
 
             sniff.objectType = "";
             sniff.entry = "";
@@ -127,7 +138,7 @@ namespace SpawnGenerator
                     string[] objectType = values[5].Split(new char[] { '/' });
 
                     sniff.guidFull = values[4];
-                    sniff.objectType = values[5]; //.TrimEnd('/');
+                    sniff.objectType = values[5];
                     sniff.map = values[8];
                     sniff.entry = values[10];
                     sniff.guidLow = values[12];
@@ -177,9 +188,96 @@ namespace SpawnGenerator
                         sniff.entry = "";
                     }
                 }
+            }
+            return dt;
+        }
 
+        public DataTable GetDataTableForSpells(List<string> filteredPackets)
+        {
+            var lines = filteredPackets;
+
+            DataTable dt = new DataTable("Spawns");
+
+            SpellPacket sniff;
+
+            sniff.spell = "";
+            sniff.casterType = "";
+            sniff.casterEntry = "";
+            sniff.targetType = "";
+            sniff.targetEntry = "";
+            sniff.time = "";
+
+            string[] columns = null;
+
+            string col = "Spell,CasterType,CasterEntry,CasterGuid,TargetType,TargetEntry,Time,TimeDiff";
+            columns = col.Split(new char[] { ',' });
+            foreach (var column in columns)
+                dt.Columns.Add(column);
+
+
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_SPELL_START"))
+                {
+                    string[] values = lines[i].Split(new char[] { ' ' });
+                    if (values.Length > 9)
+                    {
+                        sniff.time = values[9];
+
+                        i++;
+
+                        string[] values2 = lines[i].Split(new char[] { ' ' });
+
+                        sniff.casterGuid = values2[3];
+                        sniff.casterType = values2[4];
+                        sniff.casterEntry = values2[9];
+
+                        do
+                        {
+                            i++;
+
+                            if (lines[i].Contains("(Cast) SpellID:"))
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ' ' });
+
+                                sniff.spell = packetline[2];
+                            }
+
+                            if (lines[i].Contains("(Cast) (Target) Unit:"))
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ' ' });
+                                if (packetline.Length > 5)
+                                    sniff.targetType = packetline[5];
+                                else
+                                    sniff.targetType = " ";
+
+                                if (sniff.targetType == "Creature/0")
+                                    sniff.targetEntry = packetline[10];
+                                else
+                                    sniff.targetEntry = " ";
+                            }
+
+                        } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_SPELL_START"));
+
+                        if (sniff.spell != "")
+                        {
+                            DataRow dr = dt.NewRow();
+                            dr[0] = sniff.spell;
+                            dr[1] = sniff.casterType;
+                            dr[2] = sniff.casterEntry;
+                            dr[3] = sniff.casterGuid;
+                            dr[4] = sniff.targetType;
+                            dr[5] = sniff.targetEntry;
+                            dr[6] = sniff.time;
+                            dr[7] = "";
+                            dt.Rows.Add(dr);
+                            sniff.spell = "";
+                        }
+                    }
+                }
             }
             return dt;
         }
     }
 }
+

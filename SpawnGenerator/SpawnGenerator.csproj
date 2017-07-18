@@ -63,6 +63,12 @@
     <Compile Include="frm_multiSpawnGen.Designer.cs">
       <DependentUpon>frm_multiSpawnGen.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_spellPacketTimer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_spellPacketTimer.Designer.cs">
+      <DependentUpon>frm_spellPacketTimer.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_startScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_multiSpawnGen.resx">
       <DependentUpon>frm_multiSpawnGen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_spellPacketTimer.resx">
+      <DependentUpon>frm_spellPacketTimer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_startScreen.resx">
       <DependentUpon>frm_startScreen.cs</DependentUpon>
