@@ -107,43 +107,117 @@ namespace SpawnGenerator
             if (dgv_grid.SelectedRows.Count == 0)
                 return;
 
-            int guid;
-
-            if (!Int32.TryParse(txt_creatureGUID.Text, out guid))
+            if (rdb_asSpawns.Checked)
             {
-                rtxt_SQLResult.Text = "Creature GUID invalid!";
-                return;
+                int guid;
+
+                if (!Int32.TryParse(txt_creatureGUID.Text, out guid))
+                {
+                    rtxt_SQLResult.Text = "Creature GUID invalid!";
+                    return;
+                }
+
+                string output;
+                output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
+
+                foreach (DataGridViewRow row in dgv_grid.SelectedRows)
+                {
+                    output += "("
+                        + guid + ","
+                        + row.Cells[1].Value + ","
+                        + txt_map.Text + ","
+                        + txt_spawnMask.Text + ","
+                        + txt_modelid.Text + ","
+                        + txt_equipmentId.Text + ","
+                        + row.Cells[4].Value + ","
+                        + row.Cells[5].Value + ","
+                        + row.Cells[6].Value + ","
+                        + row.Cells[7].Value + ","
+                        + txt_spawnMin.Text + ","
+                        + txt_spawnMax.Text + ","
+                        + txt_spawndist.Text + ","
+                        + txt_currentWaypoint.Text + ","
+                        + txt_curhealth.Text + ","
+                        + txt_curmana.Text + ","
+                        + txt_deathState.Text + ","
+                        + txt_movementType.Text + "),\n";
+
+                    guid++;
+                }
+
+                rtxt_SQLResult.Text = output;
             }
-
-            string output;
-            output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
-
-            foreach (DataGridViewRow row in dgv_grid.SelectedRows)
+            else if (rdb_asDbscript.Checked)
             {
-                output += "("
-                    + guid + ","
-                    + row.Cells[1].Value + ","
-                    + txt_map.Text + ","
-                    + txt_spawnMask.Text + ","
-                    + txt_modelid.Text + ","
-                    + txt_equipmentId.Text + ","
-                    + row.Cells[4].Value + ","
-                    + row.Cells[5].Value + ","
-                    + row.Cells[6].Value + ","
-                    + row.Cells[7].Value + ","
-                    + txt_spawnMin.Text + ","
-                    + txt_spawnMax.Text + ","
-                    + txt_spawndist.Text + ","
-                    + txt_currentWaypoint.Text + ","
-                    + txt_curhealth.Text + ","
-                    + txt_curmana.Text + ","
-                    + txt_deathState.Text + ","
-                    + txt_movementType.Text + "),\n";
+                int pathId;
 
-                guid++;
+                if (!Int32.TryParse(txt_dbscriptPathId.Text, out pathId))
+                {
+                    rtxt_SQLResult.Text = "PathId invalid!";
+                    return;
+                }
+
+                string output;
+                output = "INSERT INTO `dbscripts_on_creature_movement` (`id`,`delay`,`command`,`datalong`,`datalong2`,`datalong3`,`dataint`,`dataint2`,`dataint3`,`dataint4`,`buddy_entry`,`search_radius`,`data_flags`,`comments`,`x`,`y`,`z`,`o`) VALUES\n";
+
+                foreach (DataGridViewRow row in dgv_grid.SelectedRows)
+                {
+                    output += "("
+                        + txt_dbscriptID.Text + "," // id
+                        + txt_dbscriptDelay.Text + "," // delay
+                        + "10," // command
+                        + row.Cells[1].Value + "," // datalong
+                        + txt_dbscriptDespawnTime.Text + "," // datalong2
+                        + pathId + "," // datalong3
+                        + (box_dbscriptRunOn.Checked ? "1," : "0,") // dataint1
+                        + "0," // dataint2
+                        + "0," // dataint3
+                        + "0," // dataint4
+                        + "0," // buddy_entry
+                        + "0," // search_radius
+                        + (box_dbscriptActiveObject.Checked ? "8," : "0,") // data_flags
+                        + txt_dbscriptComment.Text + "," // comments
+                        + row.Cells[4].Value + "," // x
+                        + row.Cells[5].Value + "," // y
+                        + row.Cells[6].Value + "," // z
+                        + row.Cells[7].Value + "),\n"; // o
+
+                    pathId++;
+                }
+
+                rtxt_SQLResult.Text = output;
             }
+            else
+            {
+                int pathId;
 
-            rtxt_SQLResult.Text = output;
+                if (!Int32.TryParse(txt_dbscriptPathId.Text, out pathId))
+                {
+                    rtxt_SQLResult.Text = "PathId invalid!";
+                    return;
+                }
+
+                string output;
+                output = "INSERT INTO `creature_movement_template` (`entry`,`point`,`pathId`,`position_x`,`position_y`,`position_z`,`waittime`,`script_id`,`orientation`) VALUES\n";
+
+                foreach (DataGridViewRow row in dgv_grid.SelectedRows)
+                {
+                    output += "("
+                        + row.Cells[1].Value + "," // entry
+                        + "1," // point
+                        + pathId + "," // pathId
+                        + row.Cells[4].Value + "," // position_x
+                        + row.Cells[5].Value + "," // position_y
+                        + row.Cells[6].Value + "," // position_z
+                        + txt_waypointWaittime.Text + "," // waittime
+                        + txt_waypointScriptId.Text + "," // script_id
+                        + row.Cells[7].Value + "),\n"; // orientation
+
+                    pathId++;
+                }
+
+                rtxt_SQLResult.Text = output;
+            }
         }
 
         /// <summary>
