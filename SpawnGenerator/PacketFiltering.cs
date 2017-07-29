@@ -141,7 +141,8 @@ namespace SpawnGenerator
                     sniff.objectType = values[5];
                     sniff.map = values[8];
                     sniff.entry = values[10];
-                    sniff.guidLow = values[12];
+                    if (values.Length > 11) // Temp fix for crash on Player packets
+                        sniff.guidLow = values[12];
 
                     do
                     {
