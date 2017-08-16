@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpawnGenerator.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +24,7 @@ namespace SpawnGenerator
         Form filterer;
         Form timestampSubtractor;
         Form spellPacketTimer;
+        Form chanceCalc;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -152,6 +154,23 @@ namespace SpawnGenerator
             poolGen = null;
         }
 
+
+        private void chanceCalcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (chanceCalc == null)
+            {
+                chanceCalc = new frm_chanceCalc();
+                chanceCalc.MdiParent = this;
+                chanceCalc.FormClosed += ChanceCalc_FormClosed;
+                chanceCalc.Show();
+            }
+        }
+
+        private void ChanceCalc_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            chanceCalc = null;
+        }
+
         private void singleSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Form SpawnGenerator = new frm_spawnGeneratorManual();
@@ -181,7 +200,5 @@ namespace SpawnGenerator
             Form Pool = new frm_poolGenerator();
             Pool.Show();
         }
-
-
     }
 }

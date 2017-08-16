@@ -57,6 +57,7 @@
             this.sniffPacketFiltererToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.poolGeneratorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.spellPacketTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chanceCalcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -217,7 +218,8 @@
             this.timestampSubtractorToolStripMenuItem,
             this.sniffPacketFiltererToolStripMenuItem,
             this.poolGeneratorToolStripMenuItem1,
-            this.spellPacketTimerToolStripMenuItem});
+            this.spellPacketTimerToolStripMenuItem,
+            this.chanceCalcToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1478, 24);
@@ -319,6 +321,13 @@
             this.spellPacketTimerToolStripMenuItem.Text = "Spell Packet Timer";
             this.spellPacketTimerToolStripMenuItem.Click += new System.EventHandler(this.spellPacketTimerToolStripMenuItem_Click);
             // 
+            // chanceCalcToolStripMenuItem
+            // 
+            this.chanceCalcToolStripMenuItem.Name = "chanceCalcToolStripMenuItem";
+            this.chanceCalcToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.chanceCalcToolStripMenuItem.Text = "Chance Calc";
+            this.chanceCalcToolStripMenuItem.Click += new System.EventHandler(this.chanceCalcToolStripMenuItem_Click);
+            // 
             // Saltgurka_SQL_Generator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -381,5 +390,6 @@
         private System.Windows.Forms.ToolStripMenuItem poolGeneratorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem poolGeneratorToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem spellPacketTimerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chanceCalcToolStripMenuItem;
     }
 }
