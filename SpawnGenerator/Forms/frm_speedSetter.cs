@@ -352,10 +352,17 @@ namespace SpawnGenerator.Forms
                 double r = Convert.ToDouble(item.SpeedRun, new CultureInfo("en-US"));
                 double speedRun = r / 7f;
 
-                double roundedSpeedWalk = Math.Round(speedWalk, 5);
-                double roundedSpeedRun = Math.Round(speedRun, 5);
+                double roundedSpeedWalk;
+                double roundedSpeedRun;
+                if (speedWalk > 1)
+                    roundedSpeedWalk = Math.Round(speedWalk, 5);
+                else
+                    roundedSpeedWalk = Math.Round(speedWalk, 6);
 
-
+                if (speedRun > 1)
+                    roundedSpeedRun = Math.Round(speedRun, 5);
+                else
+                    roundedSpeedRun = Math.Round(speedRun, 6);
 
                 string name = "";
                 bool addItem = false;
@@ -413,10 +420,22 @@ namespace SpawnGenerator.Forms
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                int numOfFiles = openFileDialog.FileNames.Length;
+                int currentFile = 0;
+                progress.Step = 100 / numOfFiles;
+
                 foreach (String file in openFileDialog.FileNames)
                 {
+                    currentFile++;
+                    lbl_currentFile.Text = file;
+                    lbl_currentNum.Text = currentFile + "/" + numOfFiles;
+                    progress.PerformStep();
                     CheckInvalidSpeeds(file);
                 }
+
+                lbl_currentFile.Text = "";
+                lbl_currentNum.Text = "Done!";
+                progress.Value = 0;
             }
             else
             {

@@ -40,13 +40,16 @@
             this.lbl_rows = new System.Windows.Forms.Label();
             this.btn_generateSQL = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.rtxt_output = new System.Windows.Forms.RichTextBox();
+            this.progress = new System.Windows.Forms.ProgressBar();
+            this.lbl_currentFile = new System.Windows.Forms.Label();
+            this.lbl_currentNum = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgv_grid
@@ -137,17 +140,6 @@
             this.tabControl1.Size = new System.Drawing.Size(1098, 421);
             this.tabControl1.TabIndex = 4;
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.rtxt_output);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1090, 395);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.dgv_grid);
@@ -159,6 +151,17 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.rtxt_output);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1090, 395);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // rtxt_output
             // 
             this.rtxt_output.Location = new System.Drawing.Point(0, 0);
@@ -167,11 +170,39 @@
             this.rtxt_output.TabIndex = 0;
             this.rtxt_output.Text = "";
             // 
+            // progress
+            // 
+            this.progress.Location = new System.Drawing.Point(210, 467);
+            this.progress.Name = "progress";
+            this.progress.Size = new System.Drawing.Size(896, 23);
+            this.progress.TabIndex = 5;
+            // 
+            // lbl_currentFile
+            // 
+            this.lbl_currentFile.AutoSize = true;
+            this.lbl_currentFile.Location = new System.Drawing.Point(424, 451);
+            this.lbl_currentFile.Name = "lbl_currentFile";
+            this.lbl_currentFile.Size = new System.Drawing.Size(0, 13);
+            this.lbl_currentFile.TabIndex = 6;
+            this.lbl_currentFile.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lbl_currentNum
+            // 
+            this.lbl_currentNum.AutoSize = true;
+            this.lbl_currentNum.Location = new System.Drawing.Point(637, 493);
+            this.lbl_currentNum.Name = "lbl_currentNum";
+            this.lbl_currentNum.Size = new System.Drawing.Size(24, 13);
+            this.lbl_currentNum.TabIndex = 7;
+            this.lbl_currentNum.Text = "0/0";
+            // 
             // frm_speedSetter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1122, 527);
+            this.Controls.Add(this.lbl_currentNum);
+            this.Controls.Add(this.lbl_currentFile);
+            this.Controls.Add(this.progress);
             this.Controls.Add(this.btn_generateSQL);
             this.Controls.Add(this.lbl_rows);
             this.Controls.Add(this.btn_loadSniff);
@@ -182,8 +213,8 @@
             this.Load += new System.EventHandler(this.SpeedSetter_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,5 +237,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.RichTextBox rtxt_output;
+        private System.Windows.Forms.ProgressBar progress;
+        private System.Windows.Forms.Label lbl_currentFile;
+        private System.Windows.Forms.Label lbl_currentNum;
     }
 }
