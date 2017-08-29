@@ -37,7 +37,24 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBConnect.cs" />
     <Compile Include="Forms\frm_chanceCalc.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +111,12 @@
     <Compile Include="Forms\frm_poolGenerator.Designer.cs">
       <DependentUpon>frm_poolGenerator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frm_speedSetter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frm_speedSetter.Designer.cs">
+      <DependentUpon>frm_speedSetter.cs</DependentUpon>
+    </Compile>
     <Compile Include="PacketFiltering.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +147,9 @@
     <EmbeddedResource Include="Forms\frm_poolGenerator.resx">
       <DependentUpon>frm_poolGenerator.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frm_speedSetter.resx">
+      <DependentUpon>frm_speedSetter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -135,6 +162,7 @@
     <EmbeddedResource Include="Forms\frm_timestampSubtractor.resx">
       <DependentUpon>frm_timestampSubtractor.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -78,29 +78,29 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txt_dbscriptID = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.txt_dbscriptDelay = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txt_dbscriptDespawnTime = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.txt_dbscriptPathId = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.box_dbscriptRunOn = new System.Windows.Forms.CheckBox();
-            this.box_dbscriptActiveObject = new System.Windows.Forms.CheckBox();
-            this.txt_dbscriptComment = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.txt_dbscriptComment = new System.Windows.Forms.TextBox();
+            this.box_dbscriptActiveObject = new System.Windows.Forms.CheckBox();
+            this.box_dbscriptRunOn = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txt_dbscriptPathId = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txt_dbscriptDespawnTime = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txt_dbscriptDelay = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txt_dbscriptID = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txt_waypointScriptId = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txt_waypointWaittime = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txt_waypointPathId = new System.Windows.Forms.TextBox();
             this.rdb_asSpawns = new System.Windows.Forms.RadioButton();
             this.rdb_asDbscript = new System.Windows.Forms.RadioButton();
             this.rdb_asWaypoints = new System.Windows.Forms.RadioButton();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txt_waypointPathId = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txt_waypointWaittime = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.txt_waypointScriptId = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -536,7 +536,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(226, 375);
+            this.tabPage3.Size = new System.Drawing.Size(254, 375);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "spawn";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -573,79 +573,21 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Values";
             // 
-            // txt_dbscriptID
+            // label18
             // 
-            this.txt_dbscriptID.Location = new System.Drawing.Point(84, 20);
-            this.txt_dbscriptID.Name = "txt_dbscriptID";
-            this.txt_dbscriptID.Size = new System.Drawing.Size(123, 20);
-            this.txt_dbscriptID.TabIndex = 0;
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(6, 129);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(51, 13);
+            this.label18.TabIndex = 11;
+            this.label18.Text = "Comment";
             // 
-            // label14
+            // txt_dbscriptComment
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 23);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(18, 13);
-            this.label14.TabIndex = 1;
-            this.label14.Text = "ID";
-            // 
-            // txt_dbscriptDelay
-            // 
-            this.txt_dbscriptDelay.Location = new System.Drawing.Point(84, 46);
-            this.txt_dbscriptDelay.Name = "txt_dbscriptDelay";
-            this.txt_dbscriptDelay.Size = new System.Drawing.Size(123, 20);
-            this.txt_dbscriptDelay.TabIndex = 2;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(6, 49);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(34, 13);
-            this.label15.TabIndex = 3;
-            this.label15.Text = "Delay";
-            // 
-            // txt_dbscriptDespawnTime
-            // 
-            this.txt_dbscriptDespawnTime.Location = new System.Drawing.Point(84, 73);
-            this.txt_dbscriptDespawnTime.Name = "txt_dbscriptDespawnTime";
-            this.txt_dbscriptDespawnTime.Size = new System.Drawing.Size(123, 20);
-            this.txt_dbscriptDespawnTime.TabIndex = 4;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 76);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(75, 13);
-            this.label16.TabIndex = 5;
-            this.label16.Text = "DespawnTime";
-            // 
-            // txt_dbscriptPathId
-            // 
-            this.txt_dbscriptPathId.Location = new System.Drawing.Point(84, 100);
-            this.txt_dbscriptPathId.Name = "txt_dbscriptPathId";
-            this.txt_dbscriptPathId.Size = new System.Drawing.Size(123, 20);
-            this.txt_dbscriptPathId.TabIndex = 6;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 103);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(38, 13);
-            this.label17.TabIndex = 7;
-            this.label17.Text = "PathId";
-            // 
-            // box_dbscriptRunOn
-            // 
-            this.box_dbscriptRunOn.AutoSize = true;
-            this.box_dbscriptRunOn.Location = new System.Drawing.Point(84, 182);
-            this.box_dbscriptRunOn.Name = "box_dbscriptRunOn";
-            this.box_dbscriptRunOn.Size = new System.Drawing.Size(63, 17);
-            this.box_dbscriptRunOn.TabIndex = 8;
-            this.box_dbscriptRunOn.Text = "Run On";
-            this.box_dbscriptRunOn.UseVisualStyleBackColor = true;
+            this.txt_dbscriptComment.Location = new System.Drawing.Point(84, 126);
+            this.txt_dbscriptComment.Name = "txt_dbscriptComment";
+            this.txt_dbscriptComment.Size = new System.Drawing.Size(123, 20);
+            this.txt_dbscriptComment.TabIndex = 10;
             // 
             // box_dbscriptActiveObject
             // 
@@ -657,21 +599,153 @@
             this.box_dbscriptActiveObject.Text = "Active Object";
             this.box_dbscriptActiveObject.UseVisualStyleBackColor = true;
             // 
-            // txt_dbscriptComment
+            // box_dbscriptRunOn
             // 
-            this.txt_dbscriptComment.Location = new System.Drawing.Point(84, 126);
-            this.txt_dbscriptComment.Name = "txt_dbscriptComment";
-            this.txt_dbscriptComment.Size = new System.Drawing.Size(123, 20);
-            this.txt_dbscriptComment.TabIndex = 10;
+            this.box_dbscriptRunOn.AutoSize = true;
+            this.box_dbscriptRunOn.Location = new System.Drawing.Point(84, 182);
+            this.box_dbscriptRunOn.Name = "box_dbscriptRunOn";
+            this.box_dbscriptRunOn.Size = new System.Drawing.Size(63, 17);
+            this.box_dbscriptRunOn.TabIndex = 8;
+            this.box_dbscriptRunOn.Text = "Run On";
+            this.box_dbscriptRunOn.UseVisualStyleBackColor = true;
             // 
-            // label18
+            // label17
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 129);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(51, 13);
-            this.label18.TabIndex = 11;
-            this.label18.Text = "Comment";
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(6, 103);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(38, 13);
+            this.label17.TabIndex = 7;
+            this.label17.Text = "PathId";
+            // 
+            // txt_dbscriptPathId
+            // 
+            this.txt_dbscriptPathId.Location = new System.Drawing.Point(84, 100);
+            this.txt_dbscriptPathId.Name = "txt_dbscriptPathId";
+            this.txt_dbscriptPathId.Size = new System.Drawing.Size(123, 20);
+            this.txt_dbscriptPathId.TabIndex = 6;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 76);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(75, 13);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "DespawnTime";
+            // 
+            // txt_dbscriptDespawnTime
+            // 
+            this.txt_dbscriptDespawnTime.Location = new System.Drawing.Point(84, 73);
+            this.txt_dbscriptDespawnTime.Name = "txt_dbscriptDespawnTime";
+            this.txt_dbscriptDespawnTime.Size = new System.Drawing.Size(123, 20);
+            this.txt_dbscriptDespawnTime.TabIndex = 4;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(6, 49);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(34, 13);
+            this.label15.TabIndex = 3;
+            this.label15.Text = "Delay";
+            // 
+            // txt_dbscriptDelay
+            // 
+            this.txt_dbscriptDelay.Location = new System.Drawing.Point(84, 46);
+            this.txt_dbscriptDelay.Name = "txt_dbscriptDelay";
+            this.txt_dbscriptDelay.Size = new System.Drawing.Size(123, 20);
+            this.txt_dbscriptDelay.TabIndex = 2;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 23);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(18, 13);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "ID";
+            // 
+            // txt_dbscriptID
+            // 
+            this.txt_dbscriptID.Location = new System.Drawing.Point(84, 20);
+            this.txt_dbscriptID.Name = "txt_dbscriptID";
+            this.txt_dbscriptID.Size = new System.Drawing.Size(123, 20);
+            this.txt_dbscriptID.TabIndex = 0;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.groupBox2);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(254, 375);
+            this.tabPage5.TabIndex = 2;
+            this.tabPage5.Text = "creature_movement_template";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label21);
+            this.groupBox2.Controls.Add(this.txt_waypointScriptId);
+            this.groupBox2.Controls.Add(this.label20);
+            this.groupBox2.Controls.Add(this.txt_waypointWaittime);
+            this.groupBox2.Controls.Add(this.label19);
+            this.groupBox2.Controls.Add(this.txt_waypointPathId);
+            this.groupBox2.Location = new System.Drawing.Point(7, 7);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(241, 362);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Values";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(7, 72);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(48, 13);
+            this.label21.TabIndex = 5;
+            this.label21.Text = "Script ID";
+            // 
+            // txt_waypointScriptId
+            // 
+            this.txt_waypointScriptId.Location = new System.Drawing.Point(75, 69);
+            this.txt_waypointScriptId.Name = "txt_waypointScriptId";
+            this.txt_waypointScriptId.Size = new System.Drawing.Size(160, 20);
+            this.txt_waypointScriptId.TabIndex = 4;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(7, 46);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(48, 13);
+            this.label20.TabIndex = 3;
+            this.label20.Text = "Waittime";
+            // 
+            // txt_waypointWaittime
+            // 
+            this.txt_waypointWaittime.Location = new System.Drawing.Point(75, 43);
+            this.txt_waypointWaittime.Name = "txt_waypointWaittime";
+            this.txt_waypointWaittime.Size = new System.Drawing.Size(160, 20);
+            this.txt_waypointWaittime.TabIndex = 2;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(7, 20);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(38, 13);
+            this.label19.TabIndex = 1;
+            this.label19.Text = "PathId";
+            // 
+            // txt_waypointPathId
+            // 
+            this.txt_waypointPathId.Location = new System.Drawing.Point(75, 17);
+            this.txt_waypointPathId.Name = "txt_waypointPathId";
+            this.txt_waypointPathId.Size = new System.Drawing.Size(160, 20);
+            this.txt_waypointPathId.TabIndex = 0;
             // 
             // rdb_asSpawns
             // 
@@ -704,80 +778,6 @@
             this.rdb_asWaypoints.TabIndex = 51;
             this.rdb_asWaypoints.Text = "As creature_movement_template";
             this.rdb_asWaypoints.UseVisualStyleBackColor = true;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.groupBox2);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(254, 375);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "creature_movement_template";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label21);
-            this.groupBox2.Controls.Add(this.txt_waypointScriptId);
-            this.groupBox2.Controls.Add(this.label20);
-            this.groupBox2.Controls.Add(this.txt_waypointWaittime);
-            this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Controls.Add(this.txt_waypointPathId);
-            this.groupBox2.Location = new System.Drawing.Point(7, 7);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(241, 362);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Values";
-            // 
-            // txt_waypointPathId
-            // 
-            this.txt_waypointPathId.Location = new System.Drawing.Point(75, 17);
-            this.txt_waypointPathId.Name = "txt_waypointPathId";
-            this.txt_waypointPathId.Size = new System.Drawing.Size(160, 20);
-            this.txt_waypointPathId.TabIndex = 0;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(7, 20);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(38, 13);
-            this.label19.TabIndex = 1;
-            this.label19.Text = "PathId";
-            // 
-            // txt_waypointWaittime
-            // 
-            this.txt_waypointWaittime.Location = new System.Drawing.Point(75, 43);
-            this.txt_waypointWaittime.Name = "txt_waypointWaittime";
-            this.txt_waypointWaittime.Size = new System.Drawing.Size(160, 20);
-            this.txt_waypointWaittime.TabIndex = 2;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(7, 46);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(48, 13);
-            this.label20.TabIndex = 3;
-            this.label20.Text = "Waittime";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(7, 72);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(48, 13);
-            this.label21.TabIndex = 5;
-            this.label21.Text = "Script ID";
-            // 
-            // txt_waypointScriptId
-            // 
-            this.txt_waypointScriptId.Location = new System.Drawing.Point(75, 69);
-            this.txt_waypointScriptId.Name = "txt_waypointScriptId";
-            this.txt_waypointScriptId.Size = new System.Drawing.Size(160, 20);
-            this.txt_waypointScriptId.TabIndex = 4;
             // 
             // frm_multiSpawnGen
             // 

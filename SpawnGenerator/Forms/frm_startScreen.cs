@@ -25,6 +25,7 @@ namespace SpawnGenerator
         Form timestampSubtractor;
         Form spellPacketTimer;
         Form chanceCalc;
+        Form speedSetter;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -171,6 +172,22 @@ namespace SpawnGenerator
             chanceCalc = null;
         }
 
+        private void speedSetterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (speedSetter == null)
+            {
+                Form speedSetter = new frm_speedSetter();
+                speedSetter.MdiParent = this;
+                speedSetter.FormClosed += SpeedSetter_FormClosed;
+                speedSetter.Show();
+            }
+        }
+
+        private void SpeedSetter_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            speedSetter = null;
+        }
+
         private void singleSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Form SpawnGenerator = new frm_spawnGeneratorManual();
@@ -199,6 +216,25 @@ namespace SpawnGenerator
         {
             Form Pool = new frm_poolGenerator();
             Pool.Show();
+        }
+
+        private void btn_loginSaveAndTest_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.User = txt_loginUser.Text;
+            Properties.Settings.Default.Password = txt_loginPassword.Text;
+            Properties.Settings.Default.Host = txt_loginHost.Text;
+            Properties.Settings.Default.Port = txt_loginPort.Text;
+            Properties.Settings.Default.Database = txt_loginDatabases.Text;
+            Properties.Settings.Default.Save();
+        }
+
+        private void Saltgurka_SQL_Generator_Load(object sender, EventArgs e)
+        {
+            txt_loginUser.Text = Properties.Settings.Default.User;
+            txt_loginPassword.Text = Properties.Settings.Default.Password;
+            txt_loginHost.Text = Properties.Settings.Default.Host;
+            txt_loginPort.Text = Properties.Settings.Default.Port;
+            txt_loginDatabases.Text = Properties.Settings.Default.Database;
         }
     }
 }

@@ -34,9 +34,27 @@ namespace SpawnGenerator
             public string time;
         }
 
-        public List<string> FilterSniffFile(string fileName, bool blacklist, List<string> filterList)
+        struct SpeedPacket
         {
-            var lines = File.ReadAllLines(fileName);
+            public string entry;
+            public string name;
+            public string speedRun;
+            public string speedWalk;
+        }
+
+        public List<string> FilterSniffFile(string fileName, bool blacklist, List<string> filterList, string[] fileNames = null)
+        {
+            string[] lines = null;
+
+            if (fileName != null)
+                lines = File.ReadAllLines(fileName);
+            else
+            {
+                foreach (String file in fileNames)
+                {
+                    lines = File.ReadAllLines(file);
+                }
+            }
 
             string[] packets = new string[lines.Count()];
             List<string> newFileStrings = new List<string>();
@@ -130,7 +148,7 @@ namespace SpawnGenerator
 
             for (int i = 1; i < lines.Count; i++)
             {
-                if (lines[i].Contains("CreateObject2"))
+                if (lines[i].Contains("CreateObject"))
                 {
                     i++;
 
@@ -279,6 +297,77 @@ namespace SpawnGenerator
             }
             return dt;
         }
+
+        public List<Forms.frm_speedSetter.SniffedSpeed> GetSniffedSpeedList(List<string> filteredPackets)
+        {
+            var lines = filteredPackets;
+
+            SpeedPacket sniff;
+            List<Forms.frm_speedSetter.SniffedSpeed> creatures = new List<Forms.frm_speedSetter.SniffedSpeed>();
+
+            sniff.entry = "";
+            sniff.name = "";
+            sniff.speedRun = "";
+            sniff.speedWalk = "";
+
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("CreateObject"))
+                {
+                    i++;
+
+                    //string[] values = lines[i].Split(new char[] { ' ' });
+                    //string[] objectType = values[5].Split(new char[] { '/' });
+                    //sniff.entry = values[10];
+                    if (lines[i+1].Contains("Unit"))
+                    {
+                        do
+                        {
+                            i++;
+
+                            if (lines[i].Contains("WalkSpeed") || lines[i].Contains("Walk Speed"))
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ':' });
+                                sniff.speedWalk = packetline[1];
+                                sniff.speedWalk = sniff.speedWalk.Trim(' ');
+                            }
+
+                            if (lines[i].Contains("RunSpeed") || lines[i].Contains("Run Speed"))
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ':' });
+                                sniff.speedRun = packetline[1];
+                                sniff.speedRun = sniff.speedRun.Trim(' ');
+                            }
+                            
+                            if (lines[i].Contains("OBJECT_FIELD_ENTRY"))
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ':','/' });
+                                sniff.entry = packetline[1];
+                                sniff.entry = sniff.entry.Trim(' ');
+                            }
+
+                        } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
+
+                        if (sniff.entry != "")
+                        {
+                            Forms.frm_speedSetter.SniffedSpeed c = new Forms.frm_speedSetter.SniffedSpeed()
+                            {
+                                Entry = sniff.entry,
+                                Name = sniff.name,
+                                SpeedWalk = sniff.speedWalk,
+                                SpeedRun = sniff.speedRun
+                            };
+                            creatures.Add(c);
+                            sniff.entry = "";
+                        }
+                    }
+                }
+            }
+            return creatures;
+        }
     }
 }
+
+
+
 
