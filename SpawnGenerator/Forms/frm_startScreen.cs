@@ -176,7 +176,7 @@ namespace SpawnGenerator
         {
             if (speedSetter == null)
             {
-                Form speedSetter = new frm_speedSetter();
+                speedSetter = new frm_speedSetter();
                 speedSetter.MdiParent = this;
                 speedSetter.FormClosed += SpeedSetter_FormClosed;
                 speedSetter.Show();
