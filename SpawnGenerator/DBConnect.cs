@@ -146,7 +146,7 @@ namespace SpawnGenerator
                         ResistanceShadow = dataReader["ResistanceShadow"].ToString(),
                         MechanicImmuneMask = dataReader["MechanicImmuneMask"].ToString(),
                         SchoolImmuneMask = dataReader["SchoolImmuneMask"].ToString(),
-                        Leash = dataReader["LeashRange"].ToString(),
+                        Leash = "",
                         Family = dataReader["Family"].ToString(),
                         SpeedWalk = dataReader["SpeedWalk"].ToString(),
                         SpeedRun = dataReader["SpeedRun"].ToString(),

@@ -373,20 +373,22 @@ namespace SpawnGenerator.Forms
                     {
                         name = creatures[i].Name;
 
-                        if (roundedSpeedWalk != double.Parse(creatures[i].SpeedWalk) && roundedSpeedRun != double.Parse(creatures[i].SpeedRun))
+                        if (roundedSpeedWalk != double.Parse(creatures[i].SpeedWalk) || roundedSpeedRun != double.Parse(creatures[i].SpeedRun))
                         {
                             bool exists = false;
 
                             for (int k = 0; k < dgv_grid.Rows.Count; k++)
                             {
-                                for (int j = 0; j < dgv_grid.Columns.Count; j++)
+                                if (dgv_grid.Rows[k].Cells[1].Value != null && item.Entry == dgv_grid.Rows[k].Cells[1].Value.ToString())
                                 {
-                                    if (dgv_grid.Rows[k].Cells[j].Value != null && item.Entry == dgv_grid.Rows[k].Cells[j].Value.ToString())
+                                    if (roundedSpeedWalk.ToString() != dgv_grid.Rows[k].Cells[4].Value.ToString() || roundedSpeedRun.ToString() != dgv_grid.Rows[k].Cells[5].Value.ToString())
                                     {
-                                        // MessageBox.Show("The value already existed in DataGridView.");
-                                        exists = true;
+                                        MessageBox.Show("The value already existed in DataGridView. Entry: (" + item.Entry + ")\n First Sniffed SpeedWalk: " + roundedSpeedWalk + " Second Sniffed SpeedWalk: " + dgv_grid.Rows[k].Cells[4].Value.ToString()
+                                            + "\n First Sniffed SpeedRun: " + roundedSpeedRun + " Second Sniffed SpeedRun: " + dgv_grid.Rows[k].Cells[5].Value.ToString() + "\n Sniffs are showing different speeds for the same creature!!");
                                     }
+                                    exists = true;
                                 }
+
                             }
                             if (exists == false)
                             {
