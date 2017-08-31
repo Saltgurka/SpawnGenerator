@@ -29,15 +29,6 @@
         private void InitializeComponent()
         {
             this.dgv_grid = new System.Windows.Forms.DataGridView();
-            this.gridColumn_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridColumn_entry = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridColumn_guidLow = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridColumn_guidFull = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridColumn_x = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridColumn_y = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridColumn_z = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridColumn_o = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gridColumn_map = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_loadSniff = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -72,7 +63,6 @@
             this.txt_spawndist = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.btn_deleteDuplicate = new System.Windows.Forms.Button();
-            this.btn_moreFiles = new System.Windows.Forms.Button();
             this.lbl_rows = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -101,6 +91,9 @@
             this.rdb_asSpawns = new System.Windows.Forms.RadioButton();
             this.rdb_asDbscript = new System.Windows.Forms.RadioButton();
             this.rdb_asWaypoints = new System.Windows.Forms.RadioButton();
+            this.box_createObject2 = new System.Windows.Forms.CheckBox();
+            this.progress = new System.Windows.Forms.ProgressBar();
+            this.lbl_currentFileCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -116,16 +109,6 @@
             // dgv_grid
             // 
             this.dgv_grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.gridColumn_type,
-            this.gridColumn_entry,
-            this.gridColumn_guidLow,
-            this.gridColumn_guidFull,
-            this.gridColumn_x,
-            this.gridColumn_y,
-            this.gridColumn_z,
-            this.gridColumn_o,
-            this.gridColumn_map});
             this.dgv_grid.Location = new System.Drawing.Point(-4, 0);
             this.dgv_grid.Name = "dgv_grid";
             this.dgv_grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -134,58 +117,13 @@
             this.dgv_grid.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgv_grid_RowsAdded);
             this.dgv_grid.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgv_grid_RowsRemoved);
             // 
-            // gridColumn_type
-            // 
-            this.gridColumn_type.HeaderText = "Type";
-            this.gridColumn_type.Name = "gridColumn_type";
-            // 
-            // gridColumn_entry
-            // 
-            this.gridColumn_entry.HeaderText = "Entry";
-            this.gridColumn_entry.Name = "gridColumn_entry";
-            // 
-            // gridColumn_guidLow
-            // 
-            this.gridColumn_guidLow.HeaderText = "GUIDLow";
-            this.gridColumn_guidLow.Name = "gridColumn_guidLow";
-            // 
-            // gridColumn_guidFull
-            // 
-            this.gridColumn_guidFull.HeaderText = "GUIDFull";
-            this.gridColumn_guidFull.Name = "gridColumn_guidFull";
-            // 
-            // gridColumn_x
-            // 
-            this.gridColumn_x.HeaderText = "x";
-            this.gridColumn_x.Name = "gridColumn_x";
-            // 
-            // gridColumn_y
-            // 
-            this.gridColumn_y.HeaderText = "y";
-            this.gridColumn_y.Name = "gridColumn_y";
-            // 
-            // gridColumn_z
-            // 
-            this.gridColumn_z.HeaderText = "z";
-            this.gridColumn_z.Name = "gridColumn_z";
-            // 
-            // gridColumn_o
-            // 
-            this.gridColumn_o.HeaderText = "o";
-            this.gridColumn_o.Name = "gridColumn_o";
-            // 
-            // gridColumn_map
-            // 
-            this.gridColumn_map.HeaderText = "Map";
-            this.gridColumn_map.Name = "gridColumn_map";
-            // 
             // btn_loadSniff
             // 
             this.btn_loadSniff.Location = new System.Drawing.Point(999, 48);
             this.btn_loadSniff.Name = "btn_loadSniff";
             this.btn_loadSniff.Size = new System.Drawing.Size(117, 23);
             this.btn_loadSniff.TabIndex = 1;
-            this.btn_loadSniff.Text = "Load Sniff File";
+            this.btn_loadSniff.Text = "Load Sniff File(s)";
             this.btn_loadSniff.UseVisualStyleBackColor = true;
             this.btn_loadSniff.Click += new System.EventHandler(this.btn_loadSniff_Click);
             // 
@@ -473,17 +411,6 @@
             this.btn_deleteDuplicate.Text = "Delete Duplicates";
             this.btn_deleteDuplicate.UseVisualStyleBackColor = true;
             this.btn_deleteDuplicate.Click += new System.EventHandler(this.btn_deleteDuplicate_Click);
-            // 
-            // btn_moreFiles
-            // 
-            this.btn_moreFiles.Enabled = false;
-            this.btn_moreFiles.Location = new System.Drawing.Point(999, 77);
-            this.btn_moreFiles.Name = "btn_moreFiles";
-            this.btn_moreFiles.Size = new System.Drawing.Size(117, 23);
-            this.btn_moreFiles.TabIndex = 45;
-            this.btn_moreFiles.Text = "Load More Files";
-            this.btn_moreFiles.UseVisualStyleBackColor = true;
-            this.btn_moreFiles.Click += new System.EventHandler(this.btn_moreFiles_Click);
             // 
             // lbl_rows
             // 
@@ -779,17 +706,47 @@
             this.rdb_asWaypoints.Text = "As creature_movement_template";
             this.rdb_asWaypoints.UseVisualStyleBackColor = true;
             // 
+            // box_createObject2
+            // 
+            this.box_createObject2.AutoSize = true;
+            this.box_createObject2.Checked = true;
+            this.box_createObject2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.box_createObject2.Location = new System.Drawing.Point(1122, 52);
+            this.box_createObject2.Name = "box_createObject2";
+            this.box_createObject2.Size = new System.Drawing.Size(118, 17);
+            this.box_createObject2.TabIndex = 52;
+            this.box_createObject2.Text = "Only CreateObject2";
+            this.box_createObject2.UseVisualStyleBackColor = true;
+            // 
+            // progress
+            // 
+            this.progress.Location = new System.Drawing.Point(119, 7);
+            this.progress.Name = "progress";
+            this.progress.Size = new System.Drawing.Size(869, 18);
+            this.progress.TabIndex = 53;
+            // 
+            // lbl_currentFileCount
+            // 
+            this.lbl_currentFileCount.AutoSize = true;
+            this.lbl_currentFileCount.Location = new System.Drawing.Point(1078, 13);
+            this.lbl_currentFileCount.Name = "lbl_currentFileCount";
+            this.lbl_currentFileCount.Size = new System.Drawing.Size(43, 13);
+            this.lbl_currentFileCount.TabIndex = 54;
+            this.lbl_currentFileCount.Text = "File 0/0";
+            // 
             // frm_multiSpawnGen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1401, 612);
+            this.Controls.Add(this.lbl_currentFileCount);
+            this.Controls.Add(this.progress);
+            this.Controls.Add(this.box_createObject2);
             this.Controls.Add(this.rdb_asWaypoints);
             this.Controls.Add(this.rdb_asDbscript);
             this.Controls.Add(this.rdb_asSpawns);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.lbl_rows);
-            this.Controls.Add(this.btn_moreFiles);
             this.Controls.Add(this.btn_deleteDuplicate);
             this.Controls.Add(this.btn_generateMarked);
             this.Controls.Add(this.btn_loadSniff);
@@ -818,15 +775,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgv_grid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_entry;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_guidLow;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_guidFull;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_x;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_y;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_z;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_o;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gridColumn_map;
         private System.Windows.Forms.Button btn_loadSniff;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.TabControl tabControl1;
@@ -861,7 +809,6 @@
         private System.Windows.Forms.TextBox txt_spawndist;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btn_deleteDuplicate;
-        private System.Windows.Forms.Button btn_moreFiles;
         private System.Windows.Forms.Label lbl_rows;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage3;
@@ -890,5 +837,8 @@
         private System.Windows.Forms.TextBox txt_waypointWaittime;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox txt_waypointScriptId;
+        private System.Windows.Forms.CheckBox box_createObject2;
+        private System.Windows.Forms.ProgressBar progress;
+        private System.Windows.Forms.Label lbl_currentFileCount;
     }
 }

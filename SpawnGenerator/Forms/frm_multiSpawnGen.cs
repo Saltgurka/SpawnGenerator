@@ -33,14 +33,25 @@ namespace SpawnGenerator
             openFileDialog.FileName = "*.txt";
             openFileDialog.FilterIndex = 1;
             openFileDialog.ShowReadOnly = false;
-            openFileDialog.Multiselect = false;
+            openFileDialog.Multiselect = true;
             openFileDialog.CheckFileExists = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                FillDataTable(openFileDialog.FileName);
-                btn_moreFiles.Enabled = true;
-                btn_loadSniff.Enabled = false;
+                int numOfFiles = openFileDialog.FileNames.Length;
+                int currentFile = 0;
+                progress.Step = 100 / numOfFiles;
+
+                foreach (String file in openFileDialog.FileNames)
+                {
+                    currentFile++;
+                    lbl_currentFileCount.Text = "File " + currentFile + "/" + numOfFiles;
+                    progress.PerformStep();
+                    FillDataTable(openFileDialog.FileName);
+                }
+
+                lbl_currentFileCount.Text = "Done!";
+                progress.Value = 0;
             }
             else
             {
@@ -78,10 +89,11 @@ namespace SpawnGenerator
 
             List<string> filterList = new List<string>(new string[]{ "SMSG_UPDATE_OBJECT" });
             List<string> createObjectList = filter.FilterSniffFile(filename, false, filterList);
-            spawns = filter.GetDataTableForSpawns(createObjectList, true);
+            
+            spawns.Merge(filter.GetDataTableForSpawns(createObjectList, box_createObject2.Checked));
 
-            dgv_grid.Rows.Clear();
-            dgv_grid.Columns.Clear();
+            //dgv_grid.Rows.Clear();
+            //dgv_grid.Columns.Clear();
 
             dgv_grid.DataSource = spawns;
             Cursor = Cursors.Default;
@@ -95,7 +107,7 @@ namespace SpawnGenerator
             List<string> filterList = new List<string>(new string[] { "SMSG_UPDATE_OBJECT" });
             List<string> createObjectList = filter.FilterSniffFile(filename, false, filterList);
 
-            spawns.Merge(filter.GetDataTableForSpawns(createObjectList, true));
+            spawns.Merge(filter.GetDataTableForSpawns(createObjectList, box_createObject2.Checked));
 
             dgv_grid.DataSource = null;
             dgv_grid.DataSource = spawns;

@@ -241,7 +241,8 @@ namespace SpawnGenerator.Forms
             SpellClick = 0x01000000,       // cause client to send 1015 opcode (spell click), dynamic, set at loading and don't must be set in DB
         }
 
-        enum UnitFlags
+        [Flags]
+        public enum UnitFlags
         {
             Unk0 = 0x00000001,
             NonAttackable = 0x00000002,           // not attackable
@@ -366,7 +367,7 @@ namespace SpawnGenerator.Forms
 
                 string name = "";
                 bool addItem = false;
-
+                
                 for (int i = 0; i < creatures.Count; i++)
                 {
                     if (creatures[i].Entry == item.Entry)
@@ -384,7 +385,7 @@ namespace SpawnGenerator.Forms
                                     if (roundedSpeedWalk.ToString() != dgv_grid.Rows[k].Cells[4].Value.ToString() || roundedSpeedRun.ToString() != dgv_grid.Rows[k].Cells[5].Value.ToString())
                                     {
                                         MessageBox.Show("The value already existed in DataGridView. Entry: (" + item.Entry + ")\n First Sniffed SpeedWalk: " + roundedSpeedWalk + " Second Sniffed SpeedWalk: " + dgv_grid.Rows[k].Cells[4].Value.ToString()
-                                            + "\n First Sniffed SpeedRun: " + roundedSpeedRun + " Second Sniffed SpeedRun: " + dgv_grid.Rows[k].Cells[5].Value.ToString() + "\n Sniffs are showing different speeds for the same creature!!");
+                                            + "\n First Sniffed SpeedRun: " + roundedSpeedRun + " Second Sniffed SpeedRun: " + dgv_grid.Rows[k].Cells[5].Value.ToString() + "\n Sniffs are showing different speeds for the same creature!!\n" + fileName);
                                     }
                                     exists = true;
                                 }
