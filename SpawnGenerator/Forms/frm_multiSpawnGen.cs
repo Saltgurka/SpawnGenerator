@@ -94,7 +94,9 @@ namespace SpawnGenerator
 
             //dgv_grid.Rows.Clear();
             //dgv_grid.Columns.Clear();
+            //dgv_grid.Rows.Add(name, item.Entry, oldSpeedWalk, oldSpeedRun, roundedSpeedWalk, roundedSpeedRun);
 
+            dgv_grid.DataSource = null;
             dgv_grid.DataSource = spawns;
             Cursor = Cursors.Default;
         }
@@ -125,35 +127,57 @@ namespace SpawnGenerator
 
                 if (!Int32.TryParse(txt_creatureGUID.Text, out guid))
                 {
-                    rtxt_SQLResult.Text = "Creature GUID invalid!";
+                    rtxt_SQLResult.Text = "GUID invalid!";
                     return;
                 }
 
                 string output;
                 output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
-
+                output += "INSERT INTO gameobject (guid, id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state) VALUES\n";
                 foreach (DataGridViewRow row in dgv_grid.SelectedRows)
                 {
-                    output += "("
-                        + guid + ","
-                        + row.Cells[1].Value + ","
-                        + txt_map.Text + ","
-                        + txt_spawnMask.Text + ","
-                        + txt_modelid.Text + ","
-                        + txt_equipmentId.Text + ","
-                        + row.Cells[4].Value + ","
-                        + row.Cells[5].Value + ","
-                        + row.Cells[6].Value + ","
-                        + row.Cells[7].Value + ","
-                        + txt_spawnMin.Text + ","
-                        + txt_spawnMax.Text + ","
-                        + txt_spawndist.Text + ","
-                        + txt_currentWaypoint.Text + ","
-                        + txt_curhealth.Text + ","
-                        + txt_curmana.Text + ","
-                        + txt_deathState.Text + ","
-                        + txt_movementType.Text + "),\n";
-
+                    if (row.Cells[0].Value.ToString() == "Creature/0")
+                    {
+                        output += "("
+                            + guid + ","
+                            + row.Cells[1].Value + ","
+                            + row.Cells[8].Value + ","
+                            + txt_spawnMask.Text + ","
+                            + txt_modelid.Text + ","
+                            + txt_equipmentId.Text + ","
+                            + row.Cells[4].Value + ","
+                            + row.Cells[5].Value + ","
+                            + row.Cells[6].Value + ","
+                            + row.Cells[7].Value + ","
+                            + txt_spawnMin.Text + ","
+                            + txt_spawnMax.Text + ","
+                            + txt_spawndist.Text + ","
+                            + txt_currentWaypoint.Text + ","
+                            + txt_curhealth.Text + ","
+                            + txt_curmana.Text + ","
+                            + txt_deathState.Text + ","
+                            + txt_movementType.Text + "),\n";
+                    }
+                    else if (row.Cells[0].Value.ToString() == "GameObject/0")
+                    {
+                        output += "("
+                            + guid + "," // guid
+                            + row.Cells[1].Value + "," // id
+                            + row.Cells[8].Value + "," // map
+                            + txt_spawnMask.Text + "," // spawnMask
+                            + row.Cells[4].Value + "," // position_x
+                            + row.Cells[5].Value + "," // position_y
+                            + row.Cells[6].Value + "," // position_z
+                            + row.Cells[7].Value + "," // orientation
+                            + row.Cells[9].Value + "," // rotation0
+                            + row.Cells[10].Value + "," // rotation1
+                            + row.Cells[11].Value + "," // rotation2
+                            + row.Cells[12].Value + "," // rotation3
+                            + txt_spawnMin.Text + "," // spawntimesecsmin
+                            + txt_spawnMax.Text + "," // spawntimesecsmax
+                            + txt_animprogress.Text + "," // animprogress
+                            + txt_state.Text + "),\n"; // state
+                    }
                     guid++;
                 }
 
@@ -299,6 +323,14 @@ namespace SpawnGenerator
         private void dgv_grid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             lbl_rows.Text = "Rows: " + dgv_grid.Rows.Count;
+        }
+
+        private void btn_filter_Click(object sender, EventArgs e)
+        {
+            BindingSource bs = new BindingSource();
+            bs.DataSource = dgv_grid.DataSource;
+            bs.Filter = dgv_grid.Columns[1].HeaderText.ToString() + " LIKE '%" + txt_filterText.Text + "%'";
+            dgv_grid.DataSource = bs;
         }
     }
 }

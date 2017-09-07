@@ -20,6 +20,10 @@ namespace SpawnGenerator
             public string y;
             public string z;
             public string o;
+            public string r0;
+            public string r1;
+            public string r2;
+            public string r3;
             public string map;
         };
 
@@ -130,19 +134,11 @@ namespace SpawnGenerator
 
             SpawnPacket sniff;
 
-            sniff.objectType = "";
-            sniff.entry = "";
-            sniff.guidLow = "";
-            sniff.guidFull = "";
-            sniff.x = "";
-            sniff.y = "";
-            sniff.z = "";
-            sniff.o = "";
-            sniff.map = "";
+
 
             string[] columns = null;
 
-            string col = "type,entry,guidlow,guidfull,x,y,z,o,map";
+            string col = "type,entry,guidlow,guidfull,x,y,z,o,map,r0,r1,r2,r3";
             columns = col.Split(new char[] { ',' });
             foreach (var column in columns)
                 dt.Columns.Add(column);
@@ -151,6 +147,20 @@ namespace SpawnGenerator
             {
                 if (lines[i].Contains(stringToSearchFor))
                 {
+                    sniff.objectType = "";
+                    sniff.entry = "";
+                    sniff.guidLow = "";
+                    sniff.guidFull = "";
+                    sniff.x = "";
+                    sniff.y = "";
+                    sniff.z = "";
+                    sniff.o = "";
+                    sniff.r0 = "";
+                    sniff.r1 = "";
+                    sniff.r2 = "";
+                    sniff.r3 = "";
+                    sniff.map = "";
+
                     i++;
 
                     string[] values = lines[i].Split(new char[] { ' ' });
@@ -184,10 +194,18 @@ namespace SpawnGenerator
                             }
 
                             string[] orientationline = lines[i + 1].Split(new char[] { ' ' });
-                            if (orientationline.Length == 3) // Creature
+                            if (objectType[0].ToString() == "Creature") // Creature
                                 sniff.o = orientationline[2];
-                            else // Gameobject
+                            else if (objectType[0].ToString() == "GameObject") // Gameobject
+                            {
                                 sniff.o = orientationline[3];
+
+                                string[] rotationline = lines[i + 2].Split(new char[] { ' ' });
+                                sniff.r0 = rotationline[4];
+                                sniff.r1 = rotationline[6];
+                                sniff.r2 = rotationline[8];
+                                sniff.r3 = rotationline[10];
+                            }
                         }
 
                     } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
@@ -204,6 +222,10 @@ namespace SpawnGenerator
                         dr[6] = sniff.z;
                         dr[7] = sniff.o;
                         dr[8] = sniff.map;
+                        dr[9] = sniff.r0;
+                        dr[10] = sniff.r1;
+                        dr[11] = sniff.r2;
+                        dr[12] = sniff.r3;
                         dt.Rows.Add(dr);
                         sniff.entry = "";
                     }

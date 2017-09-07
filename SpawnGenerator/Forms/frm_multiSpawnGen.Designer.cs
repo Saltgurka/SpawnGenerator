@@ -94,6 +94,14 @@
             this.box_createObject2 = new System.Windows.Forms.CheckBox();
             this.progress = new System.Windows.Forms.ProgressBar();
             this.lbl_currentFileCount = new System.Windows.Forms.Label();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.dgv_gameobjectGrid = new System.Windows.Forms.DataGridView();
+            this.label22 = new System.Windows.Forms.Label();
+            this.txt_animprogress = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txt_state = new System.Windows.Forms.TextBox();
+            this.txt_filterText = new System.Windows.Forms.TextBox();
+            this.btn_filter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -104,6 +112,8 @@
             this.groupBox1.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_gameobjectGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // dgv_grid
@@ -134,6 +144,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(7, 13);
             this.tabControl1.Name = "tabControl1";
@@ -149,7 +160,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(978, 565);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Data";
+            this.tabPage1.Text = "Creatures";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
@@ -187,16 +198,16 @@
             this.txt_creatureGUID.Name = "txt_creatureGUID";
             this.txt_creatureGUID.Size = new System.Drawing.Size(117, 20);
             this.txt_creatureGUID.TabIndex = 4;
-            this.txt_creatureGUID.Text = "Creature GUID";
+            this.txt_creatureGUID.Text = "GUID";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(7, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 13);
+            this.label1.Size = new System.Drawing.Size(34, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Creature GUID";
+            this.label1.Text = "GUID";
             // 
             // label6
             // 
@@ -434,6 +445,10 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.txt_state);
+            this.tabPage3.Controls.Add(this.label23);
+            this.tabPage3.Controls.Add(this.txt_animprogress);
+            this.tabPage3.Controls.Add(this.label22);
             this.tabPage3.Controls.Add(this.txt_creatureGUID);
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Controls.Add(this.txt_spawnMin);
@@ -720,9 +735,9 @@
             // 
             // progress
             // 
-            this.progress.Location = new System.Drawing.Point(119, 7);
+            this.progress.Location = new System.Drawing.Point(208, 7);
             this.progress.Name = "progress";
-            this.progress.Size = new System.Drawing.Size(869, 18);
+            this.progress.Size = new System.Drawing.Size(780, 18);
             this.progress.TabIndex = 53;
             // 
             // lbl_currentFileCount
@@ -734,11 +749,84 @@
             this.lbl_currentFileCount.TabIndex = 54;
             this.lbl_currentFileCount.Text = "File 0/0";
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.dgv_gameobjectGrid);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(978, 565);
+            this.tabPage6.TabIndex = 2;
+            this.tabPage6.Text = "Gameobjects";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // dgv_gameobjectGrid
+            // 
+            this.dgv_gameobjectGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_gameobjectGrid.Location = new System.Drawing.Point(-2, -2);
+            this.dgv_gameobjectGrid.Name = "dgv_gameobjectGrid";
+            this.dgv_gameobjectGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_gameobjectGrid.Size = new System.Drawing.Size(982, 569);
+            this.dgv_gameobjectGrid.TabIndex = 1;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(140, 5);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(69, 13);
+            this.label22.TabIndex = 44;
+            this.label22.Text = "animprogress";
+            // 
+            // txt_animprogress
+            // 
+            this.txt_animprogress.Location = new System.Drawing.Point(143, 25);
+            this.txt_animprogress.Name = "txt_animprogress";
+            this.txt_animprogress.Size = new System.Drawing.Size(33, 20);
+            this.txt_animprogress.TabIndex = 45;
+            this.txt_animprogress.Text = "100";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(143, 50);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(30, 13);
+            this.label23.TabIndex = 46;
+            this.label23.Text = "state";
+            // 
+            // txt_state
+            // 
+            this.txt_state.Location = new System.Drawing.Point(143, 68);
+            this.txt_state.Name = "txt_state";
+            this.txt_state.Size = new System.Drawing.Size(33, 20);
+            this.txt_state.TabIndex = 47;
+            this.txt_state.Text = "1";
+            // 
+            // txt_filterText
+            // 
+            this.txt_filterText.Location = new System.Drawing.Point(1002, 77);
+            this.txt_filterText.Name = "txt_filterText";
+            this.txt_filterText.Size = new System.Drawing.Size(115, 20);
+            this.txt_filterText.TabIndex = 55;
+            // 
+            // btn_filter
+            // 
+            this.btn_filter.Location = new System.Drawing.Point(1122, 74);
+            this.btn_filter.Name = "btn_filter";
+            this.btn_filter.Size = new System.Drawing.Size(117, 23);
+            this.btn_filter.TabIndex = 56;
+            this.btn_filter.Text = "Filter By Entry";
+            this.btn_filter.UseVisualStyleBackColor = true;
+            this.btn_filter.Click += new System.EventHandler(this.btn_filter_Click);
+            // 
             // frm_multiSpawnGen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1401, 612);
+            this.Controls.Add(this.btn_filter);
+            this.Controls.Add(this.txt_filterText);
             this.Controls.Add(this.lbl_currentFileCount);
             this.Controls.Add(this.progress);
             this.Controls.Add(this.box_createObject2);
@@ -767,6 +855,8 @@
             this.tabPage5.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_gameobjectGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -840,5 +930,13 @@
         private System.Windows.Forms.CheckBox box_createObject2;
         private System.Windows.Forms.ProgressBar progress;
         private System.Windows.Forms.Label lbl_currentFileCount;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.DataGridView dgv_gameobjectGrid;
+        private System.Windows.Forms.TextBox txt_state;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox txt_animprogress;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox txt_filterText;
+        private System.Windows.Forms.Button btn_filter;
     }
 }
