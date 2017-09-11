@@ -87,7 +87,7 @@ namespace SpawnGenerator
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
 
-            List<string> filterList = new List<string>(new string[]{ "SMSG_UPDATE_OBJECT" });
+            List<string> filterList = new List<string>(new string[]{ "SMSG_UPDATE_OBJECT", "SMSG_COMPRESSED_UPDATE_OBJECT" });
             List<string> createObjectList = filter.FilterSniffFile(filename, false, filterList);
             
             spawns.Merge(filter.GetDataTableForSpawns(createObjectList, box_createObject2.Checked));
@@ -136,7 +136,7 @@ namespace SpawnGenerator
                 output += "INSERT INTO gameobject (guid, id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state) VALUES\n";
                 foreach (DataGridViewRow row in dgv_grid.SelectedRows)
                 {
-                    if (row.Cells[0].Value.ToString() == "Creature/0")
+                    if (row.Cells[0].Value.ToString() == "Creature/0" || row.Cells[0].Value.ToString() == "Unit")
                     {
                         output += "("
                             + guid + ","

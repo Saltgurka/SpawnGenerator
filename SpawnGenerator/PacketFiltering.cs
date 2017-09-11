@@ -10,6 +10,12 @@ namespace SpawnGenerator
 {
     class PacketFiltering
     {
+        public enum Parser
+        {
+            Trinity = 0,
+            UDB = 1
+        }
+
         struct SpawnPacket
         {
             public string objectType;
@@ -133,7 +139,10 @@ namespace SpawnGenerator
             DataTable dt = new DataTable("Spawns");
 
             SpawnPacket sniff;
+            Parser parser = Parser.Trinity;
 
+            if (lines[0].Contains("UDB"))
+                parser = Parser.UDB;
 
 
             string[] columns = null;
@@ -163,52 +172,118 @@ namespace SpawnGenerator
 
                     i++;
 
-                    string[] values = lines[i].Split(new char[] { ' ' });
-                    string[] objectType = values[5].Split(new char[] { '/' });
-
-                    sniff.guidFull = values[4];
-                    sniff.objectType = values[5];
-                    sniff.map = values[8];
-                    sniff.entry = values[10];
-                    if (values.Length > 11) // Temp fix for crash on Player packets
-                        sniff.guidLow = values[12];
-
-                    do
+                    if (parser == Parser.Trinity)
                     {
-                        i++;
+                        string[] values = lines[i].Split(new char[] { ' ' });
 
-                        if (lines[i].Contains("Position: X:"))
+                        //string[] objectType = values[5].Split(new char[] { '/' });
+
+                        if (values.Length > 4)
+                            sniff.guidFull = values[4];
+                        if (values.Length > 5)
+                            sniff.objectType = values[5];
+                        if (values.Length > 8)
+                            sniff.map = values[8];
+                        if (values.Length > 10)
+                            sniff.entry = values[10];
+                        if (values.Length > 12)
+                            sniff.guidLow = values[12];
+
+                        do
                         {
-                            string[] packetline = lines[i].Split(new char[] { ' ' });
-                            if (packetline.Length == 8) // Creature
-                            {
-                                sniff.x = packetline[3];
-                                sniff.y = packetline[5];
-                                sniff.z = packetline[7];
-                            }
-                            else // Gameobject
-                            {
-                                sniff.x = packetline[4];
-                                sniff.y = packetline[6];
-                                sniff.z = packetline[8];
-                            }
+                            i++;
 
-                            string[] orientationline = lines[i + 1].Split(new char[] { ' ' });
-                            if (objectType[0].ToString() == "Creature") // Creature
-                                sniff.o = orientationline[2];
-                            else if (objectType[0].ToString() == "GameObject") // Gameobject
+                            if (lines[i].Contains("Position: X:"))
                             {
-                                sniff.o = orientationline[3];
+                                string[] packetline = lines[i].Split(new char[] { ' ' });
+                                if (packetline.Length == 8) // Creature
+                                {
+                                    sniff.x = packetline[3];
+                                    sniff.y = packetline[5];
+                                    sniff.z = packetline[7];
+                                }
+                                else // Gameobject
+                                {
+                                    sniff.x = packetline[4];
+                                    sniff.y = packetline[6];
+                                    sniff.z = packetline[8];
+                                }
 
-                                string[] rotationline = lines[i + 2].Split(new char[] { ' ' });
-                                sniff.r0 = rotationline[4];
-                                sniff.r1 = rotationline[6];
-                                sniff.r2 = rotationline[8];
-                                sniff.r3 = rotationline[10];
+                                string[] orientationline = lines[i + 1].Split(new char[] { ' ' });
+                                if (sniff.objectType == "Creature" || sniff.objectType == "Unit") // Creature
+                                    sniff.o = orientationline[2];
+                                else if (sniff.objectType == "GameObject") // Gameobject
+                                {
+                                    sniff.o = orientationline[3];
+
+                                    string[] rotationline = lines[i + 2].Split(new char[] { ' ' });
+
+                                    if (rotationline.Length > 10)
+                                    {
+                                        sniff.r0 = rotationline[4];
+                                        sniff.r1 = rotationline[6];
+                                        sniff.r2 = rotationline[8];
+                                        sniff.r3 = rotationline[10];
+                                    }
+                                }
                             }
-                        }
+                        } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
+                    }
+                    else if (parser == Parser.UDB)
+                    {
+                        string[] values = lines[i].Split(new char[] { ' ' });
 
-                    } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
+                        //string[] objectType = values[5].Split(new char[] { '/' });
+
+                        if (values.Length > 3)
+                            sniff.guidFull = values[3];
+                        if (values.Length > 5)
+                            sniff.objectType = values[5];
+                        if (values.Length > 7)
+                            sniff.entry = values[7];
+                        if (values.Length > 9)
+                            sniff.guidLow = values[9];
+
+                        do
+                        {
+                            i++;
+
+                            if (lines[i].Contains("Position: X:"))
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ' ' });
+                                if (packetline.Length == 8) // Creature
+                                {
+                                    sniff.x = packetline[3];
+                                    sniff.y = packetline[5];
+                                    sniff.z = packetline[7];
+                                }
+                                else // Gameobject
+                                {
+                                    sniff.x = packetline[4];
+                                    sniff.y = packetline[6];
+                                    sniff.z = packetline[8];
+                                }
+
+                                string[] orientationline = lines[i + 1].Split(new char[] { ' ' });
+                                if (sniff.objectType == "Creature" || sniff.objectType == "Unit") // Creature
+                                    sniff.o = orientationline[2];
+                                else if (sniff.objectType == "GameObject") // Gameobject
+                                {
+                                    sniff.o = orientationline[3];
+
+                                    string[] rotationline = lines[i + 2].Split(new char[] { ' ' });
+
+                                    if (rotationline.Length > 10)
+                                    {
+                                        sniff.r0 = rotationline[4];
+                                        sniff.r1 = rotationline[6];
+                                        sniff.r2 = rotationline[8];
+                                        sniff.r3 = rotationline[10];
+                                    }
+                                }
+                            }
+                        } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
+                    }
 
                     if (sniff.entry != "")
                     {
