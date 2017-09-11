@@ -26,6 +26,7 @@ namespace SpawnGenerator
         Form spellPacketTimer;
         Form chanceCalc;
         Form speedSetter;
+        Form waypointGen;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -186,6 +187,23 @@ namespace SpawnGenerator
         private void SpeedSetter_FormClosed(object sender, FormClosedEventArgs e)
         {
             speedSetter = null;
+        }
+
+
+        private void waypointGenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (waypointGen == null)
+            {
+                waypointGen = new frm_waypointGen();
+                waypointGen.MdiParent = this;
+                waypointGen.FormClosed += WaypointGen_FormClosed;
+                waypointGen.Show();
+            }
+        }
+
+        private void WaypointGen_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            waypointGen = null;
         }
 
         private void singleSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)

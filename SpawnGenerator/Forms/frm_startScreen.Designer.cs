@@ -59,6 +59,7 @@
             this.spellPacketTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chanceCalcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speedSetterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waypointGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -204,7 +205,8 @@
             this.poolGeneratorToolStripMenuItem1,
             this.spellPacketTimerToolStripMenuItem,
             this.chanceCalcToolStripMenuItem,
-            this.speedSetterToolStripMenuItem});
+            this.speedSetterToolStripMenuItem,
+            this.waypointGenToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1478, 24);
@@ -320,6 +322,13 @@
             this.speedSetterToolStripMenuItem.Text = "SpeedSetter";
             this.speedSetterToolStripMenuItem.Click += new System.EventHandler(this.speedSetterToolStripMenuItem_Click);
             // 
+            // waypointGenToolStripMenuItem
+            // 
+            this.waypointGenToolStripMenuItem.Name = "waypointGenToolStripMenuItem";
+            this.waypointGenToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.waypointGenToolStripMenuItem.Text = "WaypointGen";
+            this.waypointGenToolStripMenuItem.Click += new System.EventHandler(this.waypointGenToolStripMenuItem_Click);
+            // 
             // Saltgurka_SQL_Generator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -385,5 +394,6 @@
         private System.Windows.Forms.ToolStripMenuItem spellPacketTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem chanceCalcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem speedSetterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem waypointGenToolStripMenuItem;
     }
 }
