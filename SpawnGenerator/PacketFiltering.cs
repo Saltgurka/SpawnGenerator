@@ -193,7 +193,7 @@ namespace SpawnGenerator
                         {
                             i++;
 
-                            if (lines[i].Contains("Position: X:"))
+                            if (lines[i].Contains("] Position: X:"))
                             {
                                 string[] packetline = lines[i].Split(new char[] { ' ' });
                                 if (packetline.Length == 8) // Creature
