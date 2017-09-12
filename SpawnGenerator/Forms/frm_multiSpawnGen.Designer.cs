@@ -103,6 +103,8 @@
             this.txt_filterText = new System.Windows.Forms.TextBox();
             this.btn_filter = new System.Windows.Forms.Button();
             this.box_ai = new System.Windows.Forms.CheckBox();
+            this.box_filename = new System.Windows.Forms.CheckBox();
+            this.cmb_typeFilter = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -467,6 +469,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.box_filename);
             this.tabPage3.Controls.Add(this.box_ai);
             this.tabPage3.Controls.Add(this.txt_state);
             this.tabPage3.Controls.Add(this.label23);
@@ -833,11 +836,38 @@
             this.box_ai.Text = "AI";
             this.box_ai.UseVisualStyleBackColor = true;
             // 
+            // box_filename
+            // 
+            this.box_filename.AutoSize = true;
+            this.box_filename.Location = new System.Drawing.Point(143, 95);
+            this.box_filename.Name = "box_filename";
+            this.box_filename.Size = new System.Drawing.Size(70, 17);
+            this.box_filename.TabIndex = 50;
+            this.box_filename.Text = "FileName";
+            this.box_filename.UseVisualStyleBackColor = true;
+            // 
+            // cmb_typeFilter
+            // 
+            this.cmb_typeFilter.FormattingEnabled = true;
+            this.cmb_typeFilter.Items.AddRange(new object[] {
+            "Creature",
+            "Gameobject",
+            "AreaTrigger",
+            "Player",
+            "Pet",
+            "Unit"});
+            this.cmb_typeFilter.Location = new System.Drawing.Point(1122, 106);
+            this.cmb_typeFilter.Name = "cmb_typeFilter";
+            this.cmb_typeFilter.Size = new System.Drawing.Size(121, 21);
+            this.cmb_typeFilter.TabIndex = 57;
+            this.cmb_typeFilter.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // frm_multiSpawnGen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1401, 612);
+            this.Controls.Add(this.cmb_typeFilter);
             this.Controls.Add(this.btn_filter);
             this.Controls.Add(this.txt_filterText);
             this.Controls.Add(this.lbl_currentFileCount);
@@ -952,5 +982,7 @@
         private System.Windows.Forms.TextBox txt_filterText;
         private System.Windows.Forms.Button btn_filter;
         private System.Windows.Forms.CheckBox box_ai;
+        private System.Windows.Forms.CheckBox box_filename;
+        private System.Windows.Forms.ComboBox cmb_typeFilter;
     }
 }

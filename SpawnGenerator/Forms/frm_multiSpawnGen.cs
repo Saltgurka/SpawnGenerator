@@ -169,6 +169,11 @@ namespace SpawnGenerator
                             + txt_deathState.Text + ","
                             + txt_movementType.Text;
 
+                        if (box_filename.Checked)
+                        {
+                            output += "," + row.Cells[13].Value;
+                        }
+
                         if (i == dgv_grid.SelectedRows.Count)
                         {
                             output += ");\n";
@@ -200,6 +205,11 @@ namespace SpawnGenerator
                             + txt_spawnMax.Text + "," // spawntimesecsmax
                             + txt_animprogress.Text + "," // animprogress
                             + txt_state.Text; // state
+
+                        if (box_filename.Checked)
+                        {
+                            output += "," + row.Cells[13].Value;
+                        }
 
                         if (i == dgv_grid.SelectedRows.Count)
                         {
@@ -363,6 +373,41 @@ namespace SpawnGenerator
             BindingSource bs = new BindingSource();
             bs.DataSource = dgv_grid.DataSource;
             bs.Filter = dgv_grid.Columns[1].HeaderText.ToString() + " LIKE '%" + txt_filterText.Text + "%'";
+            dgv_grid.DataSource = bs;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmb_typeFilter.SelectedIndex == -1)
+                return;
+
+            string filter = "";
+
+            switch (cmb_typeFilter.SelectedIndex)
+            {
+                case 0:
+                    filter = "Creature";
+                    break;
+                case 1:
+                    filter = "Gameobject";
+                    break;
+                case 2:
+                    filter = "AreaTrigger";
+                    break;
+                case 3:
+                    filter = "Player";
+                    break;
+                case 4:
+                    filter = "Pet";
+                    break;
+                case 5:
+                    filter = "Unit";
+                    break;
+            }
+
+            BindingSource bs = new BindingSource();
+            bs.DataSource = dgv_grid.DataSource;
+            bs.Filter = dgv_grid.Columns[0].HeaderText.ToString() + " LIKE '%" + filter + "%'";
             dgv_grid.DataSource = bs;
         }
     }
