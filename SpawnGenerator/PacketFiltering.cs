@@ -132,7 +132,7 @@ namespace SpawnGenerator
             return newFileStrings;
         }
 
-        public DataTable GetDataTableForSpawns(List<string> filteredPackets, bool onlyCreateObject2)
+        public DataTable GetDataTableForSpawns(List<string> filteredPackets, bool onlyCreateObject2, string filename)
         {
             var lines = filteredPackets;
             string stringToSearchFor = onlyCreateObject2 ? "CreateObject2" : "CreateObject";
@@ -147,7 +147,7 @@ namespace SpawnGenerator
 
             string[] columns = null;
 
-            string col = "type,entry,guidlow,guidfull,x,y,z,o,map,r0,r1,r2,r3";
+            string col = "type,entry,guidlow,guidfull,x,y,z,o,map,r0,r1,r2,r3,sourcefile";
             columns = col.Split(new char[] { ',' });
             foreach (var column in columns)
                 dt.Columns.Add(column);
@@ -210,9 +210,9 @@ namespace SpawnGenerator
                                 }
 
                                 string[] orientationline = lines[i + 1].Split(new char[] { ' ' });
-                                if (sniff.objectType == "Creature" || sniff.objectType == "Unit") // Creature
+                                if (sniff.objectType == "Creature/0" || sniff.objectType == "Unit") // Creature
                                     sniff.o = orientationline[2];
-                                else if (sniff.objectType == "GameObject") // Gameobject
+                                else if (sniff.objectType == "GameObject/0") // Gameobject
                                 {
                                     sniff.o = orientationline[3];
 
@@ -301,6 +301,7 @@ namespace SpawnGenerator
                         dr[10] = sniff.r1;
                         dr[11] = sniff.r2;
                         dr[12] = sniff.r3;
+                        dr[13] = filename;
                         dt.Rows.Add(dr);
                         sniff.entry = "";
                     }

@@ -15,7 +15,7 @@ namespace SpawnGenerator
         static DataTable spawns = new DataTable();
         static DataTable spawnData = new DataTable();
         PacketFiltering filter = new PacketFiltering();
-        
+
         public frm_multiSpawnGen()
         {
             InitializeComponent();
@@ -23,7 +23,7 @@ namespace SpawnGenerator
 
         private void frm_multiSpawnGen_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void btn_loadSniff_Click(object sender, EventArgs e)
@@ -87,10 +87,10 @@ namespace SpawnGenerator
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
 
-            List<string> filterList = new List<string>(new string[]{ "SMSG_UPDATE_OBJECT", "SMSG_COMPRESSED_UPDATE_OBJECT" });
+            List<string> filterList = new List<string>(new string[] { "SMSG_UPDATE_OBJECT", "SMSG_COMPRESSED_UPDATE_OBJECT" });
             List<string> createObjectList = filter.FilterSniffFile(filename, false, filterList);
-            
-            spawns.Merge(filter.GetDataTableForSpawns(createObjectList, box_createObject2.Checked));
+
+            spawns.Merge(filter.GetDataTableForSpawns(createObjectList, box_createObject2.Checked, filename));
 
             //dgv_grid.Rows.Clear();
             //dgv_grid.Columns.Clear();
@@ -109,7 +109,7 @@ namespace SpawnGenerator
             List<string> filterList = new List<string>(new string[] { "SMSG_UPDATE_OBJECT" });
             List<string> createObjectList = filter.FilterSniffFile(filename, false, filterList);
 
-            spawns.Merge(filter.GetDataTableForSpawns(createObjectList, box_createObject2.Checked));
+            spawns.Merge(filter.GetDataTableForSpawns(createObjectList, box_createObject2.Checked, filename));
 
             dgv_grid.DataSource = null;
             dgv_grid.DataSource = spawns;
@@ -132,15 +132,26 @@ namespace SpawnGenerator
                 }
 
                 string output;
-                output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
-                output += "INSERT INTO gameobject (guid, id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state) VALUES\n";
+                if (box_ai.Checked)
+                {
+                    output = "INSERT INTO creature (id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
+                    output += "INSERT INTO gameobject (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state) VALUES\n";
+                }
+                else
+                {
+                    output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
+                    output += "INSERT INTO gameobject (guid, id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state) VALUES\n";
+                }
+                int i = 1;
                 foreach (DataGridViewRow row in dgv_grid.SelectedRows)
                 {
                     if (row.Cells[0].Value.ToString() == "Creature/0" || row.Cells[0].Value.ToString() == "Unit")
                     {
-                        output += "("
-                            + guid + ","
-                            + row.Cells[1].Value + ","
+                        output += "(";
+                        if (!box_ai.Checked)
+                            output += guid + ",";
+
+                        output += row.Cells[1].Value + ","
                             + row.Cells[8].Value + ","
                             + txt_spawnMask.Text + ","
                             + txt_modelid.Text + ","
@@ -156,13 +167,25 @@ namespace SpawnGenerator
                             + txt_curhealth.Text + ","
                             + txt_curmana.Text + ","
                             + txt_deathState.Text + ","
-                            + txt_movementType.Text + "),\n";
+                            + txt_movementType.Text;
+
+                        if (i == dgv_grid.SelectedRows.Count)
+                        {
+                            output += ");\n";
+                        }
+                        else
+                        {
+                            output += "),\n";
+                            i++;
+                        }
                     }
                     else if (row.Cells[0].Value.ToString() == "GameObject/0")
                     {
-                        output += "("
-                            + guid + "," // guid
-                            + row.Cells[1].Value + "," // id
+                        output += "(";
+                        if (!box_ai.Checked)
+                            output += guid + ","; // guid
+
+                        output += row.Cells[1].Value + "," // id
                             + row.Cells[8].Value + "," // map
                             + txt_spawnMask.Text + "," // spawnMask
                             + row.Cells[4].Value + "," // position_x
@@ -176,7 +199,17 @@ namespace SpawnGenerator
                             + txt_spawnMin.Text + "," // spawntimesecsmin
                             + txt_spawnMax.Text + "," // spawntimesecsmax
                             + txt_animprogress.Text + "," // animprogress
-                            + txt_state.Text + "),\n"; // state
+                            + txt_state.Text; // state
+
+                        if (i == dgv_grid.SelectedRows.Count)
+                        {
+                            output += ");\n";
+                        }
+                        else
+                        {
+                            output += "),\n";
+                            i++;
+                        }
                     }
                     guid++;
                 }

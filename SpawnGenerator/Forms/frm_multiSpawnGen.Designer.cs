@@ -33,6 +33,8 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.dgv_gameobjectGrid = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.rtxt_SQLResult = new System.Windows.Forms.RichTextBox();
             this.btn_generateMarked = new System.Windows.Forms.Button();
@@ -66,6 +68,10 @@
             this.lbl_rows = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.txt_state = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txt_animprogress = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -94,17 +100,14 @@
             this.box_createObject2 = new System.Windows.Forms.CheckBox();
             this.progress = new System.Windows.Forms.ProgressBar();
             this.lbl_currentFileCount = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.dgv_gameobjectGrid = new System.Windows.Forms.DataGridView();
-            this.label22 = new System.Windows.Forms.Label();
-            this.txt_animprogress = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.txt_state = new System.Windows.Forms.TextBox();
             this.txt_filterText = new System.Windows.Forms.TextBox();
             this.btn_filter = new System.Windows.Forms.Button();
+            this.box_ai = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_gameobjectGrid)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -112,12 +115,11 @@
             this.groupBox1.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_gameobjectGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // dgv_grid
             // 
+            this.dgv_grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgv_grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_grid.Location = new System.Drawing.Point(-4, 0);
             this.dgv_grid.Name = "dgv_grid";
@@ -163,6 +165,26 @@
             this.tabPage1.Text = "Creatures";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.dgv_gameobjectGrid);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(978, 565);
+            this.tabPage6.TabIndex = 2;
+            this.tabPage6.Text = "Gameobjects";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // dgv_gameobjectGrid
+            // 
+            this.dgv_gameobjectGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_gameobjectGrid.Location = new System.Drawing.Point(-2, -2);
+            this.dgv_gameobjectGrid.Name = "dgv_gameobjectGrid";
+            this.dgv_gameobjectGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_gameobjectGrid.Size = new System.Drawing.Size(982, 569);
+            this.dgv_gameobjectGrid.TabIndex = 1;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.rtxt_SQLResult);
@@ -196,7 +218,7 @@
             // 
             this.txt_creatureGUID.Location = new System.Drawing.Point(6, 25);
             this.txt_creatureGUID.Name = "txt_creatureGUID";
-            this.txt_creatureGUID.Size = new System.Drawing.Size(117, 20);
+            this.txt_creatureGUID.Size = new System.Drawing.Size(116, 20);
             this.txt_creatureGUID.TabIndex = 4;
             this.txt_creatureGUID.Text = "GUID";
             // 
@@ -335,7 +357,7 @@
             this.txt_curmana.Name = "txt_curmana";
             this.txt_curmana.Size = new System.Drawing.Size(56, 20);
             this.txt_curmana.TabIndex = 33;
-            this.txt_curmana.Text = "XXXX";
+            this.txt_curmana.Text = "1";
             // 
             // txt_curhealth
             // 
@@ -343,7 +365,7 @@
             this.txt_curhealth.Name = "txt_curhealth";
             this.txt_curhealth.Size = new System.Drawing.Size(56, 20);
             this.txt_curhealth.TabIndex = 32;
-            this.txt_curhealth.Text = "XXXX";
+            this.txt_curhealth.Text = "1";
             // 
             // txt_deathState
             // 
@@ -445,6 +467,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.box_ai);
             this.tabPage3.Controls.Add(this.txt_state);
             this.tabPage3.Controls.Add(this.label23);
             this.tabPage3.Controls.Add(this.txt_animprogress);
@@ -482,6 +505,40 @@
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "spawn";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // txt_state
+            // 
+            this.txt_state.Location = new System.Drawing.Point(143, 68);
+            this.txt_state.Name = "txt_state";
+            this.txt_state.Size = new System.Drawing.Size(33, 20);
+            this.txt_state.TabIndex = 47;
+            this.txt_state.Text = "1";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(143, 50);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(30, 13);
+            this.label23.TabIndex = 46;
+            this.label23.Text = "state";
+            // 
+            // txt_animprogress
+            // 
+            this.txt_animprogress.Location = new System.Drawing.Point(143, 25);
+            this.txt_animprogress.Name = "txt_animprogress";
+            this.txt_animprogress.Size = new System.Drawing.Size(33, 20);
+            this.txt_animprogress.TabIndex = 45;
+            this.txt_animprogress.Text = "100";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(140, 5);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(69, 13);
+            this.label22.TabIndex = 44;
+            this.label22.Text = "animprogress";
             // 
             // tabPage4
             // 
@@ -749,60 +806,6 @@
             this.lbl_currentFileCount.TabIndex = 54;
             this.lbl_currentFileCount.Text = "File 0/0";
             // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.dgv_gameobjectGrid);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(978, 565);
-            this.tabPage6.TabIndex = 2;
-            this.tabPage6.Text = "Gameobjects";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // dgv_gameobjectGrid
-            // 
-            this.dgv_gameobjectGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_gameobjectGrid.Location = new System.Drawing.Point(-2, -2);
-            this.dgv_gameobjectGrid.Name = "dgv_gameobjectGrid";
-            this.dgv_gameobjectGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv_gameobjectGrid.Size = new System.Drawing.Size(982, 569);
-            this.dgv_gameobjectGrid.TabIndex = 1;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(140, 5);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(69, 13);
-            this.label22.TabIndex = 44;
-            this.label22.Text = "animprogress";
-            // 
-            // txt_animprogress
-            // 
-            this.txt_animprogress.Location = new System.Drawing.Point(143, 25);
-            this.txt_animprogress.Name = "txt_animprogress";
-            this.txt_animprogress.Size = new System.Drawing.Size(33, 20);
-            this.txt_animprogress.TabIndex = 45;
-            this.txt_animprogress.Text = "100";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(143, 50);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(30, 13);
-            this.label23.TabIndex = 46;
-            this.label23.Text = "state";
-            // 
-            // txt_state
-            // 
-            this.txt_state.Location = new System.Drawing.Point(143, 68);
-            this.txt_state.Name = "txt_state";
-            this.txt_state.Size = new System.Drawing.Size(33, 20);
-            this.txt_state.TabIndex = 47;
-            this.txt_state.Text = "1";
-            // 
             // txt_filterText
             // 
             this.txt_filterText.Location = new System.Drawing.Point(1002, 77);
@@ -819,6 +822,16 @@
             this.btn_filter.Text = "Filter By Entry";
             this.btn_filter.UseVisualStyleBackColor = true;
             this.btn_filter.Click += new System.EventHandler(this.btn_filter_Click);
+            // 
+            // box_ai
+            // 
+            this.box_ai.AutoSize = true;
+            this.box_ai.Location = new System.Drawing.Point(66, 5);
+            this.box_ai.Name = "box_ai";
+            this.box_ai.Size = new System.Drawing.Size(36, 17);
+            this.box_ai.TabIndex = 49;
+            this.box_ai.Text = "AI";
+            this.box_ai.UseVisualStyleBackColor = true;
             // 
             // frm_multiSpawnGen
             // 
@@ -845,6 +858,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_gameobjectGrid)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -855,8 +870,6 @@
             this.tabPage5.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_gameobjectGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -938,5 +951,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox txt_filterText;
         private System.Windows.Forms.Button btn_filter;
+        private System.Windows.Forms.CheckBox box_ai;
     }
 }
