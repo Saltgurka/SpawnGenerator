@@ -142,10 +142,10 @@ namespace SpawnGenerator
                     output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
                     output += "INSERT INTO gameobject (guid, id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state) VALUES\n";
                 }
-                int i = 1;
+                int i = 2;
                 foreach (DataGridViewRow row in dgv_grid.SelectedRows)
                 {
-                    if (row.Cells[0].Value.ToString() == "Creature/0" || row.Cells[0].Value.ToString() == "Unit")
+                    if (row.Cells[0].Value != null && (row.Cells[0].Value.ToString() == "Creature/0" || row.Cells[0].Value.ToString() == "Unit"))
                     {
                         output += "(";
                         if (!box_ai.Checked)
@@ -184,7 +184,7 @@ namespace SpawnGenerator
                             i++;
                         }
                     }
-                    else if (row.Cells[0].Value.ToString() == "GameObject/0")
+                    else if (row.Cells[0].Value != null && row.Cells[0].Value.ToString() == "GameObject/0")
                     {
                         output += "(";
                         if (!box_ai.Checked)
