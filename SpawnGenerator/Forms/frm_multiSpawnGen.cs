@@ -47,7 +47,7 @@ namespace SpawnGenerator
                     currentFile++;
                     lbl_currentFileCount.Text = "File " + currentFile + "/" + numOfFiles;
                     progress.PerformStep();
-                    FillDataTable(openFileDialog.FileName);
+                    FillDataTable(file);
                 }
 
                 lbl_currentFileCount.Text = "Done!";
@@ -171,7 +171,7 @@ namespace SpawnGenerator
 
                         if (box_filename.Checked)
                         {
-                            output += "," + row.Cells[13].Value;
+                            output += ",'" + row.Cells[13].Value + "'";
                         }
 
                         if (i == dgv_grid.SelectedRows.Count)
@@ -208,7 +208,7 @@ namespace SpawnGenerator
 
                         if (box_filename.Checked)
                         {
-                            output += "," + row.Cells[13].Value;
+                            output += ",'" + row.Cells[13].Value + "'";
                         }
 
                         if (i == dgv_grid.SelectedRows.Count)
