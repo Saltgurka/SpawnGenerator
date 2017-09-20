@@ -46,14 +46,19 @@
             this.progress = new System.Windows.Forms.ProgressBar();
             this.lbl_currentFile = new System.Windows.Forms.Label();
             this.lbl_currentNum = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.rtxt_duplicateResults = new System.Windows.Forms.RichTextBox();
+            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgv_grid
             // 
+            this.dgv_grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgv_grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name,
@@ -61,7 +66,8 @@
             this.oldSpeedWalk,
             this.oldSpeedRun,
             this.sniffedSpeedWalk,
-            this.sniffedSpeedRun});
+            this.sniffedSpeedRun,
+            this.FileName});
             this.dgv_grid.Location = new System.Drawing.Point(0, 0);
             this.dgv_grid.Name = "dgv_grid";
             this.dgv_grid.Size = new System.Drawing.Size(1094, 395);
@@ -71,31 +77,37 @@
             // 
             this.name.HeaderText = "Name";
             this.name.Name = "name";
+            this.name.Width = 60;
             // 
             // entry
             // 
             this.entry.HeaderText = "Entry";
             this.entry.Name = "entry";
+            this.entry.Width = 56;
             // 
             // oldSpeedWalk
             // 
             this.oldSpeedWalk.HeaderText = "OldSpeedWalk";
             this.oldSpeedWalk.Name = "oldSpeedWalk";
+            this.oldSpeedWalk.Width = 104;
             // 
             // oldSpeedRun
             // 
             this.oldSpeedRun.HeaderText = "OldSpeedRun";
             this.oldSpeedRun.Name = "oldSpeedRun";
+            this.oldSpeedRun.Width = 99;
             // 
             // sniffedSpeedWalk
             // 
             this.sniffedSpeedWalk.HeaderText = "SniffedSpeedWalk";
             this.sniffedSpeedWalk.Name = "sniffedSpeedWalk";
+            this.sniffedSpeedWalk.Width = 121;
             // 
             // sniffedSpeedRun
             // 
             this.sniffedSpeedRun.HeaderText = "SniffedSpeedRun";
             this.sniffedSpeedRun.Name = "sniffedSpeedRun";
+            this.sniffedSpeedRun.Width = 116;
             // 
             // btn_loadSniff
             // 
@@ -134,6 +146,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -195,6 +208,31 @@
             this.lbl_currentNum.TabIndex = 7;
             this.lbl_currentNum.Text = "0/0";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.rtxt_duplicateResults);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1090, 395);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // rtxt_duplicateResults
+            // 
+            this.rtxt_duplicateResults.Location = new System.Drawing.Point(0, 0);
+            this.rtxt_duplicateResults.Name = "rtxt_duplicateResults";
+            this.rtxt_duplicateResults.Size = new System.Drawing.Size(1090, 395);
+            this.rtxt_duplicateResults.TabIndex = 1;
+            this.rtxt_duplicateResults.Text = "";
+            // 
+            // FileName
+            // 
+            this.FileName.HeaderText = "FileName";
+            this.FileName.Name = "FileName";
+            this.FileName.Width = 76;
+            // 
             // frm_speedSetter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -215,6 +253,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,5 +279,8 @@
         private System.Windows.Forms.ProgressBar progress;
         private System.Windows.Forms.Label lbl_currentFile;
         private System.Windows.Forms.Label lbl_currentNum;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.RichTextBox rtxt_duplicateResults;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
     }
 }

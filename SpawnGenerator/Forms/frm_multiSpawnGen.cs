@@ -151,15 +151,18 @@ namespace SpawnGenerator
                         if (!box_ai.Checked)
                             output += guid + ",";
 
-                        output += row.Cells[1].Value + ","
-                            + row.Cells[8].Value + ","
-                            + txt_spawnMask.Text + ","
+                        output += row.Cells[1].Value + ",";
+                        if (row.Cells[8].Value.ToString() != "")
+                            output += row.Cells[8].Value + ","; // map
+                        else
+                            output += "9999,"; // map
+                        output += txt_spawnMask.Text + ","
                             + txt_modelid.Text + ","
                             + txt_equipmentId.Text + ","
-                            + row.Cells[4].Value + ","
-                            + row.Cells[5].Value + ","
-                            + row.Cells[6].Value + ","
-                            + row.Cells[7].Value + ","
+                            + row.Cells[4].Value + "," // x
+                            + row.Cells[5].Value + "," // y
+                            + row.Cells[6].Value + "," // z
+                            + row.Cells[7].Value + "," // o
                             + txt_spawnMin.Text + ","
                             + txt_spawnMax.Text + ","
                             + txt_spawndist.Text + ","
@@ -171,7 +174,7 @@ namespace SpawnGenerator
 
                         if (box_filename.Checked)
                         {
-                            output += ",'" + row.Cells[13].Value + "'";
+                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells[13].Value.ToString()) + "'";
                         }
 
                         if (i == dgv_grid.SelectedRows.Count)
@@ -190,9 +193,13 @@ namespace SpawnGenerator
                         if (!box_ai.Checked)
                             output += guid + ","; // guid
 
-                        output += row.Cells[1].Value + "," // id
-                            + row.Cells[8].Value + "," // map
-                            + txt_spawnMask.Text + "," // spawnMask
+                        output += row.Cells[1].Value + ","; // id
+                        if (row.Cells[8].Value.ToString() != "")
+                            output += row.Cells[8].Value + ","; // map
+                        else
+                            output += "9999,"; // map
+
+                        output += txt_spawnMask.Text + "," // spawnMask
                             + row.Cells[4].Value + "," // position_x
                             + row.Cells[5].Value + "," // position_y
                             + row.Cells[6].Value + "," // position_z
@@ -208,7 +215,7 @@ namespace SpawnGenerator
 
                         if (box_filename.Checked)
                         {
-                            output += ",'" + row.Cells[13].Value + "'";
+                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells[13].Value.ToString()) + "'";
                         }
 
                         if (i == dgv_grid.SelectedRows.Count)
@@ -379,6 +386,9 @@ namespace SpawnGenerator
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmb_typeFilter.SelectedIndex == -1)
+                return;
+
+            if (dgv_grid.DataSource == null)
                 return;
 
             string filter = "";

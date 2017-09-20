@@ -232,23 +232,22 @@ namespace SpawnGenerator
                     else if (parser == Parser.UDB)
                     {
                         string[] values = lines[i].Split(new char[] { ' ' });
+                        string[] values2 = lines[i+1].Split(new char[] { ' ' });
 
                         //string[] objectType = values[5].Split(new char[] { '/' });
 
                         if (values.Length > 3)
                             sniff.guidFull = values[3];
+                        if (values2.Length > 3)
+                            sniff.objectType = values2[3];
                         if (values.Length > 5)
-                            sniff.objectType = values[5];
-                        if (values.Length > 7)
-                            sniff.entry = values[7];
-                        if (values.Length > 9)
-                            sniff.guidLow = values[9];
+                            sniff.guidLow = values[5];
 
                         do
                         {
                             i++;
 
-                            if (lines[i].Contains("Position: X:"))
+                            if (lines[i].Contains("] Position: X:"))
                             {
                                 string[] packetline = lines[i].Split(new char[] { ' ' });
                                 if (packetline.Length == 8) // Creature
@@ -281,6 +280,13 @@ namespace SpawnGenerator
                                         sniff.r3 = rotationline[10];
                                     }
                                 }
+                            }
+
+                            if (lines[i].Contains("OBJECT_FIELD_ENTRY:"))
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ' ' });
+                                if (packetline.Length == 4)
+                                    sniff.entry = packetline[3];
                             }
                         } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
                     }
@@ -411,6 +417,10 @@ namespace SpawnGenerator
 
             bool isPet = false;
 
+            bool speedWalkSet = false;
+            bool speedRunSet = false;
+            bool entrySet = false;
+
             for (int i = 1; i < lines.Count; i++)
             {
                 if (lines[i].Contains("CreateObject"))
@@ -426,27 +436,30 @@ namespace SpawnGenerator
                         {
                             i++;
 
-                            if (lines[i].Contains("WalkSpeed") || lines[i].Contains("Walk Speed"))
+                            if ((lines[i].Contains("WalkSpeed") || lines[i].Contains("Walk Speed")) && speedWalkSet == false)
                             {
                                 string[] packetline = lines[i].Split(new char[] { ':' });
                                 sniff.speedWalk = packetline[1];
                                 sniff.speedWalk = sniff.speedWalk.Trim(' ');
+                                speedWalkSet = true;
                             }
 
-                            if (lines[i].Contains("RunSpeed") || lines[i].Contains("Run Speed"))
+                            if ((lines[i].Contains("RunSpeed") || lines[i].Contains("Run Speed")) && speedRunSet == false)
                             {
                                 string[] packetline = lines[i].Split(new char[] { ':' });
                                 sniff.speedRun = packetline[1];
                                 sniff.speedRun = sniff.speedRun.Trim(' ');
+                                speedRunSet = true;
                             }
 
-                            if (lines[i].Contains("OBJECT_FIELD_ENTRY"))
+                            if (lines[i].Contains("OBJECT_FIELD_ENTRY") && entrySet == false)
                             {
                                 string[] packetline = lines[i].Split(new char[] { ':', '/' });
                                 sniff.entry = packetline[1];
                                 sniff.entry = sniff.entry.Trim(' ');
+                                entrySet = true;
                             }
-
+                            
                             if (lines[i].Contains("UNIT_FIELD_FLAGS"))
                             {
                                 isPet = false;
@@ -479,6 +492,9 @@ namespace SpawnGenerator
                             creatures.Add(c);
                             sniff.entry = "";
                             sniff.unitFlags = "";
+                            speedWalkSet = false;
+                            speedRunSet = false;
+                            entrySet = false;
                         }
                     }
                 }

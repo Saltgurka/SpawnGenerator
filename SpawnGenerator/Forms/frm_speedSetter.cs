@@ -310,6 +310,7 @@ namespace SpawnGenerator.Forms
             public string Name { get; set; }
             public string SpeedWalk { get; set; }
             public string SpeedRun { get; set; }
+            public string FileName { get; set; }
         }
 
         public frm_speedSetter()
@@ -386,6 +387,7 @@ namespace SpawnGenerator.Forms
                                     {
                                         MessageBox.Show("The value already existed in DataGridView. Entry: (" + item.Entry + ")\n First Sniffed SpeedWalk: " + roundedSpeedWalk + " Second Sniffed SpeedWalk: " + dgv_grid.Rows[k].Cells[4].Value.ToString()
                                             + "\n First Sniffed SpeedRun: " + roundedSpeedRun + " Second Sniffed SpeedRun: " + dgv_grid.Rows[k].Cells[5].Value.ToString() + "\n Sniffs are showing different speeds for the same creature!!\n" + fileName);
+                                        rtxt_duplicateResults.Text += item.Entry + ",\n";
                                     }
                                     exists = true;
                                 }
@@ -404,7 +406,7 @@ namespace SpawnGenerator.Forms
                 }
 
                 if (addItem)
-                    dgv_grid.Rows.Add(name, item.Entry, oldSpeedWalk, oldSpeedRun, roundedSpeedWalk, roundedSpeedRun);
+                    dgv_grid.Rows.Add(name, item.Entry, oldSpeedWalk, oldSpeedRun, roundedSpeedWalk, roundedSpeedRun, fileName);
             }
 
             Cursor = Cursors.Default;
