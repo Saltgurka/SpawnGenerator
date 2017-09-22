@@ -193,38 +193,36 @@ namespace SpawnGenerator
                         {
                             i++;
 
-                            if (lines[i].Contains("] Position: X:"))
+                            if (lines[i].Contains("] Position: X:")) // Creature
                             {
                                 string[] packetline = lines[i].Split(new char[] { ' ' });
-                                if (packetline.Length == 8) // Creature
-                                {
-                                    sniff.x = packetline[3];
-                                    sniff.y = packetline[5];
-                                    sniff.z = packetline[7];
-                                }
-                                else // Gameobject
-                                {
-                                    sniff.x = packetline[4];
-                                    sniff.y = packetline[6];
-                                    sniff.z = packetline[8];
-                                }
+
+                                sniff.x = packetline[3];
+                                sniff.y = packetline[5];
+                                sniff.z = packetline[7];
 
                                 string[] orientationline = lines[i + 1].Split(new char[] { ' ' });
-                                if (sniff.objectType == "Creature/0" || sniff.objectType == "Unit") // Creature
-                                    sniff.o = orientationline[2];
-                                else if (sniff.objectType == "GameObject/0") // Gameobject
+                                sniff.o = orientationline[2];
+                            }
+                            else if (lines[i].Contains("] Stationary Position: X:")) // Gameobject
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ' ' });
+                                sniff.x = packetline[4];
+                                sniff.y = packetline[6];
+                                sniff.z = packetline[8];
+
+                                string[] orientationline = lines[i + 1].Split(new char[] { ' ' });
+
+                                sniff.o = orientationline[3];
+
+                                string[] rotationline = lines[i + 2].Split(new char[] { ' ' });
+
+                                if (rotationline.Length > 10)
                                 {
-                                    sniff.o = orientationline[3];
-
-                                    string[] rotationline = lines[i + 2].Split(new char[] { ' ' });
-
-                                    if (rotationline.Length > 10)
-                                    {
-                                        sniff.r0 = rotationline[4];
-                                        sniff.r1 = rotationline[6];
-                                        sniff.r2 = rotationline[8];
-                                        sniff.r3 = rotationline[10];
-                                    }
+                                    sniff.r0 = rotationline[4];
+                                    sniff.r1 = rotationline[6];
+                                    sniff.r2 = rotationline[8];
+                                    sniff.r3 = rotationline[10];
                                 }
                             }
                         } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
@@ -232,7 +230,7 @@ namespace SpawnGenerator
                     else if (parser == Parser.UDB)
                     {
                         string[] values = lines[i].Split(new char[] { ' ' });
-                        string[] values2 = lines[i+1].Split(new char[] { ' ' });
+                        string[] values2 = lines[i + 1].Split(new char[] { ' ' });
 
                         //string[] objectType = values[5].Split(new char[] { '/' });
 
@@ -430,7 +428,7 @@ namespace SpawnGenerator
                     //string[] values = lines[i].Split(new char[] { ' ' });
                     //string[] objectType = values[5].Split(new char[] { '/' });
                     //sniff.entry = values[10];
-                    if (lines[i+1].Contains("Unit"))
+                    if (lines[i + 1].Contains("Unit"))
                     {
                         do
                         {
@@ -459,7 +457,7 @@ namespace SpawnGenerator
                                 sniff.entry = sniff.entry.Trim(' ');
                                 entrySet = true;
                             }
-                            
+
                             if (lines[i].Contains("UNIT_FIELD_FLAGS"))
                             {
                                 isPet = false;
