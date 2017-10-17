@@ -225,6 +225,10 @@ namespace SpawnGenerator
                                     sniff.r3 = rotationline[10];
                                 }
                             }
+                            if (sniff.objectType != "Creature/0" && sniff.objectType != "Unit/0" && sniff.objectType != "GameObject/0")
+                            {
+                                sniff.entry = "";
+                            }
                         } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
                     }
                     else if (parser == Parser.UDB)
@@ -280,7 +284,7 @@ namespace SpawnGenerator
                                 }
                             }
 
-                            if (lines[i].Contains("OBJECT_FIELD_ENTRY:"))
+                            if (lines[i].Contains("OBJECT_FIELD_ENTRY:") && (sniff.objectType == "Creature" || sniff.objectType == "Unit" || sniff.objectType == "GameObject"))
                             {
                                 string[] packetline = lines[i].Split(new char[] { ' ' });
                                 if (packetline.Length == 4)
