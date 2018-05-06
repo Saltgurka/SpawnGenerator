@@ -377,12 +377,12 @@ namespace SpawnGenerator
 
         private void dgv_grid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            lbl_rows.Text = "Rows: " + dgv_grid.Rows.Count;
+            lbl_rows.Text = "Rows: " + (dgv_grid.Rows.Count-1);
         }
 
         private void dgv_grid_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
-            lbl_rows.Text = "Rows: " + dgv_grid.Rows.Count;
+            lbl_rows.Text = "Rows: " + (dgv_grid.Rows.Count-1);
         }
 
         private void btn_filter_Click(object sender, EventArgs e)
