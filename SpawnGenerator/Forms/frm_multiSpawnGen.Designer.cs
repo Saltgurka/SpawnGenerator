@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dgv_grid = new System.Windows.Forms.DataGridView();
             this.btn_loadSniff = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -68,6 +69,8 @@
             this.lbl_rows = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.box_filename = new System.Windows.Forms.CheckBox();
+            this.box_ai = new System.Windows.Forms.CheckBox();
             this.txt_state = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.txt_animprogress = new System.Windows.Forms.TextBox();
@@ -102,9 +105,9 @@
             this.lbl_currentFileCount = new System.Windows.Forms.Label();
             this.txt_filterText = new System.Windows.Forms.TextBox();
             this.btn_filter = new System.Windows.Forms.Button();
-            this.box_ai = new System.Windows.Forms.CheckBox();
-            this.box_filename = new System.Windows.Forms.CheckBox();
             this.cmb_typeFilter = new System.Windows.Forms.ComboBox();
+            this.box_duplicateMethod = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -509,6 +512,26 @@
             this.tabPage3.Text = "spawn";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // box_filename
+            // 
+            this.box_filename.AutoSize = true;
+            this.box_filename.Location = new System.Drawing.Point(143, 95);
+            this.box_filename.Name = "box_filename";
+            this.box_filename.Size = new System.Drawing.Size(70, 17);
+            this.box_filename.TabIndex = 50;
+            this.box_filename.Text = "FileName";
+            this.box_filename.UseVisualStyleBackColor = true;
+            // 
+            // box_ai
+            // 
+            this.box_ai.AutoSize = true;
+            this.box_ai.Location = new System.Drawing.Point(66, 5);
+            this.box_ai.Name = "box_ai";
+            this.box_ai.Size = new System.Drawing.Size(36, 17);
+            this.box_ai.TabIndex = 49;
+            this.box_ai.Text = "AI";
+            this.box_ai.UseVisualStyleBackColor = true;
+            // 
             // txt_state
             // 
             this.txt_state.Location = new System.Drawing.Point(143, 68);
@@ -826,26 +849,6 @@
             this.btn_filter.UseVisualStyleBackColor = true;
             this.btn_filter.Click += new System.EventHandler(this.btn_filter_Click);
             // 
-            // box_ai
-            // 
-            this.box_ai.AutoSize = true;
-            this.box_ai.Location = new System.Drawing.Point(66, 5);
-            this.box_ai.Name = "box_ai";
-            this.box_ai.Size = new System.Drawing.Size(36, 17);
-            this.box_ai.TabIndex = 49;
-            this.box_ai.Text = "AI";
-            this.box_ai.UseVisualStyleBackColor = true;
-            // 
-            // box_filename
-            // 
-            this.box_filename.AutoSize = true;
-            this.box_filename.Location = new System.Drawing.Point(143, 95);
-            this.box_filename.Name = "box_filename";
-            this.box_filename.Size = new System.Drawing.Size(70, 17);
-            this.box_filename.TabIndex = 50;
-            this.box_filename.Text = "FileName";
-            this.box_filename.UseVisualStyleBackColor = true;
-            // 
             // cmb_typeFilter
             // 
             this.cmb_typeFilter.FormattingEnabled = true;
@@ -862,11 +865,26 @@
             this.cmb_typeFilter.TabIndex = 57;
             this.cmb_typeFilter.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // box_duplicateMethod
+            // 
+            this.box_duplicateMethod.AutoSize = true;
+            this.box_duplicateMethod.Checked = true;
+            this.box_duplicateMethod.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.box_duplicateMethod.Location = new System.Drawing.Point(1123, 139);
+            this.box_duplicateMethod.Name = "box_duplicateMethod";
+            this.box_duplicateMethod.Size = new System.Drawing.Size(163, 17);
+            this.box_duplicateMethod.TabIndex = 58;
+            this.box_duplicateMethod.Text = "New Method (recommended)";
+            this.toolTip1.SetToolTip(this.box_duplicateMethod, "New method is faster, but it removes all non-essential columns in the process. In" +
+        " case you need access to those, please use the old method");
+            this.box_duplicateMethod.UseVisualStyleBackColor = true;
+            // 
             // frm_multiSpawnGen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1401, 612);
+            this.Controls.Add(this.box_duplicateMethod);
             this.Controls.Add(this.cmb_typeFilter);
             this.Controls.Add(this.btn_filter);
             this.Controls.Add(this.txt_filterText);
@@ -984,5 +1002,7 @@
         private System.Windows.Forms.CheckBox box_ai;
         private System.Windows.Forms.CheckBox box_filename;
         private System.Windows.Forms.ComboBox cmb_typeFilter;
+        private System.Windows.Forms.CheckBox box_duplicateMethod;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

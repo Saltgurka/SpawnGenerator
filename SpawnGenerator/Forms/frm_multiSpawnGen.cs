@@ -151,18 +151,18 @@ namespace SpawnGenerator
                         if (!box_ai.Checked)
                             output += guid + ",";
 
-                        output += row.Cells[1].Value + ",";
-                        if (row.Cells[8].Value.ToString() != "")
-                            output += row.Cells[8].Value + ","; // map
+                        output += row.Cells["entry"].Value + ",";
+                        if (row.Cells["map"].Value.ToString() != "")
+                            output += row.Cells["map"].Value + ","; // map
                         else
                             output += "9999,"; // map
                         output += txt_spawnMask.Text + ","
                             + txt_modelid.Text + ","
                             + txt_equipmentId.Text + ","
-                            + row.Cells[4].Value + "," // x
-                            + row.Cells[5].Value + "," // y
-                            + row.Cells[6].Value + "," // z
-                            + row.Cells[7].Value + "," // o
+                            + row.Cells["x"].Value + "," // x
+                            + row.Cells["y"].Value + "," // y
+                            + row.Cells["z"].Value + "," // z
+                            + row.Cells["o"].Value + "," // o
                             + txt_spawnMin.Text + ","
                             + txt_spawnMax.Text + ","
                             + txt_spawndist.Text + ","
@@ -174,7 +174,7 @@ namespace SpawnGenerator
 
                         if (box_filename.Checked)
                         {
-                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells[13].Value.ToString()) + "'";
+                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells["filename"].Value.ToString()) + "'";
                         }
 
                         if (i == dgv_grid.SelectedRows.Count)
@@ -193,21 +193,21 @@ namespace SpawnGenerator
                         if (!box_ai.Checked)
                             output += guid + ","; // guid
 
-                        output += row.Cells[1].Value + ","; // id
-                        if (row.Cells[8].Value.ToString() != "")
-                            output += row.Cells[8].Value + ","; // map
+                        output += row.Cells["entry"].Value + ","; // id
+                        if (row.Cells["map"].Value.ToString() != "")
+                            output += row.Cells["map"].Value + ","; // map
                         else
                             output += "9999,"; // map
 
                         output += txt_spawnMask.Text + "," // spawnMask
-                            + row.Cells[4].Value + "," // position_x
-                            + row.Cells[5].Value + "," // position_y
-                            + row.Cells[6].Value + "," // position_z
-                            + row.Cells[7].Value + "," // orientation
-                            + row.Cells[9].Value + "," // rotation0
-                            + row.Cells[10].Value + "," // rotation1
-                            + row.Cells[11].Value + "," // rotation2
-                            + row.Cells[12].Value + "," // rotation3
+                            + row.Cells["x"].Value + "," // position_x
+                            + row.Cells["y"].Value + "," // position_y
+                            + row.Cells["z"].Value + "," // position_z
+                            + row.Cells["o"].Value + "," // orientation
+                            + row.Cells["r0"].Value + "," // rotation0
+                            + row.Cells["r1"].Value + "," // rotation1
+                            + row.Cells["r2"].Value + "," // rotation2
+                            + row.Cells["r3"].Value + "," // rotation3
                             + txt_spawnMin.Text + "," // spawntimesecsmin
                             + txt_spawnMax.Text + "," // spawntimesecsmax
                             + txt_animprogress.Text + "," // animprogress
@@ -215,7 +215,7 @@ namespace SpawnGenerator
 
                         if (box_filename.Checked)
                         {
-                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells[13].Value.ToString()) + "'";
+                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells["filename"].Value.ToString()) + "'";
                         }
 
                         if (i == dgv_grid.SelectedRows.Count)
@@ -252,7 +252,7 @@ namespace SpawnGenerator
                         + txt_dbscriptID.Text + "," // id
                         + txt_dbscriptDelay.Text + "," // delay
                         + "10," // command
-                        + row.Cells[1].Value + "," // datalong
+                        + row.Cells["entry"].Value + "," // datalong
                         + txt_dbscriptDespawnTime.Text + "," // datalong2
                         + pathId + "," // datalong3
                         + (box_dbscriptRunOn.Checked ? "1," : "0,") // dataint1
@@ -263,10 +263,10 @@ namespace SpawnGenerator
                         + "0," // search_radius
                         + (box_dbscriptActiveObject.Checked ? "8," : "0,") // data_flags
                         + txt_dbscriptComment.Text + "," // comments
-                        + row.Cells[4].Value + "," // x
-                        + row.Cells[5].Value + "," // y
-                        + row.Cells[6].Value + "," // z
-                        + row.Cells[7].Value + "),\n"; // o
+                        + row.Cells["x"].Value + "," // x
+                        + row.Cells["y"].Value + "," // y
+                        + row.Cells["z"].Value + "," // z
+                        + row.Cells["o"].Value + "),\n"; // o
 
                     pathId++;
                 }
@@ -289,15 +289,15 @@ namespace SpawnGenerator
                 foreach (DataGridViewRow row in dgv_grid.SelectedRows)
                 {
                     output += "("
-                        + row.Cells[1].Value + "," // entry
+                        + row.Cells["entry"].Value + "," // entry
                         + "1," // point
                         + pathId + "," // pathId
-                        + row.Cells[4].Value + "," // position_x
-                        + row.Cells[5].Value + "," // position_y
-                        + row.Cells[6].Value + "," // position_z
+                        + row.Cells["x"].Value + "," // position_x
+                        + row.Cells["y"].Value + "," // position_y
+                        + row.Cells["z"].Value + "," // position_z
                         + txt_waypointWaittime.Text + "," // waittime
                         + txt_waypointScriptId.Text + "," // script_id
-                        + row.Cells[7].Value + "),\n"; // orientation
+                        + row.Cells["o"].Value + "),\n"; // orientation
 
                     pathId++;
                 }
@@ -362,7 +362,17 @@ namespace SpawnGenerator
 
         private void btn_deleteDuplicate_Click(object sender, EventArgs e)
         {
-            RemoveDuplicateSpawns();
+            if (box_duplicateMethod.Checked)
+            {
+                DataTable distinctTable = spawns.DefaultView.ToTable(true, "type", "entry", "x", "y", "z", "o", "map");
+                spawns = distinctTable;
+                spawns.AcceptChanges();
+
+                dgv_grid.DataSource = null;
+                dgv_grid.DataSource = spawns;
+            }
+            else
+                RemoveDuplicateSpawns();
         }
 
         private void dgv_grid_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
