@@ -97,7 +97,16 @@ namespace SpawnGenerator
 
         private bool OpenConnection()
         {
-            connection.Open();
+            try
+            {
+                connection.Open();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Connection to Database failed! Please check your login credentials! You may need to reload the form to prevent loading issues.");
+                return false;
+                throw;
+            }
             return true;
         }
 
