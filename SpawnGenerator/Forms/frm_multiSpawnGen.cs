@@ -174,7 +174,7 @@ namespace SpawnGenerator
 
                         if (box_filename.Checked)
                         {
-                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells["filename"].Value.ToString()) + "'";
+                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells["sourcefile"].Value.ToString()) + "'";
                         }
 
                         if (i == dgv_grid.SelectedRows.Count)
@@ -215,7 +215,7 @@ namespace SpawnGenerator
 
                         if (box_filename.Checked)
                         {
-                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells["filename"].Value.ToString()) + "'";
+                            output += ",'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(row.Cells["sourcefile"].Value.ToString()) + "'";
                         }
 
                         if (i == dgv_grid.SelectedRows.Count)
@@ -364,7 +364,7 @@ namespace SpawnGenerator
         {
             if (box_duplicateMethod.Checked)
             {
-                DataTable distinctTable = spawns.DefaultView.ToTable(true, "type", "entry", "x", "y", "z", "o", "map");
+                DataTable distinctTable = spawns.DefaultView.ToTable(true, "type", "entry", "x", "y", "z", "o", "map", "r0", "r1", "r2", "r3");
                 spawns = distinctTable;
                 spawns.AcceptChanges();
 
