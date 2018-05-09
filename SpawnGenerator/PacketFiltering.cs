@@ -132,25 +132,21 @@ namespace SpawnGenerator
             return newFileStrings;
         }
 
-        public DataTable GetDataTableForSpawns(List<string> filteredPackets, bool onlyCreateObject2, string filename)
+        private List<SpawnPacket> GetSpawnData(string filename, bool onlyCreateObject2)
         {
-            var lines = filteredPackets;
+            List<string> filterList = new List<string>(new string[] { "SMSG_UPDATE_OBJECT", "SMSG_COMPRESSED_UPDATE_OBJECT" });
+            List<string> createObjectList = FilterSniffFile(filename, false, filterList);
+            List<SpawnPacket> spawnPackets = new List<SpawnPacket>();
+
+            var lines = createObjectList;
             string stringToSearchFor = onlyCreateObject2 ? "CreateObject2" : "CreateObject";
-            DataTable dt = new DataTable("Spawns");
 
             SpawnPacket sniff;
+
             Parser parser = Parser.Trinity;
 
             if (lines[0].Contains("UDB"))
                 parser = Parser.UDB;
-
-
-            string[] columns = null;
-
-            string col = "type,entry,guidlow,guidfull,x,y,z,o,map,r0,r1,r2,r3,sourcefile";
-            columns = col.Split(new char[] { ',' });
-            foreach (var column in columns)
-                dt.Columns.Add(column);
 
             for (int i = 1; i < lines.Count; i++)
             {
@@ -295,26 +291,52 @@ namespace SpawnGenerator
 
                     if (sniff.entry != "")
                     {
-                        DataRow dr = dt.NewRow();
-                        dr[0] = sniff.objectType;
-                        dr[1] = sniff.entry;
-                        dr[2] = sniff.guidLow;
-                        dr[3] = sniff.guidFull;
-                        dr[4] = sniff.x;
-                        dr[5] = sniff.y;
-                        dr[6] = sniff.z;
-                        dr[7] = sniff.o;
-                        dr[8] = sniff.map;
-                        dr[9] = sniff.r0;
-                        dr[10] = sniff.r1;
-                        dr[11] = sniff.r2;
-                        dr[12] = sniff.r3;
-                        dr[13] = filename;
-                        dt.Rows.Add(dr);
+                        spawnPackets.Add(sniff);
                         sniff.entry = "";
                     }
                 }
             }
+
+            return spawnPackets;
+        }
+
+        public DataTable GetDataTableForSpawns(List<string> filteredPackets, bool onlyCreateObject2, string filename)
+        {
+            DataTable dt = new DataTable("Spawns");
+
+            List<SpawnPacket> sniffs = new List<SpawnPacket>();
+            sniffs = GetSpawnData(filename, onlyCreateObject2);
+
+            string[] columns = null;
+
+            string col = "type,entry,guidlow,guidfull,x,y,z,o,map,r0,r1,r2,r3,sourcefile";
+            columns = col.Split(new char[] { ',' });
+            foreach (var column in columns)
+                dt.Columns.Add(column);
+
+            foreach (SpawnPacket sniff in sniffs)
+            {
+                if (sniff.entry != "")
+                {
+                    DataRow dr = dt.NewRow();
+                    dr[0] = sniff.objectType;
+                    dr[1] = sniff.entry;
+                    dr[2] = sniff.guidLow;
+                    dr[3] = sniff.guidFull;
+                    dr[4] = sniff.x;
+                    dr[5] = sniff.y;
+                    dr[6] = sniff.z;
+                    dr[7] = sniff.o;
+                    dr[8] = sniff.map;
+                    dr[9] = sniff.r0;
+                    dr[10] = sniff.r1;
+                    dr[11] = sniff.r2;
+                    dr[12] = sniff.r3;
+                    dr[13] = filename;
+                    dt.Rows.Add(dr);
+                }
+            }
+
             return dt;
         }
 
@@ -502,6 +524,12 @@ namespace SpawnGenerator
                 }
             }
             return creatures;
+        }
+
+        public string ImportGameobjectString(string fileName)
+        {
+
+            return "";
         }
     }
 }
