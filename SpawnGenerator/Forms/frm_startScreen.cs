@@ -254,5 +254,10 @@ namespace SpawnGenerator
             txt_loginPort.Text = Properties.Settings.Default.Port;
             txt_loginDatabases.Text = Properties.Settings.Default.Database;
         }
+
+        private void dBLoginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel_DBLogin.Visible = !panel_DBLogin.Visible;
+        }
     }
 }

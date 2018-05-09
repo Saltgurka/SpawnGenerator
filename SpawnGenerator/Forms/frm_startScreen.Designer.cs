@@ -60,14 +60,17 @@
             this.chanceCalcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speedSetterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.waypointGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_DBLogin = new System.Windows.Forms.Panel();
+            this.dBLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
+            this.panel_DBLogin.SuspendLayout();
             this.SuspendLayout();
             // 
             // cmb_loginDatabases
             // 
             this.cmb_loginDatabases.Enabled = false;
             this.cmb_loginDatabases.FormattingEnabled = true;
-            this.cmb_loginDatabases.Location = new System.Drawing.Point(95, 192);
+            this.cmb_loginDatabases.Location = new System.Drawing.Point(92, 164);
             this.cmb_loginDatabases.Name = "cmb_loginDatabases";
             this.cmb_loginDatabases.Size = new System.Drawing.Size(121, 21);
             this.cmb_loginDatabases.TabIndex = 2;
@@ -76,7 +79,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 35);
+            this.label1.Location = new System.Drawing.Point(7, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(241, 13);
             this.label1.TabIndex = 3;
@@ -84,28 +87,28 @@
             // 
             // txt_loginUser
             // 
-            this.txt_loginUser.Location = new System.Drawing.Point(95, 62);
+            this.txt_loginUser.Location = new System.Drawing.Point(92, 34);
             this.txt_loginUser.Name = "txt_loginUser";
             this.txt_loginUser.Size = new System.Drawing.Size(121, 20);
             this.txt_loginUser.TabIndex = 4;
             // 
             // txt_loginPassword
             // 
-            this.txt_loginPassword.Location = new System.Drawing.Point(95, 88);
+            this.txt_loginPassword.Location = new System.Drawing.Point(92, 60);
             this.txt_loginPassword.Name = "txt_loginPassword";
             this.txt_loginPassword.Size = new System.Drawing.Size(121, 20);
             this.txt_loginPassword.TabIndex = 5;
             // 
             // txt_loginHost
             // 
-            this.txt_loginHost.Location = new System.Drawing.Point(95, 114);
+            this.txt_loginHost.Location = new System.Drawing.Point(92, 86);
             this.txt_loginHost.Name = "txt_loginHost";
             this.txt_loginHost.Size = new System.Drawing.Size(121, 20);
             this.txt_loginHost.TabIndex = 6;
             // 
             // txt_loginPort
             // 
-            this.txt_loginPort.Location = new System.Drawing.Point(95, 140);
+            this.txt_loginPort.Location = new System.Drawing.Point(92, 112);
             this.txt_loginPort.Name = "txt_loginPort";
             this.txt_loginPort.Size = new System.Drawing.Size(121, 20);
             this.txt_loginPort.TabIndex = 7;
@@ -113,7 +116,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(33, 65);
+            this.label2.Location = new System.Drawing.Point(30, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(32, 13);
             this.label2.TabIndex = 9;
@@ -122,7 +125,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(33, 91);
+            this.label3.Location = new System.Drawing.Point(30, 63);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 13);
             this.label3.TabIndex = 10;
@@ -131,7 +134,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(33, 117);
+            this.label4.Location = new System.Drawing.Point(30, 89);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 11;
@@ -140,7 +143,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(33, 143);
+            this.label5.Location = new System.Drawing.Point(30, 115);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 13);
             this.label5.TabIndex = 12;
@@ -149,7 +152,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(33, 169);
+            this.label6.Location = new System.Drawing.Point(30, 141);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 13;
@@ -157,7 +160,7 @@
             // 
             // txt_loginDatabases
             // 
-            this.txt_loginDatabases.Location = new System.Drawing.Point(95, 166);
+            this.txt_loginDatabases.Location = new System.Drawing.Point(92, 138);
             this.txt_loginDatabases.Name = "txt_loginDatabases";
             this.txt_loginDatabases.Size = new System.Drawing.Size(121, 20);
             this.txt_loginDatabases.TabIndex = 8;
@@ -165,7 +168,7 @@
             // btn_loginAddDatabase
             // 
             this.btn_loginAddDatabase.Enabled = false;
-            this.btn_loginAddDatabase.Location = new System.Drawing.Point(222, 166);
+            this.btn_loginAddDatabase.Location = new System.Drawing.Point(219, 138);
             this.btn_loginAddDatabase.Name = "btn_loginAddDatabase";
             this.btn_loginAddDatabase.Size = new System.Drawing.Size(75, 23);
             this.btn_loginAddDatabase.TabIndex = 14;
@@ -176,7 +179,7 @@
             // btn_loginRemoveDatabase
             // 
             this.btn_loginRemoveDatabase.Enabled = false;
-            this.btn_loginRemoveDatabase.Location = new System.Drawing.Point(222, 192);
+            this.btn_loginRemoveDatabase.Location = new System.Drawing.Point(219, 164);
             this.btn_loginRemoveDatabase.Name = "btn_loginRemoveDatabase";
             this.btn_loginRemoveDatabase.Size = new System.Drawing.Size(75, 23);
             this.btn_loginRemoveDatabase.TabIndex = 15;
@@ -186,7 +189,7 @@
             // 
             // btn_loginSaveAndTest
             // 
-            this.btn_loginSaveAndTest.Location = new System.Drawing.Point(36, 234);
+            this.btn_loginSaveAndTest.Location = new System.Drawing.Point(33, 206);
             this.btn_loginSaveAndTest.Name = "btn_loginSaveAndTest";
             this.btn_loginSaveAndTest.Size = new System.Drawing.Size(261, 31);
             this.btn_loginSaveAndTest.TabIndex = 16;
@@ -198,6 +201,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.separateWindowToolStripMenuItem,
+            this.dBLoginToolStripMenuItem,
             this.singleSpawnGenToolStripMenuItem,
             this.multiSpawnGenToolStripMenuItem,
             this.timestampSubtractorToolStripMenuItem,
@@ -329,27 +333,42 @@
             this.waypointGenToolStripMenuItem.Text = "WaypointGen";
             this.waypointGenToolStripMenuItem.Click += new System.EventHandler(this.waypointGenToolStripMenuItem_Click);
             // 
+            // panel_DBLogin
+            // 
+            this.panel_DBLogin.Controls.Add(this.txt_loginPort);
+            this.panel_DBLogin.Controls.Add(this.cmb_loginDatabases);
+            this.panel_DBLogin.Controls.Add(this.btn_loginSaveAndTest);
+            this.panel_DBLogin.Controls.Add(this.label1);
+            this.panel_DBLogin.Controls.Add(this.btn_loginRemoveDatabase);
+            this.panel_DBLogin.Controls.Add(this.txt_loginUser);
+            this.panel_DBLogin.Controls.Add(this.btn_loginAddDatabase);
+            this.panel_DBLogin.Controls.Add(this.txt_loginPassword);
+            this.panel_DBLogin.Controls.Add(this.label6);
+            this.panel_DBLogin.Controls.Add(this.txt_loginHost);
+            this.panel_DBLogin.Controls.Add(this.label5);
+            this.panel_DBLogin.Controls.Add(this.txt_loginDatabases);
+            this.panel_DBLogin.Controls.Add(this.label4);
+            this.panel_DBLogin.Controls.Add(this.label2);
+            this.panel_DBLogin.Controls.Add(this.label3);
+            this.panel_DBLogin.Location = new System.Drawing.Point(12, 27);
+            this.panel_DBLogin.Name = "panel_DBLogin";
+            this.panel_DBLogin.Size = new System.Drawing.Size(318, 256);
+            this.panel_DBLogin.TabIndex = 22;
+            // 
+            // dBLoginToolStripMenuItem
+            // 
+            this.dBLoginToolStripMenuItem.Name = "dBLoginToolStripMenuItem";
+            this.dBLoginToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.dBLoginToolStripMenuItem.Text = "DB Login";
+            this.dBLoginToolStripMenuItem.Click += new System.EventHandler(this.dBLoginToolStripMenuItem_Click);
+            // 
             // Saltgurka_SQL_Generator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1478, 858);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.btn_loginSaveAndTest);
-            this.Controls.Add(this.btn_loginRemoveDatabase);
-            this.Controls.Add(this.btn_loginAddDatabase);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txt_loginDatabases);
-            this.Controls.Add(this.txt_loginPort);
-            this.Controls.Add(this.txt_loginHost);
-            this.Controls.Add(this.txt_loginPassword);
-            this.Controls.Add(this.txt_loginUser);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.cmb_loginDatabases);
+            this.Controls.Add(this.panel_DBLogin);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Saltgurka_SQL_Generator";
@@ -357,6 +376,8 @@
             this.Load += new System.EventHandler(this.Saltgurka_SQL_Generator_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.panel_DBLogin.ResumeLayout(false);
+            this.panel_DBLogin.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,5 +416,7 @@
         private System.Windows.Forms.ToolStripMenuItem chanceCalcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem speedSetterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem waypointGenToolStripMenuItem;
+        private System.Windows.Forms.Panel panel_DBLogin;
+        private System.Windows.Forms.ToolStripMenuItem dBLoginToolStripMenuItem;
     }
 }
