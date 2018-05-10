@@ -62,6 +62,7 @@
             this.waypointGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_DBLogin = new System.Windows.Forms.Panel();
             this.dBLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dBImporterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel_DBLogin.SuspendLayout();
             this.SuspendLayout();
@@ -210,7 +211,8 @@
             this.spellPacketTimerToolStripMenuItem,
             this.chanceCalcToolStripMenuItem,
             this.speedSetterToolStripMenuItem,
-            this.waypointGenToolStripMenuItem});
+            this.waypointGenToolStripMenuItem,
+            this.dBImporterToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1478, 24);
@@ -362,6 +364,13 @@
             this.dBLoginToolStripMenuItem.Text = "DB Login";
             this.dBLoginToolStripMenuItem.Click += new System.EventHandler(this.dBLoginToolStripMenuItem_Click);
             // 
+            // dBImporterToolStripMenuItem
+            // 
+            this.dBImporterToolStripMenuItem.Name = "dBImporterToolStripMenuItem";
+            this.dBImporterToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.dBImporterToolStripMenuItem.Text = "DB Importer";
+            this.dBImporterToolStripMenuItem.Click += new System.EventHandler(this.dBImporterToolStripMenuItem_Click);
+            // 
             // Saltgurka_SQL_Generator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -418,5 +427,6 @@
         private System.Windows.Forms.ToolStripMenuItem waypointGenToolStripMenuItem;
         private System.Windows.Forms.Panel panel_DBLogin;
         private System.Windows.Forms.ToolStripMenuItem dBLoginToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dBImporterToolStripMenuItem;
     }
 }

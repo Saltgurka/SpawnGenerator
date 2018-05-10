@@ -526,10 +526,50 @@ namespace SpawnGenerator
             return creatures;
         }
 
-        public string ImportGameobjectString(string fileName)
+        public string ImportGameobjectString(string fileName, bool onlyCreateObject2)
         {
+            List<SpawnPacket> spawns = GetSpawnData(fileName, onlyCreateObject2);
+            if (spawns.Count == 0)
+                return "INSERT IGNORE INTO gameobject_test (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);";
 
-            return "";
+            string output = "INSERT IGNORE INTO gameobject_test (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES";
+
+            int count = 0;
+
+            foreach (SpawnPacket spawn in spawns)
+            {
+                count++;
+                if (spawn.objectType == "GameObject/0")
+                {
+                    output += "("
+                    + spawn.entry + "," // entry
+                    + spawn.map + "," // map
+                    + "1," // spawnMask
+                    + spawn.x + "," // x
+                    + spawn.y + "," // y
+                    + spawn.z + "," // z
+                    + spawn.o + "," // o
+                    + (spawn.r0 != "" ? spawn.r0 : "0") + "," // r0
+                    + (spawn.r1 != "" ? spawn.r1 : "0") + "," // r1
+                    + (spawn.r2 != "" ? spawn.r2 : "0") + "," // r2
+                    + (spawn.r3 != "" ? spawn.r3 : "0") + "," // r3
+                    + "180," // spawntimesecsmin
+                    + "180," // spawntimesecsmax
+                    + "100," // animprogress
+                    + "1," // state
+                    + "'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(fileName) + "'),"; // FileName
+                }
+
+                if (count == spawns.Count)
+                {
+                    // No gameobjects in the sniff, so add a dummy object to prevent sql failing
+                    if (output == "INSERT IGNORE INTO gameobject_test (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES")
+                        output = "INSERT IGNORE INTO gameobject_test (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),";
+                    output = output.Remove(output.Length - 1);
+                    output += ";";
+                }
+            }
+            return output;
         }
     }
 }

@@ -27,6 +27,7 @@ namespace SpawnGenerator
         Form chanceCalc;
         Form speedSetter;
         Form waypointGen;
+        Form dBImporter;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -204,6 +205,22 @@ namespace SpawnGenerator
         private void WaypointGen_FormClosed(object sender, FormClosedEventArgs e)
         {
             waypointGen = null;
+        }
+
+        private void dBImporterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dBImporter == null)
+            {
+                dBImporter = new frm_DBImport();
+                dBImporter.MdiParent = this;
+                dBImporter.FormClosed += DBImporter_FormClosed;
+                dBImporter.Show();
+            }
+        }
+
+        private void DBImporter_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            dBImporter = null;
         }
 
         private void singleSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)

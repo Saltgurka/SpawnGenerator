@@ -116,6 +116,19 @@ namespace SpawnGenerator
             return true;
         }
 
+        public int RunQuery(string query)
+        {
+            int affectedRows = 0;
+            MySqlCommand command = connection.CreateCommand();
+            command.CommandText = query;
+            if (OpenConnection())
+            {
+                affectedRows = command.ExecuteNonQuery();
+                CloseConnection();
+            }
+            return affectedRows;
+        }
+
         public List<Creature> GetCreatures()
         {
             string query = "SELECT * FROM creature_template";
