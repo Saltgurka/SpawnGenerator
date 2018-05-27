@@ -48,9 +48,11 @@ namespace SpawnGenerator
         {
             public string entry;
             public string name;
+            public string unitGUID;
             public string speedRun;
             public string speedWalk;
             public string unitFlags;
+            public string model;
         }
 
         public List<string> FilterSniffFile(string fileName, bool blacklist, List<string> filterList, string[] fileNames = null)
@@ -436,29 +438,48 @@ namespace SpawnGenerator
 
             sniff.entry = "";
             sniff.name = "";
+            sniff.unitGUID = "";
             sniff.speedRun = "";
             sniff.speedWalk = "";
+            sniff.unitFlags = "";
+            sniff.model = "";
 
             bool isPet = false;
 
+            bool unitGUIDSet = false;
             bool speedWalkSet = false;
             bool speedRunSet = false;
             bool entrySet = false;
+            bool unitFlagsSet = false;
+            bool modelSet = false;
 
             for (int i = 1; i < lines.Count; i++)
             {
                 if (lines[i].Contains("CreateObject"))
                 {
-                    i++;
+                    //i++;
 
                     //string[] values = lines[i].Split(new char[] { ' ' });
                     //string[] objectType = values[5].Split(new char[] { '/' });
                     //sniff.entry = values[10];
-                    if (lines[i + 1].Contains("Unit"))
+                    if (lines[i + 2].Contains("Unit"))
                     {
                         do
                         {
                             i++;
+
+                            if (lines[i].Contains("Object Guid: Full:") && unitGUIDSet == false)
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ' ' });
+                                sniff.unitGUID = packetline[4];
+                                unitGUIDSet = true;
+                            }
+                            else if (lines[i].Contains("] GUID: Full:") && unitGUIDSet == false)
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ' ' });
+                                sniff.unitGUID = packetline[3];
+                                unitGUIDSet = true;
+                            }
 
                             if ((lines[i].Contains("WalkSpeed") || lines[i].Contains("Walk Speed")) && speedWalkSet == false)
                             {
@@ -484,7 +505,7 @@ namespace SpawnGenerator
                                 entrySet = true;
                             }
 
-                            if (lines[i].Contains("UNIT_FIELD_FLAGS"))
+                            if (lines[i].Contains("UNIT_FIELD_FLAGS") && unitFlagsSet == false)
                             {
                                 isPet = false;
                                 string s_unitFlags;
@@ -501,24 +522,50 @@ namespace SpawnGenerator
                                 {
                                     isPet = true;
                                 }
+                                unitFlagsSet = true;
                             }
+
+                            if (lines[i].Contains("UNIT_FIELD_DISPLAYID") && modelSet == false)
+                            {
+                                string[] packetline = lines[i].Split(new char[] { ':', '/' });
+                                sniff.model = packetline[1];
+                                sniff.model = sniff.model.Trim(' ');
+                                modelSet = true;
+                            }
+
+                            //if (lines[i].Contains("UNIT_FIELD_DEMON_CREATOR"))
+                            //{
+                            //    sniff.entry = "";
+                            //    entrySet = true;
+                            //}
+
                         } while (lines[i] != "" && !lines[i + 1].Contains("CreateObject"));
 
-                        if (sniff.entry != "" && isPet != true)
+                        if (sniff.entry != "" && isPet != true && sniff.unitGUID != "")
                         {
                             Forms.frm_speedSetter.SniffedSpeed c = new Forms.frm_speedSetter.SniffedSpeed()
                             {
                                 Entry = sniff.entry,
                                 Name = sniff.name,
+                                UnitGUID = sniff.unitGUID,
                                 SpeedWalk = sniff.speedWalk,
-                                SpeedRun = sniff.speedRun
+                                SpeedRun = sniff.speedRun,
+                                ModelId = sniff.model
                             };
                             creatures.Add(c);
                             sniff.entry = "";
+                            sniff.name = "";
+                            sniff.unitGUID = "";
+                            sniff.speedWalk = "";
+                            sniff.speedRun = "";
+                            sniff.model = "";
                             sniff.unitFlags = "";
                             speedWalkSet = false;
                             speedRunSet = false;
                             entrySet = false;
+                            unitFlagsSet = false;
+                            modelSet = false;
+                            unitGUIDSet = false;
                         }
                     }
                 }

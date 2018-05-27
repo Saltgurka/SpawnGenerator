@@ -15,6 +15,8 @@ namespace SpawnGenerator.Forms
     public partial class frm_speedSetter : Form
     {
         private List<Creature> creatures = new List<Creature>();
+        private List<Model> models = new List<Model>();
+        private List<string> ignoreList = new List<string>();
         PacketFiltering filter = new PacketFiltering();
 
         #region enums
@@ -308,9 +310,11 @@ namespace SpawnGenerator.Forms
         {
             public string Entry { get; set; }
             public string Name { get; set; }
+            public string UnitGUID { get; set; }
             public string SpeedWalk { get; set; }
             public string SpeedRun { get; set; }
             public string FileName { get; set; }
+            public string ModelId { get; set; }
         }
 
         public frm_speedSetter()
@@ -320,7 +324,15 @@ namespace SpawnGenerator.Forms
 
         private void SpeedSetter_Load(object sender, EventArgs e)
         {
-            LoadCreatures();
+            try
+            {
+                LoadCreatures();
+                LoadModels();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void LoadCreatures()
@@ -332,6 +344,17 @@ namespace SpawnGenerator.Forms
             string port = Properties.Settings.Default.Port;
             DBConnect connect = new DBConnect(host, database, user, password, port);
             creatures = connect.GetCreatures();
+        }
+
+        private void LoadModels()
+        {
+            string host = Properties.Settings.Default.Host;
+            string database = Properties.Settings.Default.Database;
+            string user = Properties.Settings.Default.User;
+            string password = Properties.Settings.Default.Password;
+            string port = Properties.Settings.Default.Port;
+            DBConnect connect = new DBConnect(host, database, user, password, port);
+            models = connect.GetModels();
         }
 
         private void CheckInvalidSpeeds(string fileName)
@@ -368,26 +391,32 @@ namespace SpawnGenerator.Forms
 
                 string name = "";
                 bool addItem = false;
-                
-                for (int i = 0; i < creatures.Count; i++)
-                {
-                    if (creatures[i].Entry == item.Entry)
-                    {
-                        name = creatures[i].Name;
 
-                        if (roundedSpeedWalk != double.Parse(creatures[i].SpeedWalk) || roundedSpeedRun != double.Parse(creatures[i].SpeedRun))
+                for (int i = 0; i < models.Count; i++)
+                {
+                    if (models[i].ModelId == item.ModelId)
+                    {
+                        //name = creatures[i].Name;
+
+                        if (roundedSpeedWalk != double.Parse(models[i].SpeedWalk) || roundedSpeedRun != double.Parse(models[i].SpeedRun))
                         {
                             bool exists = false;
+                            addItem = false;
+
+                            if (int.Parse(models[i].ModelId) > 25958)
+                                addItem = false;
 
                             for (int k = 0; k < dgv_grid.Rows.Count; k++)
                             {
-                                if (dgv_grid.Rows[k].Cells[1].Value != null && item.Entry == dgv_grid.Rows[k].Cells[1].Value.ToString())
+                                if (dgv_grid.Rows[k].Cells[1].Value != null && item.ModelId == dgv_grid.Rows[k].Cells[1].Value.ToString())
                                 {
                                     if (roundedSpeedWalk.ToString() != dgv_grid.Rows[k].Cells[4].Value.ToString() || roundedSpeedRun.ToString() != dgv_grid.Rows[k].Cells[5].Value.ToString())
                                     {
-                                        MessageBox.Show("The value already existed in DataGridView. Entry: (" + item.Entry + ")\n First Sniffed SpeedWalk: " + roundedSpeedWalk + " Second Sniffed SpeedWalk: " + dgv_grid.Rows[k].Cells[4].Value.ToString()
-                                            + "\n First Sniffed SpeedRun: " + roundedSpeedRun + " Second Sniffed SpeedRun: " + dgv_grid.Rows[k].Cells[5].Value.ToString() + "\n Sniffs are showing different speeds for the same creature!!\n" + fileName);
-                                        rtxt_duplicateResults.Text += item.Entry + ",\n";
+                                        //MessageBox.Show("The value already existed in DataGridView. ModelId: (" + item.ModelId + ")\n First Sniffed SpeedWalk: " + roundedSpeedWalk + " Second Sniffed SpeedWalk: " + dgv_grid.Rows[k].Cells[4].Value.ToString()
+                                            //+ "\n First Sniffed SpeedRun: " + roundedSpeedRun + " Second Sniffed SpeedRun: " + dgv_grid.Rows[k].Cells[5].Value.ToString() + "\n Sniffs are showing different speeds for the same model!!\n" + fileName);
+                                        rtxt_duplicateResults.Text += item.UnitGUID + ", " + fileName + " vs " + dgv_grid.Rows[k].Cells[7].Value.ToString() + ", " + dgv_grid.Rows[k].Cells[6].Value.ToString() + ",\n";
+                                        // Add to ignore list
+                                        ignoreList.Add(item.ModelId);
                                     }
                                     exists = true;
                                 }
@@ -395,23 +424,60 @@ namespace SpawnGenerator.Forms
                             }
                             if (exists == false)
                             {
-                                oldSpeedWalk = creatures[i].SpeedWalk;
-                                oldSpeedRun = creatures[i].SpeedRun;
+                                oldSpeedWalk = models[i].SpeedWalk;
+                                oldSpeedRun = models[i].SpeedRun;
 
                                 addItem = true;
                             }
-                            
+
                         }
                     }
                 }
 
                 if (addItem)
-                    dgv_grid.Rows.Add(name, item.Entry, oldSpeedWalk, oldSpeedRun, roundedSpeedWalk, roundedSpeedRun, fileName);
+                    dgv_grid.Rows.Add(name, int.Parse(item.ModelId), oldSpeedWalk, oldSpeedRun, roundedSpeedWalk, roundedSpeedRun, fileName, item.UnitGUID);
             }
 
             Cursor = Cursors.Default;
             lbl_rows.Text = "Rows: " + dgv_grid.RowCount;
         }
+
+        //                    for (int i = 0; i<creatures.Count; i++)
+        //            {
+        //                if (creatures[i].Entry == item.Entry)
+        //                {
+        //                    name = creatures[i].Name;
+
+        //                    if (roundedSpeedWalk != double.Parse(creatures[i].SpeedWalk) || roundedSpeedRun != double.Parse(creatures[i].SpeedRun))
+        //                    {
+        //                        bool exists = false;
+        //    addItem = false;
+
+        //                        for (int k = 0; k<dgv_grid.Rows.Count; k++)
+        //                        {
+        //                            if (dgv_grid.Rows[k].Cells[1].Value != null && item.Entry == dgv_grid.Rows[k].Cells[1].Value.ToString())
+        //                            {
+        //                                if (roundedSpeedWalk.ToString() != dgv_grid.Rows[k].Cells[4].Value.ToString() || roundedSpeedRun.ToString() != dgv_grid.Rows[k].Cells[5].Value.ToString())
+        //                                {
+        //                                    MessageBox.Show("The value already existed in DataGridView. Entry: (" + item.Entry + ")\n First Sniffed SpeedWalk: " + roundedSpeedWalk + " Second Sniffed SpeedWalk: " + dgv_grid.Rows[k].Cells[4].Value.ToString()
+        //                                        + "\n First Sniffed SpeedRun: " + roundedSpeedRun + " Second Sniffed SpeedRun: " + dgv_grid.Rows[k].Cells[5].Value.ToString() + "\n Sniffs are showing different speeds for the same creature!!\n" + fileName);
+        //                                    rtxt_duplicateResults.Text += item.Entry + ",\n";
+        //                                }
+        //exists = true;
+        //                            }
+
+        //                        }
+        //                        if (exists == false)
+        //                        {
+        //                            oldSpeedWalk = creatures[i].SpeedWalk;
+        //                            oldSpeedRun = creatures[i].SpeedRun;
+
+        //                            addItem = true;
+        //                        }
+
+        //                    }
+        //                }
+        //            }
 
         private void btn_loadSniff_Click(object sender, EventArgs e)
         {
@@ -455,19 +521,38 @@ namespace SpawnGenerator.Forms
             string output = "";
             foreach (DataGridViewRow row in dgv_grid.Rows)
             {
-                output += "UPDATE creature_template SET SpeedWalk="
-                    + row.Cells[4].Value
-                    + ", SpeedRun="
-                    + row.Cells[5].Value
-                    + " WHERE entry="
-                    + row.Cells[1].Value
-                    + "; -- "
-                    + row.Cells[0].Value
-                    + " (OldSpeedWalk: "
-                    + row.Cells[2].Value
-                    + ", OldSpeedRun: "
-                    + row.Cells[3].Value
-                    + ")\n";
+                if (!ignoreList.Contains(row.Cells[1].Value))
+                {
+                    output += "UPDATE creature_model_info SET SpeedWalk="
+                        + row.Cells[4].Value
+                        + ", SpeedRun="
+                        + row.Cells[5].Value
+                        + " WHERE modelid="
+                        + row.Cells[1].Value
+                        + ";\n";
+                        //+ row.Cells[0].Value
+                        //+ " (OldSpeedWalk: "
+                        //+ row.Cells[2].Value
+                        //+ ", OldSpeedRun: "
+                        //+ row.Cells[3].Value
+                        //+ ")\n";
+                }
+                else
+                    rtxt_duplicateResults.Text += "Ignored ModelId: " + row.Cells[1].Value + "\n";
+
+                //            output += "UPDATE creature_template SET SpeedWalk="
+                //+ row.Cells[4].Value
+                //+ ", SpeedRun="
+                //+ row.Cells[5].Value
+                //+ " WHERE entry="
+                //+ row.Cells[1].Value
+                //+ "; -- "
+                //+ row.Cells[0].Value
+                //+ " (OldSpeedWalk: "
+                //+ row.Cells[2].Value
+                //+ ", OldSpeedRun: "
+                //+ row.Cells[3].Value
+                //+ ")\n";
             }
 
             rtxt_output.Text = output;
@@ -475,7 +560,7 @@ namespace SpawnGenerator.Forms
 
         private void frm_speedSetter_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
+
         }
     }
 }

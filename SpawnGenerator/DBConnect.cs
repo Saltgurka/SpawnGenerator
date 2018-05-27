@@ -69,6 +69,23 @@ namespace SpawnGenerator
         }
     }
 
+    class Model : ICloneable
+    {
+        public string ModelId { get; set; }
+        public string Bounding_radius { get; set; }
+        public string Combat_reach { get; set; }
+        public string SpeedWalk { get; set; }
+        public string SpeedRun { get; set; }
+        public string Gender { get; set; }
+        public string Modelid_other_gender { get; set; }
+        public string Modelid_alternative { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+    }
+
     class DBConnect
     {
         private MySqlConnection connection;
@@ -129,6 +146,38 @@ namespace SpawnGenerator
             return affectedRows;
         }
 
+        public List<Model> GetModels()
+        {
+            string query = "SELECT * FROM creature_model_info";
+
+            List<Model> models = new List<Model>();
+
+            if (OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Model m = new Model()
+                    {
+                        ModelId = dataReader["modelid"].ToString(),
+                        Bounding_radius = dataReader["bounding_radius"].ToString(),
+                        Combat_reach = dataReader["combat_reach"].ToString(),
+                        SpeedWalk = dataReader["SpeedWalk"].ToString(),
+                        SpeedRun = dataReader["SpeedRun"].ToString(),
+                        Gender = dataReader["gender"].ToString(),
+                        Modelid_other_gender = dataReader["modelid_other_gender"].ToString(),
+                        Modelid_alternative = dataReader["modelid_alternative"].ToString(),
+                    };
+                    models.Add(m);
+                }
+
+                dataReader.Close();
+                CloseConnection();
+            }
+            return models;
+        }
         public List<Creature> GetCreatures()
         {
             string query = "SELECT * FROM creature_template";

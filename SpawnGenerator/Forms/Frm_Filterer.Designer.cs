@@ -154,7 +154,25 @@
             "SMSG_QUEST_POI_QUERY_RESPONSE",
             "SMSG_CALENDAR_SEND_NUM_PENDING",
             "SMSG_MAIL_QUERY_NEXT_TIME_RESULT",
-            "SMSG_BATTLE_PET_JOURNAL"});
+            "SMSG_BATTLE_PET_JOURNAL",
+            "SMSG_ALL_ACCOUNT_CRITERIA",
+            "CMSG_TWITTER_CHECK_STATUS",
+            "SMSG_TWITTER_STATUS",
+            "SMSG_BATTLENET_NOTIFICATION",
+            "SMSG_SUSPEND_TOKEN",
+            "SMSG_RESUME_TOKEN",
+            "SMSG_VOID_STORAGE_CONTENTS",
+            "SMSG_SET_PCT_SPELL_MODIFIER",
+            "SMSG_SET_FLAT_SPELL_MODIFIER",
+            "SMSG_INITIAL_SETUP",
+            "SMSG_SET_ALL_TASK_PROGRESS",
+            "SMSG_ACCOUNT_MOUNT_UPDATE",
+            "SMSG_WORLD_SERVER_INFO",
+            "SMSG_WEEKLY_SPELL_USAGE",
+            "SMSG_LOGIN_SET_TIME_SPEED",
+            "CMSG_GUILD_SET_ACHIEVEMENT_TRACKING",
+            "CMSG_GUILD_SET_ACHIEVEMENT_TRACKING",
+            "SMSG_WOW_TOKEN_DISTRIBUTION_UPDATE"});
             this.clb_packetBlackList.Location = new System.Drawing.Point(26, 102);
             this.clb_packetBlackList.Name = "clb_packetBlackList";
             this.clb_packetBlackList.Size = new System.Drawing.Size(254, 319);
