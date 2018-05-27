@@ -121,6 +121,12 @@
     <Compile Include="Forms\frm_speedSetter.Designer.cs">
       <DependentUpon>frm_speedSetter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frm_textParser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frm_textParser.Designer.cs">
+      <DependentUpon>frm_textParser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frm_waypointGen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frm_speedSetter.resx">
       <DependentUpon>frm_speedSetter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frm_textParser.resx">
+      <DependentUpon>frm_textParser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frm_waypointGen.resx">
       <DependentUpon>frm_waypointGen.cs</DependentUpon>

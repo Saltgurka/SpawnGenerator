@@ -55,6 +55,15 @@ namespace SpawnGenerator
             public string model;
         }
 
+        struct TextPacket
+        {
+            public string senderEntry;
+            public string senderName;
+            public string targetEntry;
+            public string targetName;
+            public string text;
+        }
+
         public List<string> FilterSniffFile(string fileName, bool blacklist, List<string> filterList, string[] fileNames = null)
         {
             string[] lines = null;
@@ -429,6 +438,85 @@ namespace SpawnGenerator
             return dt;
         }
 
+        public DataTable GetDataTableForTexts(List<string> filteredPackets, string filename)
+        {
+            var lines = filteredPackets;
+
+            DataTable dt = new DataTable("Texts");
+
+            TextPacket sniff;
+
+            string[] columns = null;
+
+            string col = "SenderEntry,SenderName,TargetEntry,TargetName,Text,FileName";
+            columns = col.Split(new char[] { ',' });
+            foreach (var column in columns)
+                dt.Columns.Add(column);
+
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_CHAT"))
+                {
+                    sniff.senderEntry = "";
+                    sniff.senderName = "";
+                    sniff.targetEntry = "";
+                    sniff.targetName = "";
+                    sniff.text = "";
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("SenderGUID"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.senderEntry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("TargetGUID"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            if (packetline.Length > 7)
+                                sniff.targetEntry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("Sender Name:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+
+                            sniff.senderName = packetline[1];
+                        }
+
+                        if (lines[i].Contains("Receiver Name:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            if (packetline.Length > 0)
+                                sniff.targetName = packetline[1];
+                        }
+
+                        if (lines[i].Contains("Text:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.text = packetline[1];
+                        }
+                    } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_CHAT"));
+
+                    if (sniff.text != "")
+                    {
+                        DataRow dr = dt.NewRow();
+                        dr[0] = sniff.senderEntry;
+                        dr[1] = sniff.senderName;
+                        dr[2] = sniff.targetEntry;
+                        dr[3] = sniff.targetName;
+                        dr[4] = sniff.text;
+                        dr[5] = filename;
+                        dt.Rows.Add(dr);
+                        sniff.text = "";
+                    }
+
+                }
+            }
+            return dt;
+        }
         public List<Forms.frm_speedSetter.SniffedSpeed> GetSniffedSpeedList(List<string> filteredPackets)
         {
             var lines = filteredPackets;

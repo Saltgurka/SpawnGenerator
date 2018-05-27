@@ -51,6 +51,7 @@
             this.timestampSubtractorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sniffPacketFiltererToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.poolGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dBLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.singleSpawnGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiSpawnGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timestampSubtractorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,9 +61,9 @@
             this.chanceCalcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.speedSetterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.waypointGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_DBLogin = new System.Windows.Forms.Panel();
-            this.dBLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dBImporterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_DBLogin = new System.Windows.Forms.Panel();
+            this.textParserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel_DBLogin.SuspendLayout();
             this.SuspendLayout();
@@ -212,7 +213,8 @@
             this.chanceCalcToolStripMenuItem,
             this.speedSetterToolStripMenuItem,
             this.waypointGenToolStripMenuItem,
-            this.dBImporterToolStripMenuItem});
+            this.dBImporterToolStripMenuItem,
+            this.textParserToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1478, 24);
@@ -271,6 +273,13 @@
             this.poolGeneratorToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.poolGeneratorToolStripMenuItem.Text = "Pool Generator";
             this.poolGeneratorToolStripMenuItem.Click += new System.EventHandler(this.poolGeneratorToolStripMenuItem_Click);
+            // 
+            // dBLoginToolStripMenuItem
+            // 
+            this.dBLoginToolStripMenuItem.Name = "dBLoginToolStripMenuItem";
+            this.dBLoginToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.dBLoginToolStripMenuItem.Text = "DB Login";
+            this.dBLoginToolStripMenuItem.Click += new System.EventHandler(this.dBLoginToolStripMenuItem_Click);
             // 
             // singleSpawnGenToolStripMenuItem
             // 
@@ -335,6 +344,13 @@
             this.waypointGenToolStripMenuItem.Text = "WaypointGen";
             this.waypointGenToolStripMenuItem.Click += new System.EventHandler(this.waypointGenToolStripMenuItem_Click);
             // 
+            // dBImporterToolStripMenuItem
+            // 
+            this.dBImporterToolStripMenuItem.Name = "dBImporterToolStripMenuItem";
+            this.dBImporterToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.dBImporterToolStripMenuItem.Text = "DB Importer";
+            this.dBImporterToolStripMenuItem.Click += new System.EventHandler(this.dBImporterToolStripMenuItem_Click);
+            // 
             // panel_DBLogin
             // 
             this.panel_DBLogin.Controls.Add(this.txt_loginPort);
@@ -357,19 +373,12 @@
             this.panel_DBLogin.Size = new System.Drawing.Size(318, 256);
             this.panel_DBLogin.TabIndex = 22;
             // 
-            // dBLoginToolStripMenuItem
+            // textParserToolStripMenuItem
             // 
-            this.dBLoginToolStripMenuItem.Name = "dBLoginToolStripMenuItem";
-            this.dBLoginToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.dBLoginToolStripMenuItem.Text = "DB Login";
-            this.dBLoginToolStripMenuItem.Click += new System.EventHandler(this.dBLoginToolStripMenuItem_Click);
-            // 
-            // dBImporterToolStripMenuItem
-            // 
-            this.dBImporterToolStripMenuItem.Name = "dBImporterToolStripMenuItem";
-            this.dBImporterToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
-            this.dBImporterToolStripMenuItem.Text = "DB Importer";
-            this.dBImporterToolStripMenuItem.Click += new System.EventHandler(this.dBImporterToolStripMenuItem_Click);
+            this.textParserToolStripMenuItem.Name = "textParserToolStripMenuItem";
+            this.textParserToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.textParserToolStripMenuItem.Text = "TextParser";
+            this.textParserToolStripMenuItem.Click += new System.EventHandler(this.textParserToolStripMenuItem_Click);
             // 
             // Saltgurka_SQL_Generator
             // 
@@ -428,5 +437,6 @@
         private System.Windows.Forms.Panel panel_DBLogin;
         private System.Windows.Forms.ToolStripMenuItem dBLoginToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dBImporterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem textParserToolStripMenuItem;
     }
 }

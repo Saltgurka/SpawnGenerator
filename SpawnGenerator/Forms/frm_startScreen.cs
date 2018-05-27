@@ -28,6 +28,7 @@ namespace SpawnGenerator
         Form speedSetter;
         Form waypointGen;
         Form dBImporter;
+        Form textParser;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -221,6 +222,22 @@ namespace SpawnGenerator
         private void DBImporter_FormClosed(object sender, FormClosedEventArgs e)
         {
             dBImporter = null;
+        }
+
+        private void textParserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (textParser == null)
+            {
+                textParser = new frm_textParser();
+                textParser.MdiParent = this;
+                textParser.FormClosed += TextParser_FormClosed;
+                textParser.Show();
+            }
+        }
+
+        private void TextParser_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            textParser = null;
         }
 
         private void singleSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)
