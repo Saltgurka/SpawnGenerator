@@ -61,6 +61,8 @@ namespace SpawnGenerator
             public string senderName;
             public string targetEntry;
             public string targetName;
+            public string type;
+            public string language;
             public string text;
         }
 
@@ -448,7 +450,7 @@ namespace SpawnGenerator
 
             string[] columns = null;
 
-            string col = "SenderEntry,SenderName,TargetEntry,TargetName,Text,FileName";
+            string col = "SenderEntry,SenderName,TargetEntry,TargetName,Language,Type,Text,FileName";
             columns = col.Split(new char[] { ',' });
             foreach (var column in columns)
                 dt.Columns.Add(column);
@@ -461,10 +463,38 @@ namespace SpawnGenerator
                     sniff.senderName = "";
                     sniff.targetEntry = "";
                     sniff.targetName = "";
+                    sniff.type = "";
+                    sniff.language = "";
                     sniff.text = "";
                     do
                     {
                         i++;
+
+                        if (lines[i].Contains("SlashCmd"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            switch (packetline[1])
+                            {
+                                case "12":
+                                    sniff.type = "Say";
+                                    break;
+                                case "14":
+                                    sniff.type = "Yell";
+                                    break;
+                                case "16":
+                                    sniff.type = "Emote";
+                                    break;
+                                default:
+                                    sniff.type = "Unknown";
+                                    break;
+                            }
+                        }
+
+                        if (lines[i].Contains("Language"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.language = packetline[1];
+                        }
 
                         if (lines[i].Contains("SenderGUID"))
                         {
@@ -507,8 +537,10 @@ namespace SpawnGenerator
                         dr[1] = sniff.senderName;
                         dr[2] = sniff.targetEntry;
                         dr[3] = sniff.targetName;
-                        dr[4] = sniff.text;
-                        dr[5] = filename;
+                        dr[4] = sniff.type;
+                        dr[5] = sniff.language;
+                        dr[6] = sniff.text;
+                        dr[7] = filename;
                         dt.Rows.Add(dr);
                         sniff.text = "";
                     }
