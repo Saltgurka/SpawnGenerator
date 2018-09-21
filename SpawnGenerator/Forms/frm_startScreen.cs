@@ -29,6 +29,8 @@ namespace SpawnGenerator
         Form waypointGen;
         Form dBImporter;
         Form textParser;
+        Form petSpells;
+        Form templateFixer;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -240,6 +242,38 @@ namespace SpawnGenerator
             textParser = null;
         }
 
+        private void petSpellsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (petSpells == null)
+            {
+                petSpells = new frm_petSpells();
+                petSpells.MdiParent = this;
+                petSpells.FormClosed += PetSpells_FormClosed;
+                petSpells.Show();
+            }
+        }
+
+        private void PetSpells_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            petSpells = null;
+        }
+
+        private void templateFixerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (templateFixer == null)
+            {
+                templateFixer = new frm_templateFixer();
+                templateFixer.MdiParent = this;
+                templateFixer.FormClosed += TemplateFixer_FormClosed;
+                templateFixer.Show();
+            }
+        }
+
+        private void TemplateFixer_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            templateFixer = null;
+        }
+
         private void singleSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Form SpawnGenerator = new frm_spawnGeneratorManual();
@@ -293,5 +327,13 @@ namespace SpawnGenerator
         {
             panel_DBLogin.Visible = !panel_DBLogin.Visible;
         }
+
+        private void petSpellsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form petSpells = new frm_petSpells();
+            petSpells.Show();
+        }
+
+
     }
 }

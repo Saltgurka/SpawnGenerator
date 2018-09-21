@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             this.dgv_grid = new System.Windows.Forms.DataGridView();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.entry = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.oldSpeedWalk = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.oldSpeedRun = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sniffedSpeedWalk = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sniffedSpeedRun = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitGUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btn_loadSniff = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.lbl_rows = new System.Windows.Forms.Label();
@@ -42,14 +50,6 @@
             this.progress = new System.Windows.Forms.ProgressBar();
             this.lbl_currentFile = new System.Windows.Forms.Label();
             this.lbl_currentNum = new System.Windows.Forms.Label();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.entry = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.oldSpeedWalk = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.oldSpeedRun = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sniffedSpeedWalk = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sniffedSpeedRun = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unitGUID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_grid)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -74,6 +74,54 @@
             this.dgv_grid.Name = "dgv_grid";
             this.dgv_grid.Size = new System.Drawing.Size(1094, 395);
             this.dgv_grid.TabIndex = 0;
+            // 
+            // name
+            // 
+            this.name.HeaderText = "Name";
+            this.name.Name = "name";
+            this.name.Width = 60;
+            // 
+            // entry
+            // 
+            this.entry.HeaderText = "Entry";
+            this.entry.Name = "entry";
+            this.entry.Width = 56;
+            // 
+            // oldSpeedWalk
+            // 
+            this.oldSpeedWalk.HeaderText = "OldSpeedWalk";
+            this.oldSpeedWalk.Name = "oldSpeedWalk";
+            this.oldSpeedWalk.Width = 104;
+            // 
+            // oldSpeedRun
+            // 
+            this.oldSpeedRun.HeaderText = "OldSpeedRun";
+            this.oldSpeedRun.Name = "oldSpeedRun";
+            this.oldSpeedRun.Width = 99;
+            // 
+            // sniffedSpeedWalk
+            // 
+            this.sniffedSpeedWalk.HeaderText = "SniffedSpeedWalk";
+            this.sniffedSpeedWalk.Name = "sniffedSpeedWalk";
+            this.sniffedSpeedWalk.Width = 121;
+            // 
+            // sniffedSpeedRun
+            // 
+            this.sniffedSpeedRun.HeaderText = "SniffedSpeedRun";
+            this.sniffedSpeedRun.Name = "sniffedSpeedRun";
+            this.sniffedSpeedRun.Width = 116;
+            // 
+            // FileName
+            // 
+            this.FileName.HeaderText = "FileName";
+            this.FileName.Name = "FileName";
+            this.FileName.Width = 76;
+            // 
+            // unitGUID
+            // 
+            this.unitGUID.HeaderText = "UnitGUID";
+            this.unitGUID.Name = "unitGUID";
+            this.unitGUID.Width = 78;
             // 
             // btn_loadSniff
             // 
@@ -192,54 +240,6 @@
             this.lbl_currentNum.Size = new System.Drawing.Size(24, 13);
             this.lbl_currentNum.TabIndex = 7;
             this.lbl_currentNum.Text = "0/0";
-            // 
-            // name
-            // 
-            this.name.HeaderText = "Name";
-            this.name.Name = "name";
-            this.name.Width = 60;
-            // 
-            // entry
-            // 
-            this.entry.HeaderText = "Entry";
-            this.entry.Name = "entry";
-            this.entry.Width = 56;
-            // 
-            // oldSpeedWalk
-            // 
-            this.oldSpeedWalk.HeaderText = "OldSpeedWalk";
-            this.oldSpeedWalk.Name = "oldSpeedWalk";
-            this.oldSpeedWalk.Width = 104;
-            // 
-            // oldSpeedRun
-            // 
-            this.oldSpeedRun.HeaderText = "OldSpeedRun";
-            this.oldSpeedRun.Name = "oldSpeedRun";
-            this.oldSpeedRun.Width = 99;
-            // 
-            // sniffedSpeedWalk
-            // 
-            this.sniffedSpeedWalk.HeaderText = "SniffedSpeedWalk";
-            this.sniffedSpeedWalk.Name = "sniffedSpeedWalk";
-            this.sniffedSpeedWalk.Width = 121;
-            // 
-            // sniffedSpeedRun
-            // 
-            this.sniffedSpeedRun.HeaderText = "SniffedSpeedRun";
-            this.sniffedSpeedRun.Name = "sniffedSpeedRun";
-            this.sniffedSpeedRun.Width = 116;
-            // 
-            // FileName
-            // 
-            this.FileName.HeaderText = "FileName";
-            this.FileName.Name = "FileName";
-            this.FileName.Width = 76;
-            // 
-            // unitGUID
-            // 
-            this.unitGUID.HeaderText = "UnitGUID";
-            this.unitGUID.Name = "unitGUID";
-            this.unitGUID.Width = 78;
             // 
             // frm_speedSetter
             // 

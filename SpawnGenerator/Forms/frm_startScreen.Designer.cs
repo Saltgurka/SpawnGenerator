@@ -51,6 +51,7 @@
             this.timestampSubtractorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sniffPacketFiltererToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.poolGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.petSpellsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dBLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.singleSpawnGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiSpawnGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,8 +63,10 @@
             this.speedSetterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.waypointGenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dBImporterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_DBLogin = new System.Windows.Forms.Panel();
             this.textParserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.petSpellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_DBLogin = new System.Windows.Forms.Panel();
+            this.templateFixerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel_DBLogin.SuspendLayout();
             this.SuspendLayout();
@@ -214,7 +217,9 @@
             this.speedSetterToolStripMenuItem,
             this.waypointGenToolStripMenuItem,
             this.dBImporterToolStripMenuItem,
-            this.textParserToolStripMenuItem});
+            this.textParserToolStripMenuItem,
+            this.petSpellsToolStripMenuItem,
+            this.templateFixerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1478, 24);
@@ -229,7 +234,8 @@
             this.multiSpawnGenToolStripMenuItem1,
             this.timestampSubtractorToolStripMenuItem1,
             this.sniffPacketFiltererToolStripMenuItem1,
-            this.poolGeneratorToolStripMenuItem});
+            this.poolGeneratorToolStripMenuItem,
+            this.petSpellsToolStripMenuItem1});
             this.separateWindowToolStripMenuItem.Name = "separateWindowToolStripMenuItem";
             this.separateWindowToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
             this.separateWindowToolStripMenuItem.Text = "Separate Window";
@@ -274,6 +280,13 @@
             this.poolGeneratorToolStripMenuItem.Text = "Pool Generator";
             this.poolGeneratorToolStripMenuItem.Click += new System.EventHandler(this.poolGeneratorToolStripMenuItem_Click);
             // 
+            // petSpellsToolStripMenuItem1
+            // 
+            this.petSpellsToolStripMenuItem1.Name = "petSpellsToolStripMenuItem1";
+            this.petSpellsToolStripMenuItem1.Size = new System.Drawing.Size(192, 22);
+            this.petSpellsToolStripMenuItem1.Text = "Pet Spells";
+            this.petSpellsToolStripMenuItem1.Click += new System.EventHandler(this.petSpellsToolStripMenuItem1_Click);
+            // 
             // dBLoginToolStripMenuItem
             // 
             this.dBLoginToolStripMenuItem.Name = "dBLoginToolStripMenuItem";
@@ -284,50 +297,50 @@
             // singleSpawnGenToolStripMenuItem
             // 
             this.singleSpawnGenToolStripMenuItem.Name = "singleSpawnGenToolStripMenuItem";
-            this.singleSpawnGenToolStripMenuItem.Size = new System.Drawing.Size(113, 20);
-            this.singleSpawnGenToolStripMenuItem.Text = "Single Spawn Gen";
+            this.singleSpawnGenToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
+            this.singleSpawnGenToolStripMenuItem.Text = "SingleSpawnGen";
             this.singleSpawnGenToolStripMenuItem.Click += new System.EventHandler(this.singleSpawnGenToolStripMenuItem_Click);
             // 
             // multiSpawnGenToolStripMenuItem
             // 
             this.multiSpawnGenToolStripMenuItem.Name = "multiSpawnGenToolStripMenuItem";
-            this.multiSpawnGenToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
-            this.multiSpawnGenToolStripMenuItem.Text = "Multi-Spawn Gen";
+            this.multiSpawnGenToolStripMenuItem.Size = new System.Drawing.Size(108, 20);
+            this.multiSpawnGenToolStripMenuItem.Text = "Multi-SpawnGen";
             this.multiSpawnGenToolStripMenuItem.Click += new System.EventHandler(this.multiSpawnGenToolStripMenuItem_Click);
             // 
             // timestampSubtractorToolStripMenuItem
             // 
             this.timestampSubtractorToolStripMenuItem.Name = "timestampSubtractorToolStripMenuItem";
-            this.timestampSubtractorToolStripMenuItem.Size = new System.Drawing.Size(137, 20);
-            this.timestampSubtractorToolStripMenuItem.Text = "Timestamp Subtractor";
+            this.timestampSubtractorToolStripMenuItem.Size = new System.Drawing.Size(134, 20);
+            this.timestampSubtractorToolStripMenuItem.Text = "TimestampSubtractor";
             this.timestampSubtractorToolStripMenuItem.Click += new System.EventHandler(this.timestampSubtractorToolStripMenuItem_Click);
             // 
             // sniffPacketFiltererToolStripMenuItem
             // 
             this.sniffPacketFiltererToolStripMenuItem.Name = "sniffPacketFiltererToolStripMenuItem";
-            this.sniffPacketFiltererToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
-            this.sniffPacketFiltererToolStripMenuItem.Text = "Sniff Packet Filterer";
+            this.sniffPacketFiltererToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
+            this.sniffPacketFiltererToolStripMenuItem.Text = "SniffPacketFilterer";
             this.sniffPacketFiltererToolStripMenuItem.Click += new System.EventHandler(this.sniffPacketFiltererToolStripMenuItem_Click);
             // 
             // poolGeneratorToolStripMenuItem1
             // 
             this.poolGeneratorToolStripMenuItem1.Name = "poolGeneratorToolStripMenuItem1";
-            this.poolGeneratorToolStripMenuItem1.Size = new System.Drawing.Size(98, 20);
-            this.poolGeneratorToolStripMenuItem1.Text = "Pool Generator";
+            this.poolGeneratorToolStripMenuItem1.Size = new System.Drawing.Size(95, 20);
+            this.poolGeneratorToolStripMenuItem1.Text = "PoolGenerator";
             this.poolGeneratorToolStripMenuItem1.Click += new System.EventHandler(this.poolGeneratorToolStripMenuItem1_Click);
             // 
             // spellPacketTimerToolStripMenuItem
             // 
             this.spellPacketTimerToolStripMenuItem.Name = "spellPacketTimerToolStripMenuItem";
-            this.spellPacketTimerToolStripMenuItem.Size = new System.Drawing.Size(116, 20);
-            this.spellPacketTimerToolStripMenuItem.Text = "Spell Packet Timer";
+            this.spellPacketTimerToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
+            this.spellPacketTimerToolStripMenuItem.Text = "SpellPacketTimer";
             this.spellPacketTimerToolStripMenuItem.Click += new System.EventHandler(this.spellPacketTimerToolStripMenuItem_Click);
             // 
             // chanceCalcToolStripMenuItem
             // 
             this.chanceCalcToolStripMenuItem.Name = "chanceCalcToolStripMenuItem";
-            this.chanceCalcToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
-            this.chanceCalcToolStripMenuItem.Text = "Chance Calc";
+            this.chanceCalcToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.chanceCalcToolStripMenuItem.Text = "ChanceCalc";
             this.chanceCalcToolStripMenuItem.Click += new System.EventHandler(this.chanceCalcToolStripMenuItem_Click);
             // 
             // speedSetterToolStripMenuItem
@@ -347,9 +360,23 @@
             // dBImporterToolStripMenuItem
             // 
             this.dBImporterToolStripMenuItem.Name = "dBImporterToolStripMenuItem";
-            this.dBImporterToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
-            this.dBImporterToolStripMenuItem.Text = "DB Importer";
+            this.dBImporterToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.dBImporterToolStripMenuItem.Text = "DBImporter";
             this.dBImporterToolStripMenuItem.Click += new System.EventHandler(this.dBImporterToolStripMenuItem_Click);
+            // 
+            // textParserToolStripMenuItem
+            // 
+            this.textParserToolStripMenuItem.Name = "textParserToolStripMenuItem";
+            this.textParserToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.textParserToolStripMenuItem.Text = "TextParser";
+            this.textParserToolStripMenuItem.Click += new System.EventHandler(this.textParserToolStripMenuItem_Click);
+            // 
+            // petSpellsToolStripMenuItem
+            // 
+            this.petSpellsToolStripMenuItem.Name = "petSpellsToolStripMenuItem";
+            this.petSpellsToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.petSpellsToolStripMenuItem.Text = "PetSpells";
+            this.petSpellsToolStripMenuItem.Click += new System.EventHandler(this.petSpellsToolStripMenuItem_Click);
             // 
             // panel_DBLogin
             // 
@@ -372,13 +399,14 @@
             this.panel_DBLogin.Name = "panel_DBLogin";
             this.panel_DBLogin.Size = new System.Drawing.Size(318, 256);
             this.panel_DBLogin.TabIndex = 22;
+            this.panel_DBLogin.Visible = false;
             // 
-            // textParserToolStripMenuItem
+            // templateFixerToolStripMenuItem
             // 
-            this.textParserToolStripMenuItem.Name = "textParserToolStripMenuItem";
-            this.textParserToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
-            this.textParserToolStripMenuItem.Text = "TextParser";
-            this.textParserToolStripMenuItem.Click += new System.EventHandler(this.textParserToolStripMenuItem_Click);
+            this.templateFixerToolStripMenuItem.Name = "templateFixerToolStripMenuItem";
+            this.templateFixerToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.templateFixerToolStripMenuItem.Text = "TemplateFixer";
+            this.templateFixerToolStripMenuItem.Click += new System.EventHandler(this.templateFixerToolStripMenuItem_Click);
             // 
             // Saltgurka_SQL_Generator
             // 
@@ -438,5 +466,8 @@
         private System.Windows.Forms.ToolStripMenuItem dBLoginToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dBImporterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem textParserToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem petSpellsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem petSpellsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem templateFixerToolStripMenuItem;
     }
 }

@@ -41,10 +41,11 @@
             // dgv_grid
             // 
             this.dgv_grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgv_grid.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dgv_grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_grid.Location = new System.Drawing.Point(12, 41);
             this.dgv_grid.Name = "dgv_grid";
-            this.dgv_grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgv_grid.Size = new System.Drawing.Size(982, 540);
             this.dgv_grid.TabIndex = 1;
             // 

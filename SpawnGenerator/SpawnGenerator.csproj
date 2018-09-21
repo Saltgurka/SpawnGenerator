@@ -91,6 +91,12 @@
     <Compile Include="Forms\frm_multiSpawnGen.Designer.cs">
       <DependentUpon>frm_multiSpawnGen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frm_petSpells.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frm_petSpells.Designer.cs">
+      <DependentUpon>frm_petSpells.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frm_spellPacketTimer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +126,12 @@
     </Compile>
     <Compile Include="Forms\frm_speedSetter.Designer.cs">
       <DependentUpon>frm_speedSetter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frm_templateFixer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frm_templateFixer.Designer.cs">
+      <DependentUpon>frm_templateFixer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frm_textParser.cs">
       <SubType>Form</SubType>
@@ -154,6 +166,9 @@
     <EmbeddedResource Include="Forms\frm_multiSpawnGen.resx">
       <DependentUpon>frm_multiSpawnGen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frm_petSpells.resx">
+      <DependentUpon>frm_petSpells.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frm_spellPacketTimer.resx">
       <DependentUpon>frm_spellPacketTimer.cs</DependentUpon>
     </EmbeddedResource>
@@ -168,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frm_speedSetter.resx">
       <DependentUpon>frm_speedSetter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frm_templateFixer.resx">
+      <DependentUpon>frm_templateFixer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frm_textParser.resx">
       <DependentUpon>frm_textParser.cs</DependentUpon>

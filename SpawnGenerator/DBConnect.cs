@@ -22,6 +22,7 @@ namespace SpawnGenerator
         public string SpeedRun { get; set; }
         public string MovementType { get; set; }
         public string Faction { get; set; }
+        public string Scale { get; set; }
         public string ModelId1 { get; set; }
         public string ModelId2 { get; set; }
         public string ModelId3 { get; set; }
@@ -49,7 +50,9 @@ namespace SpawnGenerator
         public string ExperienceMultiplier { get; set; }
         public string ArmorMultiplier { get; set; }
 
-        public string Rate { get; set; } // MeleeBaseAttackTime/RangedBaseAttackTime
+        public string MeleeBaseAttackTime { get; set; }
+        public string RangedBaseAttackTime { get; set; }
+        public string RacialLeader { get; set; }
         public string DamageVariance { get; set; }
         public string DamageSchool { get; set; }
 
@@ -207,7 +210,9 @@ namespace SpawnGenerator
                         DamageMultiplier = dataReader["DamageMultiplier"].ToString(),
                         ArmorMultiplier = dataReader["ArmorMultiplier"].ToString(),
                         ExperienceMultiplier = dataReader["ExperienceMultiplier"].ToString(),
-                        Rate = dataReader["MeleeBaseAttackTime"].ToString(),
+                        MeleeBaseAttackTime = dataReader["MeleeBaseAttackTime"].ToString(),
+                        RangedBaseAttackTime = dataReader["RangedBaseAttackTime"].ToString(),
+                        RacialLeader = dataReader["RacialLeader"].ToString(),
                         DamageVariance = dataReader["DamageVariance"].ToString(),
                         DamageSchool = dataReader["DamageSchool"].ToString(),
                         ResistanceArcane = dataReader["ResistanceArcane"].ToString(),
@@ -223,6 +228,7 @@ namespace SpawnGenerator
                         SpeedRun = dataReader["SpeedRun"].ToString(),
                         MovementType = dataReader["MovementType"].ToString(),
                         Faction = dataReader["FactionAlliance"].ToString(),
+                        Scale = dataReader["Scale"].ToString(),
                         ModelId1 = dataReader["ModelId1"].ToString(),
                         ModelId2 = dataReader["ModelId2"].ToString(),
                         ModelId3 = dataReader["ModelId3"].ToString(),
