@@ -394,6 +394,7 @@ namespace SpawnGenerator.Forms
                     case 0:
                         break;
                     case 3: // Unit
+                    case 5:
                         {
                             // Entry
                             if (lines[i].Contains("OBJECT_FIELD_ENTRY:"))

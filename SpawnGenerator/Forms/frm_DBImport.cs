@@ -39,6 +39,11 @@ namespace SpawnGenerator.Forms
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                Cursor = Cursors.WaitCursor;
+                Application.DoEvents();
+
+                affectedRows = 0;
+                lbl_affectedRows.Text = "Affected Rows: " + affectedRows;
                 int numOfFiles = openFileDialog.FileNames.Length;
                 int currentFile = 0;
                 progress.Step = 100 / numOfFiles;
@@ -49,12 +54,23 @@ namespace SpawnGenerator.Forms
                     lbl_currentFileCount.Text = "File " + currentFile + "/" + numOfFiles;
                     progress.PerformStep();
                     lbl_currentFileName.Text = file;
-                    string importString = filter.ImportGameobjectString(file, box_createObject2.Checked);
-                    ImportDataToDB(importString);
+
+                    if (box_gameobjects.Checked)
+                    {
+                        string importString = filter.ImportGameobjectString(file, box_gameobjectsCreateObject2.Checked);
+                        ImportDataToDB(importString);
+                    }
+                    if (box_creatures.Checked)
+                    {
+                        string importString = filter.ImportCreatureString(file, box_creaturesCreateObject2.Checked);
+                        ImportDataToDB(importString);
+                    }
                 }
 
                 lbl_currentFileCount.Text = "Done!";
                 progress.Value = 0;
+
+                Cursor = Cursors.Default;
             }
             else
             {

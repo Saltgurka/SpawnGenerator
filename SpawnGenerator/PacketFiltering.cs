@@ -83,9 +83,12 @@ namespace SpawnGenerator
             string[] packets = new string[lines.Count()];
             List<string> newFileStrings = new List<string>();
 
-            for (int i = 0; i < 7; i++) // Write the first lines without filtering
+            if (lines.Length > 6)
             {
-                newFileStrings.Add(lines[i]);
+                for (int i = 0; i < 7; i++) // Write the first lines without filtering
+                {
+                    newFileStrings.Add(lines[i]);
+                }
             }
 
             // Add filter information
@@ -697,9 +700,9 @@ namespace SpawnGenerator
         {
             List<SpawnPacket> spawns = GetSpawnData(fileName, onlyCreateObject2);
             if (spawns.Count == 0)
-                return "INSERT IGNORE INTO gameobject_test (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);";
+                return "INSERT IGNORE INTO sniffgameobject (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);";
 
-            string output = "INSERT IGNORE INTO gameobject_test (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES";
+            string output = "INSERT IGNORE INTO sniffgameobject (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES";
 
             int count = 0;
 
@@ -730,8 +733,54 @@ namespace SpawnGenerator
                 if (count == spawns.Count)
                 {
                     // No gameobjects in the sniff, so add a dummy object to prevent sql failing
-                    if (output == "INSERT IGNORE INTO gameobject_test (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES")
-                        output = "INSERT IGNORE INTO gameobject_test (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),";
+                    if (output == "INSERT IGNORE INTO sniffgameobject (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES")
+                        output = "INSERT IGNORE INTO sniffgameobject (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state, FileName) VALUES (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),";
+                    output = output.Remove(output.Length - 1);
+                    output += ";";
+                }
+            }
+            return output;
+        }
+
+        public string ImportCreatureString(string fileName, bool onlyCreateObject2)
+        {
+            List<SpawnPacket> spawns = GetSpawnData(fileName, onlyCreateObject2);
+            if (spawns.Count == 0)
+                return "INSERT IGNORE INTO sniffcreature (id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, curhealth, curmana, MovementType, FileName) VALUES (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);";
+
+            string output = "INSERT IGNORE INTO sniffcreature (id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, curhealth, curmana, MovementType, FileName) VALUES";
+
+            int count = 0;
+
+            foreach (SpawnPacket spawn in spawns)
+            {
+                count++;
+                if (spawn.objectType == "Creature/0")
+                {
+                    output += "("
+                    + spawn.entry + "," // entry
+                    + spawn.map + "," // map
+                    + "1," // spawnMask
+                    + "0," // modelid
+                    + "0," // equipment_id
+                    + spawn.x + "," // x
+                    + spawn.y + "," // y
+                    + spawn.z + "," // z
+                    + spawn.o + "," // o
+                    + "300," // spawntimesecsmin
+                    + "300," // spawntimesecsmax
+                    + "0," // spawndist
+                    + "0," // curhealth
+                    + "0," // curmana
+                    + "0," // MovementType
+                    + "'" + MySql.Data.MySqlClient.MySqlHelper.EscapeString(fileName) + "'),"; // FileName
+                }
+
+                if (count == spawns.Count)
+                {
+                    // No gameobjects in the sniff, so add a dummy object to prevent sql failing
+                    if (output == "INSERT IGNORE INTO sniffcreature (id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, curhealth, curmana, MovementType, FileName) VALUES")
+                        output = "INSERT IGNORE INTO sniffcreature (id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, curhealth, curmana, MovementType, FileName) VALUES (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);";
                     output = output.Remove(output.Length - 1);
                     output += ";";
                 }

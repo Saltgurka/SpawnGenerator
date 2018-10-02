@@ -134,12 +134,12 @@ namespace SpawnGenerator
                 string output;
                 if (box_ai.Checked)
                 {
-                    output = "INSERT INTO creature (id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
+                    output = "INSERT INTO creature (id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, curhealth, curmana, MovementType) VALUES\n";
                     output += "INSERT INTO gameobject (id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state) VALUES\n";
                 }
                 else
                 {
-                    output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES\n";
+                    output = "INSERT INTO creature (guid, id, map, spawnMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecsmin, spawntimesecsmax, spawndist, curhealth, curmana, MovementType) VALUES\n";
                     output += "INSERT INTO gameobject (guid, id, map, spawnMask, position_x, position_y, position_z, orientation, rotation0, rotation1, rotation2, rotation3, spawntimesecsmin, spawntimesecsmax, animprogress, state) VALUES\n";
                 }
                 int i = 2;
@@ -166,10 +166,10 @@ namespace SpawnGenerator
                             + txt_spawnMin.Text + ","
                             + txt_spawnMax.Text + ","
                             + txt_spawndist.Text + ","
-                            + txt_currentWaypoint.Text + ","
+                            //+ txt_currentWaypoint.Text + ","
                             + txt_curhealth.Text + ","
                             + txt_curmana.Text + ","
-                            + txt_deathState.Text + ","
+                            //+ txt_deathState.Text + ","
                             + txt_movementType.Text;
 
                         if (box_filename.Checked)
