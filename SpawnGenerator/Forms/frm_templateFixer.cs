@@ -654,6 +654,14 @@ namespace SpawnGenerator.Forms
                 unitFlags = 0;
             if (npcFlags == -1)
                 npcFlags = 0;
+            if (modelId1 == -1)
+                modelId1 = 0;
+            if (modelId2 == -1)
+                modelId2 = 0;
+            if (modelId3 == -1)
+                modelId3 = 0;
+            if (modelId4 == -1)
+                modelId4 = 0;
 
             string entryString = entry.ToString();
             string currentModelString = currentModel.ToString();
@@ -688,12 +696,15 @@ namespace SpawnGenerator.Forms
                 (modelId2 != -1 ? (modelId2.ToString() != result.ModelId2 ? " ModelId2=" + modelId2.ToString() + "," : "") : "") +
                 (modelId3 != -1 ? (modelId3.ToString() != result.ModelId3 ? " ModelId3=" + modelId3.ToString() + "," : "") : "") +
                 (modelId4 != -1 ? (modelId4.ToString() != result.ModelId4 ? " ModelId4=" + modelId4.ToString() + "," : "") : "") +
-                " WHERE entry=" + entry.ToString() + ";\n" +
-                "UPDATE creature_model_info SET" +
-                (boundingRadius != -1f ? (boundingRadius.ToString() != modelResult.Bounding_radius ? " bounding_radius=" + boundingRadius.ToString() + "," : "") : "") +
-                (combatReach != -1f ? (combatReach.ToString() != modelResult.Combat_reach ? " combat_reach=" + combatReach.ToString() + "," : "") : "") +
-                " WHERE modelid=" + currentModel.ToString() + ";"
-            ;
+                " WHERE entry=" + entry.ToString() + ";\n";
+
+            if (modelResult != null)
+            {
+                rtb_output.Text += "UPDATE creature_model_info SET" +
+                    (boundingRadius != -1f ? (boundingRadius.ToString() != modelResult.Bounding_radius ? " bounding_radius=" + boundingRadius.ToString() + "," : "") : "") +
+                    (combatReach != -1f ? (combatReach.ToString() != modelResult.Combat_reach ? " combat_reach=" + combatReach.ToString() + "," : "") : "") +
+                    " WHERE modelid=" + currentModel.ToString() + ";";
+            }
 
             if(true)
             {
