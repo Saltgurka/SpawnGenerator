@@ -362,7 +362,7 @@
             this.txt_curmana.Name = "txt_curmana";
             this.txt_curmana.Size = new System.Drawing.Size(56, 20);
             this.txt_curmana.TabIndex = 33;
-            this.txt_curmana.Text = "1";
+            this.txt_curmana.Text = "0";
             // 
             // txt_curhealth
             // 
@@ -370,7 +370,7 @@
             this.txt_curhealth.Name = "txt_curhealth";
             this.txt_curhealth.Size = new System.Drawing.Size(56, 20);
             this.txt_curhealth.TabIndex = 32;
-            this.txt_curhealth.Text = "1";
+            this.txt_curhealth.Text = "0";
             // 
             // txt_deathState
             // 
