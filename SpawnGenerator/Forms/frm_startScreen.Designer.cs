@@ -65,8 +65,9 @@
             this.dBImporterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textParserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.petSpellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_DBLogin = new System.Windows.Forms.Panel();
             this.templateFixerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_DBLogin = new System.Windows.Forms.Panel();
+            this.gossipImportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel_DBLogin.SuspendLayout();
             this.SuspendLayout();
@@ -219,10 +220,11 @@
             this.dBImporterToolStripMenuItem,
             this.textParserToolStripMenuItem,
             this.petSpellsToolStripMenuItem,
-            this.templateFixerToolStripMenuItem});
+            this.templateFixerToolStripMenuItem,
+            this.gossipImportMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1478, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1513, 24);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -378,6 +380,13 @@
             this.petSpellsToolStripMenuItem.Text = "PetSpells";
             this.petSpellsToolStripMenuItem.Click += new System.EventHandler(this.petSpellsToolStripMenuItem_Click);
             // 
+            // templateFixerToolStripMenuItem
+            // 
+            this.templateFixerToolStripMenuItem.Name = "templateFixerToolStripMenuItem";
+            this.templateFixerToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.templateFixerToolStripMenuItem.Text = "TemplateFixer";
+            this.templateFixerToolStripMenuItem.Click += new System.EventHandler(this.templateFixerToolStripMenuItem_Click);
+            // 
             // panel_DBLogin
             // 
             this.panel_DBLogin.Controls.Add(this.txt_loginPort);
@@ -401,18 +410,18 @@
             this.panel_DBLogin.TabIndex = 22;
             this.panel_DBLogin.Visible = false;
             // 
-            // templateFixerToolStripMenuItem
+            // gossipImportMenuItem
             // 
-            this.templateFixerToolStripMenuItem.Name = "templateFixerToolStripMenuItem";
-            this.templateFixerToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
-            this.templateFixerToolStripMenuItem.Text = "TemplateFixer";
-            this.templateFixerToolStripMenuItem.Click += new System.EventHandler(this.templateFixerToolStripMenuItem_Click);
+            this.gossipImportMenuItem.Name = "gossipImportMenuItem";
+            this.gossipImportMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.gossipImportMenuItem.Text = "GossipImport";
+            this.gossipImportMenuItem.Click += new System.EventHandler(this.gossipImportMenuItem_Click);
             // 
             // Saltgurka_SQL_Generator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1478, 858);
+            this.ClientSize = new System.Drawing.Size(1513, 858);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panel_DBLogin);
             this.IsMdiContainer = true;
@@ -469,5 +478,6 @@
         private System.Windows.Forms.ToolStripMenuItem petSpellsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem petSpellsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem templateFixerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gossipImportMenuItem;
     }
 }

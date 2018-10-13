@@ -31,6 +31,7 @@ namespace SpawnGenerator
         Form textParser;
         Form petSpells;
         Form templateFixer;
+        Form gossipImport;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -274,6 +275,22 @@ namespace SpawnGenerator
             templateFixer = null;
         }
 
+        private void gossipImportMenuItem_Click(object sender, EventArgs e)
+        {
+            if (gossipImport == null)
+            {
+                gossipImport = new frm_gossipImport();
+                gossipImport.MdiParent = this;
+                gossipImport.FormClosed += GossipImport_FormClosed;
+                gossipImport.Show();
+            }
+        }
+
+        private void GossipImport_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            gossipImport = null;
+        }
+
         private void singleSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Form SpawnGenerator = new frm_spawnGeneratorManual();
@@ -333,7 +350,5 @@ namespace SpawnGenerator
             Form petSpells = new frm_petSpells();
             petSpells.Show();
         }
-
-
     }
 }

@@ -85,6 +85,12 @@
     <Compile Include="Forms\frm_filterer.Designer.cs">
       <DependentUpon>frm_filterer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frm_gossipImport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frm_gossipImport.Designer.cs">
+      <DependentUpon>frm_gossipImport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frm_multiSpawnGen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frm_filterer.resx">
       <DependentUpon>frm_filterer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frm_gossipImport.resx">
+      <DependentUpon>frm_gossipImport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frm_multiSpawnGen.resx">
       <DependentUpon>frm_multiSpawnGen.cs</DependentUpon>

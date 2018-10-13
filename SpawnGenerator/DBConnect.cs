@@ -89,6 +89,35 @@ namespace SpawnGenerator
         }
     }
 
+    class Gossip : ICloneable
+    {
+        public string Entry { get; set; }
+        public string MenuId { get; set; }
+        public string TextId { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+    }
+
+    class GossipMenuOption : ICloneable
+    {
+        public string Entry { get; set; }
+        public string MenuId { get; set; }
+        public string Id { get; set; }
+        public string OptionIcon { get; set; }
+        public string OptionNPCFlag { get; set; }
+        public string BoxMoney { get; set; }
+        public string OptionText { get; set; }
+        public string BoxText { get; set; }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+    }
+
     class DBConnect
     {
         private MySqlConnection connection;
@@ -147,6 +176,60 @@ namespace SpawnGenerator
                 CloseConnection();
             }
             return affectedRows;
+        }
+
+        public List<Gossip> GetGossip()
+        {
+            string query = "SELECT * FROM gossip_menu";
+
+            List<Gossip> gossips = new List<Gossip>();
+
+            if (OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Gossip m = new Gossip()
+                    {
+                        MenuId = dataReader["entry"].ToString(),
+                        TextId = dataReader["text_id"].ToString(),
+                    };
+                    gossips.Add(m);
+                }
+
+                dataReader.Close();
+                CloseConnection();
+            }
+            return gossips;
+        }
+
+        public List<GossipMenuOption> GetGossipMenuOptions()
+        {
+            string query = "SELECT * FROM gossip_menu_option";
+
+            List<GossipMenuOption> gossips = new List<GossipMenuOption>();
+
+            if (OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    GossipMenuOption m = new GossipMenuOption()
+                    {
+                        MenuId = dataReader["menu_id"].ToString(),
+                        OptionText = dataReader["option_text"].ToString(),
+                    };
+                    gossips.Add(m);
+                }
+
+                dataReader.Close();
+                CloseConnection();
+            }
+            return gossips;
         }
 
         public List<Model> GetModels()

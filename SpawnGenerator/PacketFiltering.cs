@@ -66,6 +66,26 @@ namespace SpawnGenerator
             public string text;
         }
 
+        struct GossipPacket
+        {
+            public string entry;
+            public string menuId;
+            public string textId;
+        }
+
+        struct GossipMenuOptionPacket
+        {
+            public string entry;
+            public string menuId;
+            public string Id;
+            public string clientOption;
+            public string optionNPC;
+            public string optionFlags;
+            public string optionCost;
+            public string optionText;
+            public string confirm;
+        }
+
         public List<string> FilterSniffFile(string fileName, bool blacklist, List<string> filterList, string[] fileNames = null)
         {
             string[] lines = null;
@@ -552,6 +572,7 @@ namespace SpawnGenerator
             }
             return dt;
         }
+
         public List<Forms.frm_speedSetter.SniffedSpeed> GetSniffedSpeedList(List<string> filteredPackets)
         {
             var lines = filteredPackets;
@@ -786,6 +807,557 @@ namespace SpawnGenerator
                 }
             }
             return output;
+        }
+
+        public List<Gossip> GetSniffGossip(List<string> filteredPackets)
+        {
+            var lines = filteredPackets;
+
+            GossipPacket sniff;
+            List<Gossip> gossips = new List<Gossip>();
+
+            sniff.entry = "";
+            sniff.menuId = "";
+            sniff.textId = "";
+
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_GOSSIP_MESSAGE"))
+                {
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("GossipGUID: Full:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.entry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("GossipID:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.menuId = packetline[1];
+                        }
+
+                        if (lines[i].Contains("TextID:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.textId = packetline[1];
+                        }
+
+                    } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_GOSSIP_MESSAGE"));
+
+                    if (sniff.entry != "")
+                    {
+                        Gossip c = new Gossip()
+                        {
+                            Entry = sniff.entry,
+                            MenuId = sniff.menuId,
+                            TextId = sniff.textId,
+                        };
+                        gossips.Add(c);
+                        sniff.entry = "";
+                        sniff.menuId = "";
+                        sniff.textId = "";
+                    }
+
+                }
+            }
+            return gossips;
+        }
+
+        public List<GossipMenuOption> GetSniffGossipOptionMenu(List<string> filteredPackets)
+        {
+            var lines = filteredPackets;
+
+            GossipMenuOptionPacket sniff;
+            List<GossipMenuOption> gossips = new List<GossipMenuOption>();
+
+            sniff.entry = "";
+            sniff.menuId = "";
+            sniff.clientOption = "";
+            sniff.optionNPC = "";
+            sniff.optionFlags = "";
+            sniff.optionCost = "";
+            sniff.optionText = "";
+            sniff.confirm = "";
+
+            List<string> OptionTexts = new List<string>();
+
+            // ToDo: Clean this up
+            #region
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_GOSSIP_MESSAGE"))
+                {
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("GossipGUID: Full:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.entry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("GossipID:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.menuId = packetline[1];
+                        }
+
+                        if (lines[i].Contains("[0] (GossipOptions) ClientOption:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.clientOption = packetline[3];
+                        }
+                        if (lines[i].Contains("[0] (GossipOptions) OptionNPC:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionNPC = packetline[3];
+                        }
+                        if (lines[i].Contains("[0] (GossipOptions) OptionFlags:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionFlags = packetline[3];
+                        }
+                        if (lines[i].Contains("[0] (GossipOptions) OptionCost:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionCost = packetline[3];
+                        }
+                        if (lines[i].Contains("[0] (GossipOptions) Text:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.optionText = packetline[1].TrimStart(' ');
+
+                        }
+                        if (lines[i].Contains("[0] (GossipOptions) Confirm:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.confirm = packetline[1].TrimStart(' ');
+                        }
+
+                    } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_GOSSIP_MESSAGE"));
+
+                    if (sniff.entry != "" && sniff.optionText != "")
+                    {
+                        GossipMenuOption c = new GossipMenuOption()
+                        {
+                            Entry = sniff.entry,
+                            MenuId = sniff.menuId,
+                            Id = sniff.clientOption,
+                            OptionIcon = sniff.optionNPC,
+                            OptionNPCFlag = sniff.optionFlags,
+                            BoxMoney = sniff.optionCost,
+                            OptionText = sniff.optionText,
+                            BoxText = sniff.confirm,
+                        };
+                        gossips.Add(c);
+                        sniff.entry = "";
+                        sniff.menuId = "";
+                        sniff.clientOption = "";
+                        sniff.optionNPC = "";
+                        sniff.optionFlags = "";
+                        sniff.optionCost = "";
+                        sniff.optionText = "";
+                        sniff.confirm = "";
+                    }
+                }
+            }
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_GOSSIP_MESSAGE"))
+                {
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("GossipGUID: Full:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.entry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("GossipID:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.menuId = packetline[1];
+                        }
+
+                        if (lines[i].Contains("[1] (GossipOptions) ClientOption:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.clientOption = packetline[3];
+                        }
+                        if (lines[i].Contains("[1] (GossipOptions) OptionNPC:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionNPC = packetline[3];
+                        }
+                        if (lines[i].Contains("[1] (GossipOptions) OptionFlags:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionFlags = packetline[3];
+                        }
+                        if (lines[i].Contains("[1] (GossipOptions) OptionCost:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionCost = packetline[3];
+                        }
+                        if (lines[i].Contains("[1] (GossipOptions) Text:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.optionText = packetline[1].TrimStart(' ');
+                        }
+                        if (lines[i].Contains("[1] (GossipOptions) Confirm:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.confirm = packetline[1].TrimStart(' ');
+                        }
+
+                    } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_GOSSIP_MESSAGE"));
+
+                    if (sniff.entry != "" && sniff.optionText != "")
+                    {
+                        GossipMenuOption c = new GossipMenuOption()
+                        {
+                            Entry = sniff.entry,
+                            MenuId = sniff.menuId,
+                            Id = sniff.clientOption,
+                            OptionIcon = sniff.optionNPC,
+                            OptionNPCFlag = sniff.optionFlags,
+                            BoxMoney = sniff.optionCost,
+                            OptionText = sniff.optionText,
+                            BoxText = sniff.confirm,
+                        };
+                        gossips.Add(c);
+                        sniff.entry = "";
+                        sniff.menuId = "";
+                        sniff.clientOption = "";
+                        sniff.optionNPC = "";
+                        sniff.optionFlags = "";
+                        sniff.optionCost = "";
+                        sniff.optionText = "";
+                        sniff.confirm = "";
+                    }
+                }
+            }
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_GOSSIP_MESSAGE"))
+                {
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("GossipGUID: Full:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.entry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("GossipID:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.menuId = packetline[1];
+                        }
+
+                        if (lines[i].Contains("[2] (GossipOptions) ClientOption:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.clientOption = packetline[3];
+                        }
+                        if (lines[i].Contains("[2] (GossipOptions) OptionNPC:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionNPC = packetline[3];
+                        }
+                        if (lines[i].Contains("[2] (GossipOptions) OptionFlags:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionFlags = packetline[3];
+                        }
+                        if (lines[i].Contains("[2] (GossipOptions) OptionCost:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionCost = packetline[3];
+                        }
+                        if (lines[i].Contains("[2] (GossipOptions) Text:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.optionText = packetline[1].TrimStart(' ');
+                        }
+                        if (lines[i].Contains("[2] (GossipOptions) Confirm:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.confirm = packetline[1].TrimStart(' ');
+                        }
+
+                    } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_GOSSIP_MESSAGE"));
+
+                    if (sniff.entry != "" && sniff.optionText != "")
+                    {
+                        GossipMenuOption c = new GossipMenuOption()
+                        {
+                            Entry = sniff.entry,
+                            MenuId = sniff.menuId,
+                            Id = sniff.clientOption,
+                            OptionIcon = sniff.optionNPC,
+                            OptionNPCFlag = sniff.optionFlags,
+                            BoxMoney = sniff.optionCost,
+                            OptionText = sniff.optionText,
+                            BoxText = sniff.confirm,
+                        };
+                        gossips.Add(c);
+                        sniff.entry = "";
+                        sniff.menuId = "";
+                        sniff.clientOption = "";
+                        sniff.optionNPC = "";
+                        sniff.optionFlags = "";
+                        sniff.optionCost = "";
+                        sniff.optionText = "";
+                        sniff.confirm = "";
+                    }
+                }
+            }
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_GOSSIP_MESSAGE"))
+                {
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("GossipGUID: Full:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.entry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("GossipID:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.menuId = packetline[1];
+                        }
+
+                        if (lines[i].Contains("[3] (GossipOptions) ClientOption:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.clientOption = packetline[3];
+                        }
+                        if (lines[i].Contains("[3] (GossipOptions) OptionNPC:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionNPC = packetline[3];
+                        }
+                        if (lines[i].Contains("[3] (GossipOptions) OptionFlags:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionFlags = packetline[3];
+                        }
+                        if (lines[i].Contains("[3] (GossipOptions) OptionCost:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionCost = packetline[3];
+                        }
+                        if (lines[i].Contains("[3] (GossipOptions) Text:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.optionText = packetline[1].TrimStart(' ');
+                        }
+                        if (lines[i].Contains("[3] (GossipOptions) Confirm:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.confirm = packetline[1].TrimStart(' ');
+                        }
+
+                    } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_GOSSIP_MESSAGE"));
+
+                    if (sniff.entry != "" && sniff.optionText != "")
+                    {
+                        GossipMenuOption c = new GossipMenuOption()
+                        {
+                            Entry = sniff.entry,
+                            MenuId = sniff.menuId,
+                            Id = sniff.clientOption,
+                            OptionIcon = sniff.optionNPC,
+                            OptionNPCFlag = sniff.optionFlags,
+                            BoxMoney = sniff.optionCost,
+                            OptionText = sniff.optionText,
+                            BoxText = sniff.confirm,
+                        };
+                        gossips.Add(c);
+                        sniff.entry = "";
+                        sniff.menuId = "";
+                        sniff.clientOption = "";
+                        sniff.optionNPC = "";
+                        sniff.optionFlags = "";
+                        sniff.optionCost = "";
+                        sniff.optionText = "";
+                        sniff.confirm = "";
+                    }
+                }
+            }
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_GOSSIP_MESSAGE"))
+                {
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("GossipGUID: Full:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.entry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("GossipID:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.menuId = packetline[1];
+                        }
+
+                        if (lines[i].Contains("[4] (GossipOptions) ClientOption:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.clientOption = packetline[3];
+                        }
+                        if (lines[i].Contains("[4] (GossipOptions) OptionNPC:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionNPC = packetline[3];
+                        }
+                        if (lines[i].Contains("[4] (GossipOptions) OptionFlags:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionFlags = packetline[3];
+                        }
+                        if (lines[i].Contains("[4] (GossipOptions) OptionCost:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionCost = packetline[3];
+                        }
+                        if (lines[i].Contains("[4] (GossipOptions) Text:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.optionText = packetline[1].TrimStart(' ');
+                        }
+                        if (lines[i].Contains("[4] (GossipOptions) Confirm:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.confirm = packetline[1].TrimStart(' ');
+                        }
+
+                    } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_GOSSIP_MESSAGE"));
+
+                    if (sniff.entry != "" && sniff.optionText != "")
+                    {
+                        GossipMenuOption c = new GossipMenuOption()
+                        {
+                            Entry = sniff.entry,
+                            MenuId = sniff.menuId,
+                            Id = sniff.clientOption,
+                            OptionIcon = sniff.optionNPC,
+                            OptionNPCFlag = sniff.optionFlags,
+                            BoxMoney = sniff.optionCost,
+                            OptionText = sniff.optionText,
+                            BoxText = sniff.confirm,
+                        };
+                        gossips.Add(c);
+                        sniff.entry = "";
+                        sniff.menuId = "";
+                        sniff.clientOption = "";
+                        sniff.optionNPC = "";
+                        sniff.optionFlags = "";
+                        sniff.optionCost = "";
+                        sniff.optionText = "";
+                        sniff.confirm = "";
+                    }
+                }
+            }
+            for (int i = 1; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("SMSG_GOSSIP_MESSAGE"))
+                {
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("GossipGUID: Full:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.entry = packetline[8];
+                        }
+
+                        if (lines[i].Contains("GossipID:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.menuId = packetline[1];
+                        }
+
+                        if (lines[i].Contains("[5] (GossipOptions) ClientOption:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.clientOption = packetline[3];
+                        }
+                        if (lines[i].Contains("[5] (GossipOptions) OptionNPC:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionNPC = packetline[3];
+                        }
+                        if (lines[i].Contains("[5] (GossipOptions) OptionFlags:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionFlags = packetline[3];
+                        }
+                        if (lines[i].Contains("[5] (GossipOptions) OptionCost:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            sniff.optionCost = packetline[3];
+                        }
+                        if (lines[i].Contains("[5] (GossipOptions) Text:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.optionText = packetline[1].TrimStart(' ');
+                        }
+                        if (lines[i].Contains("[5] (GossipOptions) Confirm:"))
+                        {
+                            string[] packetline = lines[i].Split(new char[] { ':' });
+                            sniff.confirm = packetline[1].TrimStart(' ');
+                        }
+
+                    } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_GOSSIP_MESSAGE"));
+
+                    if (sniff.entry != "" && sniff.optionText != "")
+                    {
+                        GossipMenuOption c = new GossipMenuOption()
+                        {
+                            Entry = sniff.entry,
+                            MenuId = sniff.menuId,
+                            Id = sniff.clientOption,
+                            OptionIcon = sniff.optionNPC,
+                            OptionNPCFlag = sniff.optionFlags,
+                            BoxMoney = sniff.optionCost,
+                            OptionText = sniff.optionText,
+                            BoxText = sniff.confirm,
+                        };
+                        gossips.Add(c);
+                        sniff.entry = "";
+                        sniff.menuId = "";
+                        sniff.clientOption = "";
+                        sniff.optionNPC = "";
+                        sniff.optionFlags = "";
+                        sniff.optionCost = "";
+                        sniff.optionText = "";
+                        sniff.confirm = "";
+                    }
+                }
+            }
+            #endregion
+            return gossips;
         }
     }
 }
