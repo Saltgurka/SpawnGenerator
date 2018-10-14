@@ -16,6 +16,9 @@ namespace SpawnGenerator.Forms
     {
         private List<Creature> creatures = new List<Creature>();
         private List<Model> models = new List<Model>();
+        PacketFiltering filter = new PacketFiltering();
+        List<int> addedEntries = new List<int>();
+        List<int> addedModels = new List<int>();
 
         #region enums
         enum MechanicImmunities
@@ -304,6 +307,33 @@ namespace SpawnGenerator.Forms
         }
 
         #endregion
+
+        struct CreaturePacket
+        {
+            public int objectType;
+            public int entry;
+            public float speedWalk;
+            public float speedRun;
+            public float scale;
+            public int faction;
+            public int unitFlags;
+            public int meleeBaseAttackTime;
+            public int rangedBaseAttackTime;
+            public float boundingRadius;
+            public float combatReach;
+            public int npcFlags;
+            public int racialLeader;
+            // Add Type Flags
+            public int creatureType;
+            public int creatureFamily;
+            public int rank;
+            public int modelId1;
+            public int modelId2;
+            public int modelId3;
+            public int modelId4;
+
+            public int currentModel;
+        }
 
         public frm_templateFixer()
         {
@@ -665,8 +695,8 @@ namespace SpawnGenerator.Forms
 
             string entryString = entry.ToString();
             string currentModelString = currentModel.ToString();
-            Creature result = creatures.FirstOrDefault(a => a.Entry == entryString);
-            Model modelResult = models.FirstOrDefault(a => a.ModelId == currentModelString);
+            Creature result = creatures.Find(a => a.Entry == entryString);
+            Model modelResult = models.Find(a => a.ModelId == currentModelString);
             double roundedSpeedWalk;
             double roundedSpeedRun;
             if (speedWalk > 1)
@@ -705,10 +735,589 @@ namespace SpawnGenerator.Forms
                     (combatReach != -1f ? (combatReach.ToString() != modelResult.Combat_reach ? " combat_reach=" + combatReach.ToString() + "," : "") : "") +
                     " WHERE modelid=" + currentModel.ToString() + ";";
             }
+        }
 
-            if(true)
+        private void btn_loadFile_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Title = "Open File";
+            openFileDialog.Filter = "Parsed Sniff File (*.txt)|*.txt";
+            openFileDialog.FileName = "*.txt";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.ShowReadOnly = false;
+            openFileDialog.Multiselect = true;
+            openFileDialog.CheckFileExists = true;
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                btn_loadFile.Enabled = false;
+                btn_loadFile.Text = "Loading...";
+                List<CreaturePacket> creaturePacketsToCompare = new List<CreaturePacket>();
 
+                foreach (String file in openFileDialog.FileNames)
+                {
+                    List<string> filterList = new List<string>(new string[] { "SMSG_UPDATE_OBJECT", "SMSG_QUERY_CREATURE_RESPONSE" });
+                    creaturePacketsToCompare = GetMassUpdate(filter.FilterSniffFile(file, false, filterList));
+                }
+                CompareMassUppdate(creaturePacketsToCompare);
+
+                btn_loadFile.Enabled = true;
+                btn_loadFile.Text = "Load File(s)";
+            }
+            else
+            {
+                // This code runs if the dialog was cancelled
+                return;
+            }
+
+            addedEntries.Clear();
+            addedModels.Clear();
+        }
+
+        private List<CreaturePacket> GetMassUpdate(List<string> filteredPackets)
+        {
+            var lines = filteredPackets;
+
+            CreaturePacket sniff = new CreaturePacket();
+            List<CreaturePacket> creaturePackets = new List<CreaturePacket>();
+
+            sniff.objectType = -1;
+            sniff.entry = -1;
+            sniff.speedWalk = -1f;
+            sniff.speedRun = -1f;
+            sniff.scale = -1f;
+            sniff.faction = -1;
+            sniff.unitFlags = -1;
+            sniff.meleeBaseAttackTime = -1;
+            sniff.rangedBaseAttackTime = -1;
+            sniff.boundingRadius = -1f;
+            sniff.combatReach = -1f;
+            sniff.npcFlags = -1;
+            sniff.racialLeader = -1;
+            // Add Type Flags
+            sniff.creatureType = -1;
+            sniff.creatureFamily = -1;
+            sniff.rank = -1;
+            sniff.modelId1 = -1;
+            sniff.modelId2 = -1;
+            sniff.modelId3 = -1;
+            sniff.modelId4 = -1;
+
+            sniff.currentModel = -1;
+
+            
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (lines[i].Contains("CreateObject2") || lines[i].Contains("SMSG_QUERY_CREATURE_RESPONSE"))
+                {
+                    bool createObjectPacket = false;
+                    if (lines[i].Contains("CreateObject2"))
+                        createObjectPacket = true;
+                    do
+                    {
+                        i++;
+
+                        if (lines[i].Contains("Object Type:") && sniff.objectType == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[3], out sniff.objectType))
+                            {
+                                //rtb_output.Text = "Parsing failed on Type";
+                                //return;
+                            }
+                        }
+                        // Entry
+                        if (lines[i].Contains("OBJECT_FIELD_ENTRY:") && sniff.entry == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!int.TryParse(line2[0], out sniff.entry))
+                            {
+                                //rtb_output.Text = "Parsing failed on Entry";
+                                //return;
+                            }
+                            //if (tempEntry != sniff.entry && sniff.entry != -1)
+                            //{
+                            //    //rtb_output.Text = "Can't parse two objects at the same time";
+                            //    //return;
+                            //}
+                            //sniff.entry = tempEntry;
+                        }
+                        // Entry in Query Response
+                        if (lines[i].Contains("Entry:") && sniff.entry == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[1], out sniff.entry))
+                            {
+                                //rtb_output.Text = "Parsing failed on WalkSpeed";
+                                //return;
+                            }
+
+                            // This means that we can also set the object type
+                            sniff.objectType = 3;
+                        }
+
+                        // SpeedWalk
+                        if (lines[i].Contains("WalkSpeed:") && sniff.speedWalk == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!float.TryParse(line[2], out sniff.speedWalk))
+                            {
+                                //rtb_output.Text = "Parsing failed on WalkSpeed";
+                                //return;
+                            }
+                            //speedWalk /= 2.5f;
+                        }
+
+                        // SpeedRun
+                        if (lines[i].Contains("RunSpeed:") && sniff.speedRun == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!float.TryParse(line[2], out sniff.speedRun))
+                            {
+                                //rtb_output.Text = "Parsing failed on RunSpeed";
+                                //return;
+                            }
+                            //speedWalk /= 7f;
+                        }
+
+                        // Scale
+                        if (lines[i].Contains("OBJECT_FIELD_SCALE_X:") && sniff.scale == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!float.TryParse(line2[1], out sniff.scale))
+                            {
+                                //rtb_output.Text = "Parsing failed on OBJECT_FIELD_SCALE_X";
+                                //return;
+                            }
+                        }
+
+                        // Faction
+                        if (lines[i].Contains("UNIT_FIELD_FACTIONTEMPLATE:") && sniff.faction == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!int.TryParse(line2[0], out sniff.faction))
+                            {
+                                //rtb_output.Text = "Parsing failed on UNIT_FIELD_FACTIONTEMPLATE";
+                                //return;
+                            }
+                        }
+
+                        // UnitFlags
+                        if (lines[i].Contains("UNIT_FIELD_FLAGS:") && sniff.unitFlags == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!int.TryParse(line2[0], out sniff.unitFlags))
+                            {
+                                //rtb_output.Text = "Parsing failed on UNIT_FIELD_FLAGS";
+                                //return;
+                            }
+                        }
+
+                        // MeleeBaseAttackTime
+                        if (lines[i].Contains("UNIT_FIELD_BASEATTACKTIME:") && sniff.meleeBaseAttackTime == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!int.TryParse(line2[0], out sniff.meleeBaseAttackTime))
+                            {
+                                //rtb_output.Text = "Parsing failed on UNIT_FIELD_BASEATTACKTIME";
+                                //return;
+                            }
+                        }
+
+                        // RangedBaseAttackTime
+                        if (lines[i].Contains("UNIT_FIELD_BASEATTACKTIME + 1:") && sniff.rangedBaseAttackTime == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[4].Split('/');
+                            if (!int.TryParse(line2[0], out sniff.rangedBaseAttackTime))
+                            {
+                                //rtb_output.Text = "Parsing failed on UNIT_FIELD_BASEATTACKTIME + 1";
+                                //return;
+                            }
+                        }
+
+                        // bounding_radius
+                        if (lines[i].Contains("UNIT_FIELD_BOUNDINGRADIUS:") && sniff.boundingRadius == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!float.TryParse(line2[1], out sniff.boundingRadius))
+                            {
+                                //rtb_output.Text = "Parsing failed on UNIT_FIELD_BOUNDINGRADIUS";
+                                //return;
+                            }
+                        }
+
+                        // combat_reach
+                        if (lines[i].Contains("UNIT_FIELD_COMBATREACH:") && sniff.combatReach == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!float.TryParse(line2[1], out sniff.combatReach))
+                            {
+                                //rtb_output.Text = "Parsing failed on UNIT_FIELD_COMBATREACH";
+                                //return;
+                            }
+                        }
+
+                        // NPCFlags
+                        if (lines[i].Contains("UNIT_NPC_FLAGS:") && sniff.npcFlags == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!int.TryParse(line2[0], out sniff.npcFlags))
+                            {
+                                //rtb_output.Text = "Parsing failed on UNIT_NPC_FLAGS";
+                                //return;
+                            }
+                        }
+
+                        // RacialLeader
+                        if (lines[i].Contains("Leader:") && sniff.racialLeader == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (lines[1] == "True")
+                                sniff.racialLeader = 1;
+                            else
+                                sniff.racialLeader = 0;
+                        }
+
+                        // TypeFlags
+
+                        // CreatureType
+                        if (lines[i].Contains("CreatureType:") && sniff.creatureType == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[1], out sniff.creatureType))
+                            {
+                                //rtb_output.Text = "Parsing failed on CreatureType";
+                                //return;
+                            }
+                        }
+
+                        // CreatureFamily
+                        if (lines[i].Contains("CreatureFamily:") && sniff.creatureFamily == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[1], out sniff.creatureFamily))
+                            {
+                                //rtb_output.Text = "Parsing failed on CreatureFamily";
+                                //return;
+                            }
+                        }
+
+                        // Rank
+                        if (lines[i].Contains("Classification:") && sniff.rank == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[1], out sniff.rank))
+                            {
+                                //rtb_output.Text = "Parsing failed on Classification";
+                                //return;
+                            }
+                        }
+
+                        // ModelId1
+                        if (lines[i].Contains("[0] CreatureDisplayID:") && sniff.modelId1 == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[2], out sniff.modelId1))
+                            {
+                                //rtb_output.Text = "Parsing failed on [0] CreatureDisplayID:";
+                                //return;
+                            }
+                        }
+
+                        // ModelId2
+                        if (lines[i].Contains("[1] CreatureDisplayID:") && sniff.modelId2 == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[2], out sniff.modelId2))
+                            {
+                                //rtb_output.Text = "Parsing failed on [1] CreatureDisplayID:";
+                                //return;
+                            }
+                        }
+
+                        // ModelId3
+                        if (lines[i].Contains("[2] CreatureDisplayID:") && sniff.modelId3 == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[2], out sniff.modelId3))
+                            {
+                                //rtb_output.Text = "Parsing failed on [2] CreatureDisplayID:";
+                                //return;
+                            }
+                        }
+
+                        // ModelId4
+                        if (lines[i].Contains("[3] CreatureDisplayID:") && sniff.modelId4 == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            if (!int.TryParse(line[2], out sniff.modelId4))
+                            {
+                                //rtb_output.Text = "Parsing failed on [3] CreatureDisplayID:";
+                                //return;
+                            }
+                        }
+
+                        // currentModel
+                        if (lines[i].Contains("UNIT_FIELD_DISPLAYID:") && sniff.currentModel == -1)
+                        {
+                            string[] line = lines[i].Split(' ');
+                            string[] line2 = line[2].Split('/');
+                            if (!int.TryParse(line2[0], out sniff.currentModel))
+                            {
+                                //rtb_output.Text = "Parsing failed on UNIT_FIELD_DISPLAYID";
+                                //return;
+                            }
+                        }
+                    } while (lines[i + 1] != "" && !lines[i + 1].Contains("CreateObject2"));
+
+                    // If these lines were not found it means they are 0
+                    if (createObjectPacket)
+                    {
+                        if (sniff.unitFlags == -1)
+                            sniff.unitFlags = 0;
+                        if (sniff.npcFlags == -1)
+                            sniff.npcFlags = 0;
+                    }
+                    else
+                    {
+                        if (sniff.modelId1 == -1)
+                            sniff.modelId1 = 0;
+                        if (sniff.modelId2 == -1)
+                            sniff.modelId2 = 0;
+                        if (sniff.modelId3 == -1)
+                            sniff.modelId3 = 0;
+                        if (sniff.modelId4 == -1)
+                            sniff.modelId4 = 0;
+                    }
+
+                    //string entryString = sniff.entry.ToString();
+                    //string currentModelString = sniff.currentModel.ToString();
+                    //Creature result = creatures.FirstOrDefault(a => a.Entry == entryString);
+                    //Model modelResult = models.FirstOrDefault(a => a.ModelId == currentModelString);
+                    //double roundedSpeedWalk;
+                    //double roundedSpeedRun;
+                    //if (sniff.speedWalk > 1)
+                    //    roundedSpeedWalk = Math.Round(sniff.speedWalk / 2.5, 5);
+                    //else
+                    //    roundedSpeedWalk = Math.Round(sniff.speedWalk / 2.5, 6);
+
+                    //if (sniff.speedRun > 1)
+                    //    roundedSpeedRun = Math.Round(sniff.speedRun / 7, 5);
+                    //else
+                    //    roundedSpeedRun = Math.Round(sniff.speedRun / 7, 6);
+
+                    //sniff.speedWalk = (float)roundedSpeedWalk;
+                    //sniff.speedRun = (float)roundedSpeedRun;
+                    if (sniff.objectType != 3 && sniff.objectType != 5)
+                        sniff.entry = -1;
+
+                    // Is creature a TBC npc
+                    Creature result = creatures.Find(a => a.Entry == sniff.entry.ToString());
+                    if (result == null)
+                        sniff.entry = -1;
+
+                    if (sniff.entry != -1)
+                    {
+                        CreaturePacket updatePacket = creaturePackets.Find(a => a.entry == sniff.entry);
+                        if (updatePacket.entry != sniff.entry)
+                        {
+                            creaturePackets.Add(sniff);
+                            addedEntries.Add(sniff.entry);
+                        }
+                        else if (!createObjectPacket)
+                        {
+                            updatePacket.racialLeader = sniff.racialLeader;
+                            updatePacket.creatureType = sniff.creatureType;
+                            updatePacket.creatureFamily = sniff.creatureFamily;
+                            updatePacket.rank = sniff.rank;
+                            updatePacket.modelId1 = sniff.modelId1;
+                            updatePacket.modelId2 = sniff.modelId2;
+                            updatePacket.modelId3 = sniff.modelId3;
+                            updatePacket.modelId4 = sniff.modelId4;
+
+                            creaturePackets.RemoveAt(creaturePackets.FindIndex(a => a.entry == sniff.entry));
+                            creaturePackets.Add(updatePacket);
+                            //creaturePackets[creaturePackets.FindIndex(a => a.entry == sniff.entry)].racialLeader = sniff.racialLeader;
+                            //creaturePackets[creaturePackets.FindIndex(a => a.entry == sniff.entry)].creatureType = sniff.creatureType;
+                            //creaturePackets[creaturePackets.FindIndex(a => a.entry == sniff.entry)].creatureFamily = sniff.creatureFamily;
+                            //creaturePackets[creaturePackets.FindIndex(a => a.entry == sniff.entry)].rank = sniff.rank;
+                            //creaturePackets[creaturePackets.FindIndex(a => a.entry == sniff.entry)].modelId1 = sniff.modelId1;
+                            //creaturePackets[creaturePackets.FindIndex(a => a.entry == sniff.entry)].modelId2 = sniff.modelId2;
+                            //creaturePackets[creaturePackets.FindIndex(a => a.entry == sniff.entry)].modelId3 = sniff.modelId3;
+                            //creaturePackets[creaturePackets.FindIndex(a => a.entry == sniff.entry)].modelId4 = sniff.modelId4;
+                            //racialLeader = sniff.racialLeader;
+                        }
+                        else
+                        {
+                            updatePacket.speedWalk = sniff.speedWalk;
+                            updatePacket.speedRun = sniff.speedRun;
+                            updatePacket.scale = sniff.scale;
+                            updatePacket.faction = sniff.faction;
+                            updatePacket.unitFlags = sniff.unitFlags;
+                            updatePacket.meleeBaseAttackTime = sniff.meleeBaseAttackTime;
+                            updatePacket.rangedBaseAttackTime = sniff.rangedBaseAttackTime;
+                            updatePacket.boundingRadius = sniff.boundingRadius;
+                            updatePacket.combatReach = sniff.combatReach;
+                            updatePacket.npcFlags = sniff.npcFlags;
+
+                            creaturePackets.RemoveAt(creaturePackets.FindIndex(a => a.entry == sniff.entry));
+                            creaturePackets.Add(updatePacket);
+                        }
+                    }
+                    #region reset
+                    sniff.objectType = -1;
+                    sniff.entry = -1;
+                    sniff.speedWalk = -1f;
+                    sniff.speedRun = -1f;
+                    sniff.scale = -1f;
+                    sniff.faction = -1;
+                    sniff.unitFlags = -1;
+                    sniff.meleeBaseAttackTime = -1;
+                    sniff.rangedBaseAttackTime = -1;
+                    sniff.boundingRadius = -1f;
+                    sniff.combatReach = -1f;
+                    sniff.npcFlags = -1;
+                    sniff.racialLeader = -1;
+                    // Add Type Flags
+                    sniff.creatureType = -1;
+                    sniff.creatureFamily = -1;
+                    sniff.rank = -1;
+                    sniff.modelId1 = -1;
+                    sniff.modelId2 = -1;
+                    sniff.modelId3 = -1;
+                    sniff.modelId4 = -1;
+
+                    sniff.currentModel = -1;
+                    #endregion
+                }
+            }
+            return creaturePackets;
+        }
+
+        private void CompareMassUppdate(List<CreaturePacket> creaturePackets)
+        {
+            foreach (CreaturePacket sniff in creaturePackets)
+            {
+                bool creatureValueToUpdate = false;
+                bool modelValueToUpdate = false;
+                //string creatureName = "";
+                string entryString = sniff.entry.ToString();
+                string currentModelString = sniff.currentModel.ToString();
+                Creature result = creatures.Find(a => a.Entry == entryString);
+                Model modelResult = models.Find(a => a.ModelId == currentModelString);
+                double roundedSpeedWalk;
+                double roundedSpeedRun;
+                if (sniff.speedWalk > 1)
+                    roundedSpeedWalk = Math.Round(sniff.speedWalk / 2.5, 5);
+                else
+                    roundedSpeedWalk = Math.Round(sniff.speedWalk / 2.5, 6);
+
+                if (sniff.speedRun > 1)
+                    roundedSpeedRun = Math.Round(sniff.speedRun / 7, 5);
+                else
+                    roundedSpeedRun = Math.Round(sniff.speedRun / 7, 6);
+
+                if (result == null)
+                    continue;
+
+                string creatureName = result.Name;
+
+                string speedWalkString = (sniff.speedWalk != -1f ? (roundedSpeedWalk.ToString() != result.SpeedWalk ? " SpeedWalk=" + sniff.speedWalk.ToString() + "/2.5," : "") : "");
+                string speedRunString = (sniff.speedRun != -1f ? (roundedSpeedRun.ToString() != result.SpeedRun ? " SpeedRun=" + sniff.speedRun.ToString() + "/7," : "") : "");
+                string scaleString = (sniff.scale != -1f ? (sniff.scale.ToString() != result.Scale ? " Scale=" + sniff.scale.ToString() + "," : "") : "");
+                string factionString = (sniff.faction != -1f ? (sniff.faction.ToString() != result.Faction ? " FactionAlliance=" + sniff.faction.ToString() + ", FactionHorde=" + sniff.faction.ToString() + "," : "") : "");
+                string unitFlagsString = (sniff.unitFlags != -1 ? (sniff.unitFlags.ToString() != result.UnitFlags ? " UnitFlags=" + sniff.unitFlags.ToString() + "," : "") : "");
+                string meleeBaseAttackTimeString = (sniff.meleeBaseAttackTime != -1 ? (sniff.meleeBaseAttackTime.ToString() != result.MeleeBaseAttackTime ? " MeleeBaseAttackTime=" + sniff.meleeBaseAttackTime.ToString() + "," : "") : "");
+                string rangedBaseAttackTimeString = (sniff.rangedBaseAttackTime != -1 ? (sniff.rangedBaseAttackTime.ToString() != result.RangedBaseAttackTime ? " RangedBaseAttackTime=" + sniff.rangedBaseAttackTime.ToString() + "," : "") : "");
+                string npcFlagsString = (sniff.npcFlags != -1 ? (sniff.npcFlags.ToString() != result.NpcFlags ? " NpcFlags=" + sniff.npcFlags.ToString() + "," : "") : "");
+                string racialLeaderString = (sniff.racialLeader != -1 ? (sniff.racialLeader.ToString() != result.RacialLeader ? " RacialLeader=" + sniff.racialLeader.ToString() + "," : "") : "");
+                string creatureTypeString = (sniff.creatureType != -1 ? (sniff.creatureType.ToString() != result.CreatureType ? " CreatureType=" + sniff.creatureType.ToString() + "," : "") : "");
+                string creatureFamilyString = (sniff.creatureFamily != -1 ? (sniff.creatureFamily.ToString() != result.Family ? " Family=" + sniff.creatureFamily.ToString() + "," : "") : "");
+                string rankString = (sniff.rank != -1 ? (sniff.rank.ToString() != result.Rank ? " Rank=" + sniff.rank.ToString() + "," : "") : "");
+                string modelId1String = (sniff.modelId1 != -1 ? (sniff.modelId1.ToString() != result.ModelId1 ? " ModelId1=" + sniff.modelId1.ToString() + "," : "") : "");
+                string modelId2String = (sniff.modelId2 != -1 ? (sniff.modelId2.ToString() != result.ModelId2 ? " ModelId2=" + sniff.modelId2.ToString() + "," : "") : "");
+                string modelId3String = (sniff.modelId3 != -1 ? (sniff.modelId3.ToString() != result.ModelId3 ? " ModelId3=" + sniff.modelId3.ToString() + "," : "") : "");
+                string modelId4String = (sniff.modelId4 != -1 ? (sniff.modelId4.ToString() != result.ModelId4 ? " ModelId4=" + sniff.modelId4.ToString() + "," : "") : "");
+
+                if (speedWalkString + speedRunString + scaleString + factionString + unitFlagsString + meleeBaseAttackTimeString + rangedBaseAttackTimeString + npcFlagsString + racialLeaderString +
+                    creatureTypeString + creatureFamilyString + rankString + modelId1String + modelId2String + modelId3String + modelId4String != "")
+                    creatureValueToUpdate = true;
+
+                if (creatureValueToUpdate)
+                {
+                    rtb_output.Text += "\n-- " + creatureName + " c." + entryString + "\nUPDATE creature_template SET" +
+                        speedWalkString +
+                        speedRunString +
+                        scaleString +
+                        factionString +
+                        unitFlagsString +
+                        meleeBaseAttackTimeString +
+                        rangedBaseAttackTimeString +
+                        npcFlagsString +
+                        racialLeaderString +
+                        creatureTypeString +
+                        creatureFamilyString +
+                        rankString +
+                        modelId1String +
+                        modelId2String +
+                        modelId3String +
+                        modelId4String +
+                        " WHERE entry=" + sniff.entry.ToString() + ";\n";
+                }
+
+                //rtb_output.Text = "UPDATE creature_template SET" +
+                //(sniff.speedWalk != -1f ? (roundedSpeedWalk.ToString() != result.SpeedWalk ? " SpeedWalk=" + sniff.speedWalk.ToString() + "/2.5," : "") : "") +
+                //(sniff.speedRun != -1f ? (roundedSpeedRun.ToString() != result.SpeedRun ? " SpeedRun=" + sniff.speedRun.ToString() + "/7," : "") : "") +
+                //(sniff.scale != -1f ? (sniff.scale.ToString() != result.Scale ? " Scale=" + sniff.scale.ToString() + "," : "") : "") +
+                //(sniff.faction != -1f ? (sniff.faction.ToString() != result.Faction ? " FactionAlliance=" + sniff.faction.ToString() + ", FactionHorde=" + sniff.faction.ToString() + "," : "") : "") +
+                //(sniff.unitFlags != -1 ? (sniff.unitFlags.ToString() != result.UnitFlags ? " UnitFlags=" + sniff.unitFlags.ToString() + "," : "") : "") +
+                //(sniff.meleeBaseAttackTime != -1 ? (sniff.meleeBaseAttackTime.ToString() != result.MeleeBaseAttackTime ? " MeleeBaseAttackTime=" + sniff.meleeBaseAttackTime.ToString() + "," : "") : "") +
+                //(sniff.rangedBaseAttackTime != -1 ? (sniff.rangedBaseAttackTime.ToString() != result.RangedBaseAttackTime ? " RangedBaseAttackTime=" + sniff.rangedBaseAttackTime.ToString() + "," : "") : "") +
+                //(sniff.npcFlags != -1 ? (sniff.npcFlags.ToString() != result.NpcFlags ? " NpcFlags=" + sniff.npcFlags.ToString() + "," : "") : "") +
+                //(sniff.racialLeader != -1 ? (sniff.racialLeader.ToString() != result.RacialLeader ? " RacialLeader=" + sniff.racialLeader.ToString() + "," : "") : "") +
+                //(sniff.creatureType != -1 ? (sniff.creatureType.ToString() != result.CreatureType ? " CreatureType=" + sniff.creatureType.ToString() + "," : "") : "") +
+                //(sniff.creatureFamily != -1 ? (sniff.creatureFamily.ToString() != result.Family ? " Family=" + sniff.creatureFamily.ToString() + "," : "") : "") +
+                //(sniff.rank != -1 ? (sniff.rank.ToString() != result.Rank ? " Rank=" + sniff.rank.ToString() + "," : "") : "") +
+                //(sniff.modelId1 != -1 ? (sniff.modelId1.ToString() != result.ModelId1 ? " ModelId1=" + sniff.modelId1.ToString() + "," : "") : "") +
+                //(sniff.modelId2 != -1 ? (sniff.modelId2.ToString() != result.ModelId2 ? " ModelId2=" + sniff.modelId2.ToString() + "," : "") : "") +
+                //(sniff.modelId3 != -1 ? (sniff.modelId3.ToString() != result.ModelId3 ? " ModelId3=" + sniff.modelId3.ToString() + "," : "") : "") +
+                //(sniff.modelId4 != -1 ? (sniff.modelId4.ToString() != result.ModelId4 ? " ModelId4=" + sniff.modelId4.ToString() + "," : "") : "") +
+                //" WHERE entry=" + sniff.entry.ToString() + ";\n";
+
+                //entryString = sniff.entry.ToString();
+                //sniff.currentModel.ToString();
+                //result = creatures.FirstOrDefault(a => a.Entry == entryString);
+                //modelResult = models.FirstOrDefault(a => a.ModelId == currentModelString);
+                //creatureName = result.Name;
+                if (modelResult != null)
+                {
+                    string boundingRadiusString = (sniff.boundingRadius != -1f ? (sniff.boundingRadius.ToString() != modelResult.Bounding_radius ? " bounding_radius=" + sniff.boundingRadius.ToString() + "," : "") : "");
+                    string combatReachString = (sniff.combatReach != -1f ? (sniff.combatReach.ToString() != modelResult.Combat_reach ? " combat_reach=" + sniff.combatReach.ToString() + "," : "") : "");
+
+                    if (boundingRadiusString + combatReachString != "")
+                        modelValueToUpdate = true;
+
+                    if (modelValueToUpdate)
+                    {
+                        rtb_output.Text += "\n-- Used by: " + creatureName + " c." + entryString + "\nUPDATE creature_model_info SET" +
+                            boundingRadiusString +
+                            combatReachString +
+                            " WHERE modelid=" + sniff.currentModel.ToString() + ";\n";
+                    }
+                    //rtb_output.Text += "UPDATE creature_model_info SET" +
+                    //(sniff.boundingRadius != -1f ? (sniff.boundingRadius.ToString() != modelResult.Bounding_radius ? " bounding_radius=" + sniff.boundingRadius.ToString() + "," : "") : "") +
+                    //(sniff.combatReach != -1f ? (sniff.combatReach.ToString() != modelResult.Combat_reach ? " combat_reach=" + sniff.combatReach.ToString() + "," : "") : "") +
+                    //" WHERE modelid=" + sniff.currentModel.ToString() + ";";
+                }
             }
         }
     }

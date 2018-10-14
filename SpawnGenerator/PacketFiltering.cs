@@ -1359,6 +1359,36 @@ namespace SpawnGenerator
             #endregion
             return gossips;
         }
+
+        //public List<Forms.frm_templateFixer.CreaturePacket> GetTemplateUpdates(List<string> filteredPackets)
+        //{
+        //    Forms.frm_templateFixer.CreaturePacket sniff;
+        //    List<Forms.frm_templateFixer.CreaturePacket> creatures = new List<Forms.frm_templateFixer.CreaturePacket>();
+
+        //    sniff.objectType = -1;
+        //    sniff.entry = -1;
+        //    sniff.speedWalk = -1f;
+        //    sniff.speedRun = -1f;
+        //    sniff.scale = -1f;
+        //    sniff.faction = -1;
+        //    sniff.unitFlags = -1;
+        //    sniff.meleeBaseAttackTime = -1;
+        //    sniff.rangedBaseAttackTime = -1;
+        //    sniff.boundingRadius = -1f;
+        //    sniff.combatReach = -1f;
+        //    sniff.npcFlags = -1;
+        //    sniff.racialLeader = -1;
+        //    // Add Type Flags
+        //    sniff.creatureType = -1;
+        //    sniff.creatureFamily = -1;
+        //    sniff.rank = -1;
+        //    sniff.modelId1 = -1;
+        //    sniff.modelId2 = -1;
+        //    sniff.modelId3 = -1;
+        //    sniff.modelId4 = -1;
+
+        //    sniff.currentModel = -1;
+        //}
     }
 }
 
