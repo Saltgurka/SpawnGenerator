@@ -844,7 +844,7 @@ namespace SpawnGenerator.Forms
                             //sniff.entry = tempEntry;
                         }
                         // Entry in Query Response
-                        if (lines[i].Contains("Entry:") && sniff.entry == -1)
+                        if (lines[i].Contains("Entry:") && sniff.entry == -1 && createObjectPacket == false)
                         {
                             string[] line = lines[i].Split(' ');
                             if (!int.TryParse(line[1], out sniff.entry))
