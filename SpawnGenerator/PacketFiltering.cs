@@ -516,40 +516,44 @@ namespace SpawnGenerator
                         if (lines[i].Contains("Language"))
                         {
                             string[] packetline = lines[i].Split(new char[] { ' ' });
-                            sniff.language = packetline[1];
+                            sniff.language = packetline[1].TrimStart(' ');
                         }
 
                         if (lines[i].Contains("SenderGUID"))
                         {
                             string[] packetline = lines[i].Split(new char[] { ' ' });
-                            sniff.senderEntry = packetline[8];
+                            sniff.senderEntry = packetline[8].TrimStart(' ');
                         }
 
                         if (lines[i].Contains("TargetGUID"))
                         {
                             string[] packetline = lines[i].Split(new char[] { ' ' });
                             if (packetline.Length > 7)
-                                sniff.targetEntry = packetline[8];
+                                sniff.targetEntry = packetline[8].TrimStart(' ');
                         }
 
                         if (lines[i].Contains("Sender Name:"))
                         {
                             string[] packetline = lines[i].Split(new char[] { ':' });
 
-                            sniff.senderName = packetline[1];
+                            sniff.senderName = packetline[1].TrimStart(' ');
                         }
 
                         if (lines[i].Contains("Receiver Name:"))
                         {
                             string[] packetline = lines[i].Split(new char[] { ':' });
                             if (packetline.Length > 0)
-                                sniff.targetName = packetline[1];
+                                sniff.targetName = packetline[1].TrimStart(' ');
                         }
 
                         if (lines[i].Contains("Text:"))
                         {
-                            string[] packetline = lines[i].Split(new char[] { ':' });
-                            sniff.text = packetline[1];
+                            string[] packetline = lines[i].Split(new char[] { ' ' });
+                            //for (int j = 1; j < packetline.Length; j++)
+                            //{
+                            //    sniff.text += packetline[j];
+                            //}
+                            sniff.text = lines[i].Substring(6);
                         }
                     } while (lines[i] != "" && !lines[i + 1].Contains("SMSG_CHAT"));
 
