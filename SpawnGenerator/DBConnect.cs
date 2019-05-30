@@ -310,7 +310,7 @@ namespace SpawnGenerator
                         SpeedWalk = dataReader["SpeedWalk"].ToString(),
                         SpeedRun = dataReader["SpeedRun"].ToString(),
                         MovementType = dataReader["MovementType"].ToString(),
-                        Faction = dataReader["FactionAlliance"].ToString(),
+                        Faction = dataReader["Faction"].ToString(),
                         Scale = dataReader["Scale"].ToString(),
                         ModelId1 = dataReader["ModelId1"].ToString(),
                         ModelId2 = dataReader["ModelId2"].ToString(),
