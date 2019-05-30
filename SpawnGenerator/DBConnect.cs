@@ -520,7 +520,7 @@ namespace SpawnGenerator
 
                 while (dataReader.Read())
                 {
-                    Quest qc = new Quest()
+                    Quest q = new Quest()
                     {
                         Entry = dataReader["entry"].ToString(),
                         Method = dataReader["Method"].ToString(),
@@ -575,51 +575,6 @@ namespace SpawnGenerator
                         ReqItemCount2 = dataReader["ReqItemCount2"].ToString(),
                         ReqItemCount3 = dataReader["ReqItemCount3"].ToString(),
                         ReqItemCount4 = dataReader["ReqItemCount4"].ToString(),
-
-                        ReqSourceId1 = dataReader["ReqSourceId1"].ToString(),
-                        ReqSourceId2 = dataReader["ReqSourceId2"].ToString(),
-                        ReqSourceId3 = dataReader["ReqSourceId3"].ToString(),
-                        ReqSourceId4 = dataReader["ReqSourceId4"].ToString(),
-                        ReqSourceCount1 = dataReader["ReqSourceCount1"].ToString(),
-                        ReqSourceCount2 = dataReader["ReqSourceCount2"].ToString(),
-                        ReqSourceCount3 = dataReader["ReqSourceCount3"].ToString(),
-                        ReqSourceCount4 = dataReader["ReqSourceCount4"].ToString(),
-
-                        ReqCreatureOrGOId1 = dataReader["ReqCreatureOrGOId1"].ToString(),
-                        ReqCreatureOrGOId2 = dataReader["ReqCreatureOrGOId2"].ToString(),
-                        ReqCreatureOrGOId3 = dataReader["ReqCreatureOrGOId3"].ToString(),
-                        ReqCreatureOrGOId4 = dataReader["ReqCreatureOrGOId4"].ToString(),
-                        ReqCreatureOrGOCount1 = dataReader["ReqCreatureOrGOCount1"].ToString(),
-                        ReqCreatureOrGOCount2 = dataReader["ReqCreatureOrGOCount2"].ToString(),
-                        ReqCreatureOrGOCount3 = dataReader["ReqCreatureOrGOCount3"].ToString(),
-                        ReqCreatureOrGOCount4 = dataReader["ReqCreatureOrGOCount4"].ToString(),
-
-                        ReqSpellCast1 = dataReader["ReqSpellCast1"].ToString(),
-                        ReqSpellCast2 = dataReader["ReqSpellCast2"].ToString(),
-                        ReqSpellCast3 = dataReader["ReqSpellCast3"].ToString(),
-                        ReqSpellCast4 = dataReader["ReqSpellCast4"].ToString(),
-
-                        RewChoiceItemId1 = dataReader["RewChoiceItemId1"].ToString(),
-                        RewChoiceItemId2 = dataReader["RewChoiceItemId2"].ToString(),
-                        RewChoiceItemId3 = dataReader["RewChoiceItemId3"].ToString(),
-                        RewChoiceItemId4 = dataReader["RewChoiceItemId4"].ToString(),
-                        RewChoiceItemId5 = dataReader["RewChoiceItemId5"].ToString(),
-                        RewChoiceItemId6 = dataReader["RewChoiceItemId6"].ToString(),
-                        RewChoiceItemCount1 = dataReader["RewChoiceItemCount1"].ToString(),
-                        RewChoiceItemCount2 = dataReader["RewChoiceItemCount2"].ToString(),
-                        RewChoiceItemCount3 = dataReader["RewChoiceItemCount3"].ToString(),
-                        RewChoiceItemCount4 = dataReader["RewChoiceItemCount4"].ToString(),
-                        RewChoiceItemCount5 = dataReader["RewChoiceItemCount5"].ToString(),
-                        RewChoiceItemCount6 = dataReader["RewChoiceItemCount6"].ToString(),
-
-                        RewItemId1 = dataReader["RewItemId1"].ToString(),
-                        RewItemId2 = dataReader["RewItemId2"].ToString(),
-                        RewItemId3 = dataReader["RewItemId3"].ToString(),
-                        RewItemId4 = dataReader["RewItemId4"].ToString(),
-                        RewItemCount1 = dataReader["RewItemCount1"].ToString(),
-                        RewItemCount2 = dataReader["RewItemCount2"].ToString(),
-                        RewItemCount3 = dataReader["RewItemCount3"].ToString(),
-                        RewItemCount4 = dataReader["RewItemCount4"].ToString(),
 
                         ReqSourceId1 = dataReader["ReqSourceId1"].ToString(),
                         ReqSourceId2 = dataReader["ReqSourceId2"].ToString(),

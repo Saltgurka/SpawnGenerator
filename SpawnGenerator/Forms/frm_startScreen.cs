@@ -32,6 +32,7 @@ namespace SpawnGenerator
         Form petSpells;
         Form templateFixer;
         Form gossipImport;
+        Form questTemplateFixer;
 
         private void btn_spawnGenerator_Click(object sender, EventArgs e)
         {
@@ -289,6 +290,22 @@ namespace SpawnGenerator
         private void GossipImport_FormClosed(object sender, FormClosedEventArgs e)
         {
             gossipImport = null;
+        }
+
+        private void questTemplateFixerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (questTemplateFixer == null)
+            {
+                questTemplateFixer = new frm_questEmotes();
+                questTemplateFixer.MdiParent = this;
+                questTemplateFixer.FormClosed += QuestTemplateFixer_FormClosed;
+                questTemplateFixer.Show();
+            }
+        }
+
+        private void QuestTemplateFixer_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            questTemplateFixer = null;
         }
 
         private void singleSpawnGenToolStripMenuItem1_Click(object sender, EventArgs e)

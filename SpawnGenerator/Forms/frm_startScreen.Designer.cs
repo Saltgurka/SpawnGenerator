@@ -66,8 +66,9 @@
             this.textParserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.petSpellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.templateFixerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_DBLogin = new System.Windows.Forms.Panel();
             this.gossipImportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel_DBLogin = new System.Windows.Forms.Panel();
+            this.questTemplateFixerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel_DBLogin.SuspendLayout();
             this.SuspendLayout();
@@ -205,6 +206,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.AutoSize = false;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.separateWindowToolStripMenuItem,
             this.dBLoginToolStripMenuItem,
@@ -221,10 +223,12 @@
             this.textParserToolStripMenuItem,
             this.petSpellsToolStripMenuItem,
             this.templateFixerToolStripMenuItem,
-            this.gossipImportMenuItem});
+            this.gossipImportMenuItem,
+            this.questTemplateFixerToolStripMenuItem});
+            this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1513, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1513, 47);
             this.menuStrip1.TabIndex = 20;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -239,7 +243,7 @@
             this.poolGeneratorToolStripMenuItem,
             this.petSpellsToolStripMenuItem1});
             this.separateWindowToolStripMenuItem.Name = "separateWindowToolStripMenuItem";
-            this.separateWindowToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.separateWindowToolStripMenuItem.Size = new System.Drawing.Size(111, 19);
             this.separateWindowToolStripMenuItem.Text = "Separate Window";
             // 
             // toolStripSeparator1
@@ -292,100 +296,107 @@
             // dBLoginToolStripMenuItem
             // 
             this.dBLoginToolStripMenuItem.Name = "dBLoginToolStripMenuItem";
-            this.dBLoginToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.dBLoginToolStripMenuItem.Size = new System.Drawing.Size(67, 19);
             this.dBLoginToolStripMenuItem.Text = "DB Login";
             this.dBLoginToolStripMenuItem.Click += new System.EventHandler(this.dBLoginToolStripMenuItem_Click);
             // 
             // singleSpawnGenToolStripMenuItem
             // 
             this.singleSpawnGenToolStripMenuItem.Name = "singleSpawnGenToolStripMenuItem";
-            this.singleSpawnGenToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
+            this.singleSpawnGenToolStripMenuItem.Size = new System.Drawing.Size(107, 19);
             this.singleSpawnGenToolStripMenuItem.Text = "SingleSpawnGen";
             this.singleSpawnGenToolStripMenuItem.Click += new System.EventHandler(this.singleSpawnGenToolStripMenuItem_Click);
             // 
             // multiSpawnGenToolStripMenuItem
             // 
             this.multiSpawnGenToolStripMenuItem.Name = "multiSpawnGenToolStripMenuItem";
-            this.multiSpawnGenToolStripMenuItem.Size = new System.Drawing.Size(108, 20);
+            this.multiSpawnGenToolStripMenuItem.Size = new System.Drawing.Size(108, 19);
             this.multiSpawnGenToolStripMenuItem.Text = "Multi-SpawnGen";
             this.multiSpawnGenToolStripMenuItem.Click += new System.EventHandler(this.multiSpawnGenToolStripMenuItem_Click);
             // 
             // timestampSubtractorToolStripMenuItem
             // 
             this.timestampSubtractorToolStripMenuItem.Name = "timestampSubtractorToolStripMenuItem";
-            this.timestampSubtractorToolStripMenuItem.Size = new System.Drawing.Size(134, 20);
+            this.timestampSubtractorToolStripMenuItem.Size = new System.Drawing.Size(134, 19);
             this.timestampSubtractorToolStripMenuItem.Text = "TimestampSubtractor";
             this.timestampSubtractorToolStripMenuItem.Click += new System.EventHandler(this.timestampSubtractorToolStripMenuItem_Click);
             // 
             // sniffPacketFiltererToolStripMenuItem
             // 
             this.sniffPacketFiltererToolStripMenuItem.Name = "sniffPacketFiltererToolStripMenuItem";
-            this.sniffPacketFiltererToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
+            this.sniffPacketFiltererToolStripMenuItem.Size = new System.Drawing.Size(114, 19);
             this.sniffPacketFiltererToolStripMenuItem.Text = "SniffPacketFilterer";
             this.sniffPacketFiltererToolStripMenuItem.Click += new System.EventHandler(this.sniffPacketFiltererToolStripMenuItem_Click);
             // 
             // poolGeneratorToolStripMenuItem1
             // 
             this.poolGeneratorToolStripMenuItem1.Name = "poolGeneratorToolStripMenuItem1";
-            this.poolGeneratorToolStripMenuItem1.Size = new System.Drawing.Size(95, 20);
+            this.poolGeneratorToolStripMenuItem1.Size = new System.Drawing.Size(95, 19);
             this.poolGeneratorToolStripMenuItem1.Text = "PoolGenerator";
             this.poolGeneratorToolStripMenuItem1.Click += new System.EventHandler(this.poolGeneratorToolStripMenuItem1_Click);
             // 
             // spellPacketTimerToolStripMenuItem
             // 
             this.spellPacketTimerToolStripMenuItem.Name = "spellPacketTimerToolStripMenuItem";
-            this.spellPacketTimerToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
+            this.spellPacketTimerToolStripMenuItem.Size = new System.Drawing.Size(110, 19);
             this.spellPacketTimerToolStripMenuItem.Text = "SpellPacketTimer";
             this.spellPacketTimerToolStripMenuItem.Click += new System.EventHandler(this.spellPacketTimerToolStripMenuItem_Click);
             // 
             // chanceCalcToolStripMenuItem
             // 
             this.chanceCalcToolStripMenuItem.Name = "chanceCalcToolStripMenuItem";
-            this.chanceCalcToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.chanceCalcToolStripMenuItem.Size = new System.Drawing.Size(82, 19);
             this.chanceCalcToolStripMenuItem.Text = "ChanceCalc";
             this.chanceCalcToolStripMenuItem.Click += new System.EventHandler(this.chanceCalcToolStripMenuItem_Click);
             // 
             // speedSetterToolStripMenuItem
             // 
             this.speedSetterToolStripMenuItem.Name = "speedSetterToolStripMenuItem";
-            this.speedSetterToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.speedSetterToolStripMenuItem.Size = new System.Drawing.Size(81, 19);
             this.speedSetterToolStripMenuItem.Text = "SpeedSetter";
             this.speedSetterToolStripMenuItem.Click += new System.EventHandler(this.speedSetterToolStripMenuItem_Click);
             // 
             // waypointGenToolStripMenuItem
             // 
             this.waypointGenToolStripMenuItem.Name = "waypointGenToolStripMenuItem";
-            this.waypointGenToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+            this.waypointGenToolStripMenuItem.Size = new System.Drawing.Size(91, 19);
             this.waypointGenToolStripMenuItem.Text = "WaypointGen";
             this.waypointGenToolStripMenuItem.Click += new System.EventHandler(this.waypointGenToolStripMenuItem_Click);
             // 
             // dBImporterToolStripMenuItem
             // 
             this.dBImporterToolStripMenuItem.Name = "dBImporterToolStripMenuItem";
-            this.dBImporterToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.dBImporterToolStripMenuItem.Size = new System.Drawing.Size(80, 19);
             this.dBImporterToolStripMenuItem.Text = "DBImporter";
             this.dBImporterToolStripMenuItem.Click += new System.EventHandler(this.dBImporterToolStripMenuItem_Click);
             // 
             // textParserToolStripMenuItem
             // 
             this.textParserToolStripMenuItem.Name = "textParserToolStripMenuItem";
-            this.textParserToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.textParserToolStripMenuItem.Size = new System.Drawing.Size(72, 19);
             this.textParserToolStripMenuItem.Text = "TextParser";
             this.textParserToolStripMenuItem.Click += new System.EventHandler(this.textParserToolStripMenuItem_Click);
             // 
             // petSpellsToolStripMenuItem
             // 
             this.petSpellsToolStripMenuItem.Name = "petSpellsToolStripMenuItem";
-            this.petSpellsToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.petSpellsToolStripMenuItem.Size = new System.Drawing.Size(66, 19);
             this.petSpellsToolStripMenuItem.Text = "PetSpells";
             this.petSpellsToolStripMenuItem.Click += new System.EventHandler(this.petSpellsToolStripMenuItem_Click);
             // 
             // templateFixerToolStripMenuItem
             // 
             this.templateFixerToolStripMenuItem.Name = "templateFixerToolStripMenuItem";
-            this.templateFixerToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.templateFixerToolStripMenuItem.Size = new System.Drawing.Size(92, 19);
             this.templateFixerToolStripMenuItem.Text = "TemplateFixer";
             this.templateFixerToolStripMenuItem.Click += new System.EventHandler(this.templateFixerToolStripMenuItem_Click);
+            // 
+            // gossipImportMenuItem
+            // 
+            this.gossipImportMenuItem.Name = "gossipImportMenuItem";
+            this.gossipImportMenuItem.Size = new System.Drawing.Size(90, 19);
+            this.gossipImportMenuItem.Text = "GossipImport";
+            this.gossipImportMenuItem.Click += new System.EventHandler(this.gossipImportMenuItem_Click);
             // 
             // panel_DBLogin
             // 
@@ -404,18 +415,18 @@
             this.panel_DBLogin.Controls.Add(this.label4);
             this.panel_DBLogin.Controls.Add(this.label2);
             this.panel_DBLogin.Controls.Add(this.label3);
-            this.panel_DBLogin.Location = new System.Drawing.Point(12, 27);
+            this.panel_DBLogin.Location = new System.Drawing.Point(12, 50);
             this.panel_DBLogin.Name = "panel_DBLogin";
             this.panel_DBLogin.Size = new System.Drawing.Size(318, 256);
             this.panel_DBLogin.TabIndex = 22;
             this.panel_DBLogin.Visible = false;
             // 
-            // gossipImportMenuItem
+            // questTemplateFixerToolStripMenuItem
             // 
-            this.gossipImportMenuItem.Name = "gossipImportMenuItem";
-            this.gossipImportMenuItem.Size = new System.Drawing.Size(90, 20);
-            this.gossipImportMenuItem.Text = "GossipImport";
-            this.gossipImportMenuItem.Click += new System.EventHandler(this.gossipImportMenuItem_Click);
+            this.questTemplateFixerToolStripMenuItem.Name = "questTemplateFixerToolStripMenuItem";
+            this.questTemplateFixerToolStripMenuItem.Size = new System.Drawing.Size(123, 19);
+            this.questTemplateFixerToolStripMenuItem.Text = "QuestTemplateFixer";
+            this.questTemplateFixerToolStripMenuItem.Click += new System.EventHandler(this.questTemplateFixerToolStripMenuItem_Click);
             // 
             // Saltgurka_SQL_Generator
             // 
@@ -434,7 +445,6 @@
             this.panel_DBLogin.ResumeLayout(false);
             this.panel_DBLogin.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -479,5 +489,6 @@
         private System.Windows.Forms.ToolStripMenuItem petSpellsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem templateFixerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gossipImportMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem questTemplateFixerToolStripMenuItem;
     }
 }
