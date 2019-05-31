@@ -188,6 +188,11 @@ namespace SpawnGenerator.Forms
             quests = connect.GetQuests();
         }
 
+        string AddDoubleQuotes(string value)
+        {
+            return "\"" + value + "\"";
+        }
+
         private void btn_loadFile_Click(object sender, EventArgs e)
         {
             openFileDialog.Title = "Open File";
@@ -442,10 +447,136 @@ namespace SpawnGenerator.Forms
                         sniff.DetailsEmoteDelay4 = "-1";
                         #endregion
                     }
+                    
+                    if (lines[i].Contains("SMSG_QUESTGIVER_OFFER_REWARD"))
+                    {
+                        do
+                        {
+                            i++;
+
+                            // Entry
+                            if (lines[i].Contains("Quest ID:") && sniff.Entry == "-1")
+                            {
+                                string[] line = lines[i].Split(' ');
+                                sniff.Entry = line[2];
+                            }
+
+                            // OfferRewardText
+                            if (lines[i].Contains("Text:") && sniff.OfferRewardText == "-1")
+                            {
+                                string line = lines[i];
+                                line = line.TrimStart('T');
+                                line = line.TrimStart('e');
+                                line = line.TrimStart('x');
+                                line = line.TrimStart('t');
+                                line = line.TrimStart(':');
+                                line = line.TrimStart(' ');
+                                sniff.OfferRewardText = line;
+                            }
+
+                            // OfferRewardEmote1-4 and OfferRewardEmoteDelay1-4
+                            if (lines[i].Contains("Emote Count:") && sniff.OfferRewardEmote1 == "-1")
+                            {
+                                string[] line = lines[i].Split(' ');
+                                int emoteCount = 0;
+                                int.TryParse(line[2], out emoteCount);
+                                if (emoteCount == 0)
+                                {
+                                    sniff.OfferRewardEmote1 = "0";
+                                    sniff.OfferRewardEmote2 = "0";
+                                    sniff.OfferRewardEmote3 = "0";
+                                    sniff.OfferRewardEmote4 = "0";
+                                    sniff.OfferRewardEmoteDelay1 = "0";
+                                    sniff.OfferRewardEmoteDelay2 = "0";
+                                    sniff.OfferRewardEmoteDelay3 = "0";
+                                    sniff.OfferRewardEmoteDelay4 = "0";
+                                }
+                                else
+                                {
+                                    for (int j = 1; j < emoteCount * 2; j += 2)
+                                    {
+                                        string[] delayLine = lines[i + j].Split(' ');
+                                        string[] emoteLine = lines[i + j + 1].Split('(', ')');
+                                        switch (j)
+                                        {
+                                            case 1:
+                                                sniff.OfferRewardEmoteDelay1 = delayLine[3];
+                                                sniff.OfferRewardEmote1 = emoteLine[1];
+                                                break;
+                                            case 3:
+                                                sniff.OfferRewardEmoteDelay2 = delayLine[3];
+                                                sniff.OfferRewardEmote2 = emoteLine[1];
+                                                break;
+                                            case 5:
+                                                sniff.OfferRewardEmoteDelay3 = delayLine[3];
+                                                sniff.OfferRewardEmote3 = emoteLine[1];
+                                                break;
+                                            case 7:
+                                                sniff.OfferRewardEmoteDelay4 = delayLine[3];
+                                                sniff.OfferRewardEmote4 = emoteLine[1];
+                                                break;
+                                            default:
+                                                MessageBox.Show("Something went very wrong with parsing in private List<QuestPacket> GetMassUpdate(List<string> filteredPackets)");
+                                                break;
+                                        }
+                                    }
+                                }
+                                //sniff.Entry = line[2];
+                            }
+
+                        } while (lines[i + 1] != "");
+
+                        // Does quest exist in DB
+                        Quest result = quests.Find(a => a.Entry == sniff.Entry);
+                        if (result == null)
+                            sniff.Entry = "-1";
+
+                        if (sniff.Entry != "-1")
+                        {
+                            QuestPacket updatePacket = questPackets.Find(item => item.Entry == sniff.Entry);
+                            // Was update already added
+                            //if (!questPackets.Contains(sniff)) // New entry, so just add it as a whole
+                            if (updatePacket.Entry != sniff.Entry)
+                            {
+                                questPackets.Add(sniff);
+                            }
+                            else // Entry already exists in list, so need to update each value individually
+                            {
+                                updatePacket.OfferRewardText = sniff.OfferRewardText;
+
+                                updatePacket.OfferRewardEmote1 = sniff.OfferRewardEmote1;
+                                updatePacket.OfferRewardEmote2 = sniff.OfferRewardEmote2;
+                                updatePacket.OfferRewardEmote3 = sniff.OfferRewardEmote3;
+                                updatePacket.OfferRewardEmote4 = sniff.OfferRewardEmote4;
+
+                                updatePacket.OfferRewardEmoteDelay1 = sniff.OfferRewardEmoteDelay1;
+                                updatePacket.OfferRewardEmoteDelay2 = sniff.OfferRewardEmoteDelay2;
+                                updatePacket.OfferRewardEmoteDelay3 = sniff.OfferRewardEmoteDelay3;
+                                updatePacket.OfferRewardEmoteDelay4 = sniff.OfferRewardEmoteDelay4;
+
+                                questPackets.RemoveAt(questPackets.FindIndex(a => a.Entry == sniff.Entry));
+                                questPackets.Add(updatePacket);
+                            }
+                        }
+                        #region reset
+                        sniff.Entry = "-1";
+                        sniff.OfferRewardText = "-1";
+
+                        sniff.OfferRewardEmote1 = "-1";
+                        sniff.OfferRewardEmote2 = "-1";
+                        sniff.OfferRewardEmote3 = "-1";
+                        sniff.OfferRewardEmote4 = "-1";
+                        sniff.OfferRewardEmoteDelay1 = "-1";
+                        sniff.OfferRewardEmoteDelay2 = "-1";
+                        sniff.OfferRewardEmoteDelay3 = "-1";
+                        sniff.OfferRewardEmoteDelay4 = "-1";
+                        #endregion
+                    }
+                    
                 }
                 else
                 {
-
+                    // Add trinity version here!
                 }
 
             }
@@ -463,9 +594,10 @@ namespace SpawnGenerator.Forms
                 if (result == null)
                     continue;
 
-                string titleString = (sniff.Title != "-1" ? (sniff.Title != result.Title ? " Title=" + sniff.Title : "") : "");
-                string detailsString = (sniff.Details != "-1" ? (sniff.Details != result.Details ? " Details=" + sniff.Details : "") : "");
-                string objectivesString = (sniff.Objectives != "-1" ? (sniff.Objectives != result.Objectives ? " Objectives=" + sniff.Objectives : "") : "");
+                string titleString = (sniff.Title != "-1" ? (sniff.Title != result.Title ? " Title=" + AddDoubleQuotes(sniff.Title) : "") : "");
+                string detailsString = (sniff.Details != "-1" ? (sniff.Details != result.Details ? " Details=" + AddDoubleQuotes(sniff.Details) : "") : "");
+                string objectivesString = (sniff.Objectives != "-1" ? (sniff.Objectives != result.Objectives ? " Objectives=" + AddDoubleQuotes(sniff.Objectives) : "") : "");
+                string offerRewardsString = (sniff.OfferRewardText != "-1" ? (sniff.OfferRewardText != result.OfferRewardText ? " OfferRewardText=" + AddDoubleQuotes(sniff.OfferRewardText) : "") : "");
 
                 string detailsEmote1String = (sniff.DetailsEmote1 != "-1" ? (sniff.DetailsEmote1 != result.DetailsEmote1 ? " DetailsEmote1=" + sniff.DetailsEmote1 : "") : "");
                 string detailsEmote2String = (sniff.DetailsEmote2 != "-1" ? (sniff.DetailsEmote2 != result.DetailsEmote2 ? " DetailsEmote2=" + sniff.DetailsEmote2 : "") : "");
@@ -477,11 +609,21 @@ namespace SpawnGenerator.Forms
                 string detailsEmoteDelay3String = (sniff.DetailsEmoteDelay3 != "-1" ? (sniff.DetailsEmoteDelay3 != result.DetailsEmoteDelay3 ? " DetailsEmoteDelay3=" + sniff.DetailsEmoteDelay3 : "") : "");
                 string detailsEmoteDelay4String = (sniff.DetailsEmoteDelay4 != "-1" ? (sniff.DetailsEmoteDelay4 != result.DetailsEmoteDelay4 ? " DetailsEmoteDelay4=" + sniff.DetailsEmoteDelay4 : "") : "");
 
+                string offerRewardEmote1String = (sniff.OfferRewardEmote1 != "-1" ? (sniff.OfferRewardEmote1 != result.OfferRewardEmote1 ? " OfferRewardEmote1=" + sniff.OfferRewardEmote1 : "") : "");
+                string offerRewardEmote2String = (sniff.OfferRewardEmote2 != "-1" ? (sniff.OfferRewardEmote2 != result.OfferRewardEmote2 ? " OfferRewardEmote2=" + sniff.OfferRewardEmote1 : "") : "");
+                string offerRewardEmote3String = (sniff.OfferRewardEmote3 != "-1" ? (sniff.OfferRewardEmote3 != result.OfferRewardEmote3 ? " OfferRewardEmote3=" + sniff.OfferRewardEmote1 : "") : "");
+                string offerRewardEmote4String = (sniff.OfferRewardEmote4 != "-1" ? (sniff.OfferRewardEmote4 != result.OfferRewardEmote4 ? " OfferRewardEmote4=" + sniff.OfferRewardEmote1 : "") : "");
 
-
-                if (titleString + detailsString + objectivesString +
+                string offerRewardEmoteDelay1String = (sniff.OfferRewardEmoteDelay1 != "-1" ? (sniff.OfferRewardEmoteDelay1 != result.OfferRewardEmoteDelay1 ? " OfferRewardEmoteDelay1=" + sniff.OfferRewardEmoteDelay1 : "") : "");
+                string offerRewardEmoteDelay2String = (sniff.OfferRewardEmoteDelay2 != "-1" ? (sniff.OfferRewardEmoteDelay2 != result.OfferRewardEmoteDelay2 ? " OfferRewardEmoteDelay2=" + sniff.OfferRewardEmoteDelay2 : "") : "");
+                string offerRewardEmoteDelay3String = (sniff.OfferRewardEmoteDelay3 != "-1" ? (sniff.OfferRewardEmoteDelay3 != result.OfferRewardEmoteDelay3 ? " OfferRewardEmoteDelay3=" + sniff.OfferRewardEmoteDelay3 : "") : "");
+                string offerRewardEmoteDelay4String = (sniff.OfferRewardEmoteDelay4 != "-1" ? (sniff.OfferRewardEmoteDelay4 != result.OfferRewardEmoteDelay4 ? " OfferRewardEmoteDelay4=" + sniff.OfferRewardEmoteDelay4 : "") : "");
+                
+                if (titleString + detailsString + objectivesString + offerRewardsString +
                     detailsEmote1String + detailsEmote2String + detailsEmote3String + detailsEmote4String +
-                    detailsEmoteDelay1String + detailsEmoteDelay2String + detailsEmoteDelay3String + detailsEmoteDelay4String != "")
+                    detailsEmoteDelay1String + detailsEmoteDelay2String + detailsEmoteDelay3String + detailsEmoteDelay4String +
+                    offerRewardEmote1String + offerRewardEmote2String + offerRewardEmote3String + offerRewardEmote4String +
+                    offerRewardEmoteDelay1String + offerRewardEmoteDelay2String + offerRewardEmoteDelay3String + offerRewardEmoteDelay4String != "")
                     questValueToUpdate = true;
 
                 if (questValueToUpdate)
@@ -495,6 +637,8 @@ namespace SpawnGenerator.Forms
                         newOutput += newOutput == compareString ? detailsString : "," + detailsString;
                     if (objectivesString != "")
                         newOutput += newOutput == compareString ? objectivesString : "," + objectivesString;
+                    if (offerRewardsString != "")
+                        newOutput += newOutput == compareString ? offerRewardsString : "," + offerRewardsString;
 
                     if (detailsEmote1String != "")
                         newOutput += newOutput == compareString ? detailsEmote1String : "," + detailsEmote1String;
@@ -513,6 +657,24 @@ namespace SpawnGenerator.Forms
                         newOutput += newOutput == compareString ? detailsEmoteDelay3String : "," + detailsEmoteDelay3String;
                     if (detailsEmoteDelay4String != "")
                         newOutput += newOutput == compareString ? detailsEmoteDelay4String : "," + detailsEmoteDelay4String;
+
+                    if (offerRewardEmote1String != "")
+                        newOutput += newOutput == compareString ? offerRewardEmote1String : "," + offerRewardEmote1String;
+                    if (offerRewardEmote2String != "")
+                        newOutput += newOutput == compareString ? offerRewardEmote2String : "," + offerRewardEmote2String;
+                    if (offerRewardEmote3String != "")
+                        newOutput += newOutput == compareString ? offerRewardEmote3String : "," + offerRewardEmote3String;
+                    if (offerRewardEmote4String != "")
+                        newOutput += newOutput == compareString ? offerRewardEmote4String : "," + offerRewardEmote4String;
+
+                    if (offerRewardEmoteDelay1String != "")
+                        newOutput += newOutput == compareString ? offerRewardEmoteDelay1String : "," + offerRewardEmoteDelay1String;
+                    if (offerRewardEmoteDelay2String != "")
+                        newOutput += newOutput == compareString ? offerRewardEmoteDelay2String : "," + offerRewardEmoteDelay2String;
+                    if (offerRewardEmoteDelay3String != "")
+                        newOutput += newOutput == compareString ? offerRewardEmoteDelay3String : "," + offerRewardEmoteDelay3String;
+                    if (offerRewardEmoteDelay4String != "")
+                        newOutput += newOutput == compareString ? offerRewardEmoteDelay4String : "," + offerRewardEmoteDelay4String;
 
                     newOutput += " WHERE entry=" + sniff.Entry + ";\n";
 
