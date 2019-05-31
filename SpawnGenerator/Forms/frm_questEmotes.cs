@@ -255,6 +255,9 @@ namespace SpawnGenerator.Forms
             sniff.CompleteEmoteDelay = "-1";
 
             // SMSG_QUESTGIVER_OFFER_REWARD
+            // Can also add quest flags, spells and titles here
+            sniff.OfferRewardText = "-1";
+
             sniff.OfferRewardEmote1 = "-1";
             sniff.OfferRewardEmote2 = "-1";
             sniff.OfferRewardEmote3 = "-1";
@@ -263,6 +266,9 @@ namespace SpawnGenerator.Forms
             sniff.OfferRewardEmoteDelay2 = "-1";
             sniff.OfferRewardEmoteDelay3 = "-1";
             sniff.OfferRewardEmoteDelay4 = "-1";
+
+            // SMSG_QUEST_QUERY_RESPONSE
+            // EndText here (and maybe move other texts while at it)
 
             if (lines[0] == "# UDBParser") // Packets are differently structured in Trinity sniffs so separate them
                 udbSniff = true;
@@ -392,12 +398,31 @@ namespace SpawnGenerator.Forms
 
                         if (sniff.Entry != "-1")
                         {
+                            QuestPacket updatePacket = questPackets.Find(item => item.Entry == sniff.Entry);
                             // Was update already added
-                            //Quest updatePacket = sniff;
-                            if (!questPackets.Contains(sniff))
+                            //if (!questPackets.Contains(sniff)) // New entry, so just add it as a whole
+                            if (updatePacket.Entry != sniff.Entry)
                             {
                                 questPackets.Add(sniff);
-                                //addedEntries.Add(sniff.entry);
+                            }
+                            else // Entry already exists in list, so need to update each value individually
+                            {
+                                updatePacket.Title = sniff.Title;
+                                updatePacket.Details = sniff.Details;
+                                updatePacket.Objectives = sniff.Objectives;
+
+                                updatePacket.DetailsEmote1 = sniff.DetailsEmote1;
+                                updatePacket.DetailsEmote2 = sniff.DetailsEmote2;
+                                updatePacket.DetailsEmote3 = sniff.DetailsEmote3;
+                                updatePacket.DetailsEmote4 = sniff.DetailsEmote4;
+
+                                updatePacket.DetailsEmoteDelay1 = sniff.DetailsEmoteDelay1;
+                                updatePacket.DetailsEmoteDelay2 = sniff.DetailsEmoteDelay2;
+                                updatePacket.DetailsEmoteDelay3 = sniff.DetailsEmoteDelay3;
+                                updatePacket.DetailsEmoteDelay4 = sniff.DetailsEmoteDelay4;
+
+                                questPackets.RemoveAt(questPackets.FindIndex(a => a.Entry == sniff.Entry));
+                                questPackets.Add(updatePacket);
                             }
                         }
                         #region reset
