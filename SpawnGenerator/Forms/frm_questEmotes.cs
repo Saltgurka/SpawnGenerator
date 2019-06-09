@@ -214,6 +214,14 @@ namespace SpawnGenerator.Forms
                     List<string> filterList = new List<string>(new string[] { "SMSG_QUESTGIVER_QUEST_DETAILS", "SMSG_QUESTGIVER_REQUEST_ITEMS", "SMSG_QUESTGIVER_OFFER_REWARD" });
                     questPacketsToCompare.AddRange(GetMassUpdate(filter.FilterSniffFile(file, false, filterList)));
                 }
+                questPacketsToCompare = questPacketsToCompare.Distinct().ToList(); // Remove exact duplicates
+                questPacketsToCompare.Sort(delegate (QuestPacket x, QuestPacket y) // Order by entry asc.
+                {
+                    if (x.Entry == null && y.Entry == null) return 0;
+                    else if (x.Entry == null) return -1;
+                    else if (y.Entry == null) return 1;
+                    else return x.Entry.CompareTo(y.Entry);
+                });
                 CompareMassUppdate(questPacketsToCompare);
 
                 btn_loadFile.Enabled = true;
@@ -253,6 +261,9 @@ namespace SpawnGenerator.Forms
             sniff.DetailsEmoteDelay4 = "-1";
 
             // SMSG_QUESTGIVER_REQUEST_ITEMS
+            // Could add req items and suggested players
+            sniff.RequestItemsText = "-1";
+
             sniff.IncompleteEmote = "-1";
             sniff.IncompleteEmoteDelay = "-1";
 
@@ -403,32 +414,38 @@ namespace SpawnGenerator.Forms
 
                         if (sniff.Entry != "-1")
                         {
-                            QuestPacket updatePacket = questPackets.Find(item => item.Entry == sniff.Entry);
-                            // Was update already added
-                            //if (!questPackets.Contains(sniff)) // New entry, so just add it as a whole
-                            if (updatePacket.Entry != sniff.Entry)
+                            int packetIndex = questPackets.FindIndex(a => a.Entry == sniff.Entry);
+                            if (packetIndex != -1)
                             {
+                                QuestPacket updatePacket = questPackets[packetIndex];
+
+                                // Was update already added
+                                if (updatePacket.Entry != sniff.Entry)
+                                {
+                                    questPackets.Add(sniff);
+                                }
+                                else // Entry already exists in list, so need to update each value individually
+                                {
+                                    updatePacket.Title = sniff.Title;
+                                    updatePacket.Details = sniff.Details;
+                                    updatePacket.Objectives = sniff.Objectives;
+
+                                    updatePacket.DetailsEmote1 = sniff.DetailsEmote1;
+                                    updatePacket.DetailsEmote2 = sniff.DetailsEmote2;
+                                    updatePacket.DetailsEmote3 = sniff.DetailsEmote3;
+                                    updatePacket.DetailsEmote4 = sniff.DetailsEmote4;
+
+                                    updatePacket.DetailsEmoteDelay1 = sniff.DetailsEmoteDelay1;
+                                    updatePacket.DetailsEmoteDelay2 = sniff.DetailsEmoteDelay2;
+                                    updatePacket.DetailsEmoteDelay3 = sniff.DetailsEmoteDelay3;
+                                    updatePacket.DetailsEmoteDelay4 = sniff.DetailsEmoteDelay4;
+
+                                    questPackets.RemoveAt(packetIndex);
+                                    questPackets.Add(updatePacket);
+                                }
+                            }
+                            else
                                 questPackets.Add(sniff);
-                            }
-                            else // Entry already exists in list, so need to update each value individually
-                            {
-                                updatePacket.Title = sniff.Title;
-                                updatePacket.Details = sniff.Details;
-                                updatePacket.Objectives = sniff.Objectives;
-
-                                updatePacket.DetailsEmote1 = sniff.DetailsEmote1;
-                                updatePacket.DetailsEmote2 = sniff.DetailsEmote2;
-                                updatePacket.DetailsEmote3 = sniff.DetailsEmote3;
-                                updatePacket.DetailsEmote4 = sniff.DetailsEmote4;
-
-                                updatePacket.DetailsEmoteDelay1 = sniff.DetailsEmoteDelay1;
-                                updatePacket.DetailsEmoteDelay2 = sniff.DetailsEmoteDelay2;
-                                updatePacket.DetailsEmoteDelay3 = sniff.DetailsEmoteDelay3;
-                                updatePacket.DetailsEmoteDelay4 = sniff.DetailsEmoteDelay4;
-
-                                questPackets.RemoveAt(questPackets.FindIndex(a => a.Entry == sniff.Entry));
-                                questPackets.Add(updatePacket);
-                            }
                         }
                         #region reset
                         sniff.Entry = "-1";
@@ -447,7 +464,96 @@ namespace SpawnGenerator.Forms
                         sniff.DetailsEmoteDelay4 = "-1";
                         #endregion
                     }
-                    
+
+                    if (lines[i].Contains("SMSG_QUESTGIVER_REQUEST_ITEMS"))
+                    {
+                        do
+                        {
+                            i++;
+
+                            // Entry
+                            if (lines[i].Contains("Quest ID:") && sniff.Entry == "-1")
+                            {
+                                string[] line = lines[i].Split(' ');
+                                sniff.Entry = line[2];
+                            }
+
+                            // RequestItemsText
+                            if (lines[i].Contains("Text:") && sniff.RequestItemsText == "-1")
+                            {
+                                string line = lines[i];
+                                line = line.TrimStart('T');
+                                line = line.TrimStart('e');
+                                line = line.TrimStart('x');
+                                line = line.TrimStart('t');
+                                line = line.TrimStart(':');
+                                line = line.TrimStart(' ');
+                                sniff.RequestItemsText = line;
+                            }
+
+                            // IncompleteEmote - Seems like these two are always the same
+                            if (lines[i].Contains("Unk UInt32 1:") && sniff.IncompleteEmote == "-1")
+                            {
+                                string[] line = lines[i].Split(' ');
+                                sniff.IncompleteEmote = line[3];
+                            }
+                            // CompleteEmote - Seems like these two are always the same
+                            if (lines[i].Contains("Unk UInt32 1:") && sniff.CompleteEmote == "-1")
+                            {
+                                string[] line = lines[i].Split(' ');
+                                sniff.CompleteEmote = line[3];
+                            }
+
+                            // Delays are either unused in tbc or is not sent
+
+                        } while (lines[i + 1] != "");
+
+                        // Does quest exist in DB
+                        Quest result = quests.Find(a => a.Entry == sniff.Entry);
+                        if (result == null)
+                            sniff.Entry = "-1";
+
+                        if (sniff.Entry != "-1")
+                        {
+                            int packetIndex = questPackets.FindIndex(a => a.Entry == sniff.Entry);
+                            if (packetIndex != -1)
+                            {
+                                QuestPacket updatePacket = questPackets[packetIndex];
+
+                                // Was update already added
+                                if (updatePacket.Entry != sniff.Entry)
+                                {
+                                    questPackets.Add(sniff);
+                                }
+                                else // Entry already exists in list, so need to update each value individually
+                                {
+                                    updatePacket.RequestItemsText = sniff.RequestItemsText;
+
+                                    updatePacket.IncompleteEmote = sniff.IncompleteEmote;
+                                    updatePacket.IncompleteEmoteDelay = sniff.IncompleteEmoteDelay;
+
+                                    updatePacket.CompleteEmote = sniff.CompleteEmote;
+                                    updatePacket.CompleteEmoteDelay = sniff.CompleteEmoteDelay;
+
+                                    questPackets.RemoveAt(packetIndex);
+                                    questPackets.Add(updatePacket);
+                                }
+                            }
+                            else
+                                questPackets.Add(sniff);
+                        }
+                        #region reset
+                        sniff.Entry = "-1";
+                        sniff.RequestItemsText = "-1";
+
+                        sniff.IncompleteEmote = "-1";
+                        sniff.IncompleteEmoteDelay = "-1";
+
+                        sniff.CompleteEmote = "-1";
+                        sniff.CompleteEmoteDelay = "-1";
+                        #endregion
+                    }
+
                     if (lines[i].Contains("SMSG_QUESTGIVER_OFFER_REWARD"))
                     {
                         do
@@ -533,30 +639,36 @@ namespace SpawnGenerator.Forms
 
                         if (sniff.Entry != "-1")
                         {
-                            QuestPacket updatePacket = questPackets.Find(item => item.Entry == sniff.Entry);
-                            // Was update already added
-                            //if (!questPackets.Contains(sniff)) // New entry, so just add it as a whole
-                            if (updatePacket.Entry != sniff.Entry)
+                            int packetIndex = questPackets.FindIndex(a => a.Entry == sniff.Entry);
+                            if (packetIndex != -1)
                             {
+                                QuestPacket updatePacket = questPackets[packetIndex];
+
+                                // Was update already added
+                                if (updatePacket.Entry != sniff.Entry)
+                                {
+                                    questPackets.Add(sniff);
+                                }
+                                else // Entry already exists in list, so need to update each value individually
+                                {
+                                    updatePacket.OfferRewardText = sniff.OfferRewardText;
+
+                                    updatePacket.OfferRewardEmote1 = sniff.OfferRewardEmote1;
+                                    updatePacket.OfferRewardEmote2 = sniff.OfferRewardEmote2;
+                                    updatePacket.OfferRewardEmote3 = sniff.OfferRewardEmote3;
+                                    updatePacket.OfferRewardEmote4 = sniff.OfferRewardEmote4;
+
+                                    updatePacket.OfferRewardEmoteDelay1 = sniff.OfferRewardEmoteDelay1;
+                                    updatePacket.OfferRewardEmoteDelay2 = sniff.OfferRewardEmoteDelay2;
+                                    updatePacket.OfferRewardEmoteDelay3 = sniff.OfferRewardEmoteDelay3;
+                                    updatePacket.OfferRewardEmoteDelay4 = sniff.OfferRewardEmoteDelay4;
+
+                                    questPackets.RemoveAt(packetIndex);
+                                    questPackets.Add(updatePacket);
+                                }
+                            }
+                            else
                                 questPackets.Add(sniff);
-                            }
-                            else // Entry already exists in list, so need to update each value individually
-                            {
-                                updatePacket.OfferRewardText = sniff.OfferRewardText;
-
-                                updatePacket.OfferRewardEmote1 = sniff.OfferRewardEmote1;
-                                updatePacket.OfferRewardEmote2 = sniff.OfferRewardEmote2;
-                                updatePacket.OfferRewardEmote3 = sniff.OfferRewardEmote3;
-                                updatePacket.OfferRewardEmote4 = sniff.OfferRewardEmote4;
-
-                                updatePacket.OfferRewardEmoteDelay1 = sniff.OfferRewardEmoteDelay1;
-                                updatePacket.OfferRewardEmoteDelay2 = sniff.OfferRewardEmoteDelay2;
-                                updatePacket.OfferRewardEmoteDelay3 = sniff.OfferRewardEmoteDelay3;
-                                updatePacket.OfferRewardEmoteDelay4 = sniff.OfferRewardEmoteDelay4;
-
-                                questPackets.RemoveAt(questPackets.FindIndex(a => a.Entry == sniff.Entry));
-                                questPackets.Add(updatePacket);
-                            }
                         }
                         #region reset
                         sniff.Entry = "-1";
@@ -598,6 +710,7 @@ namespace SpawnGenerator.Forms
                 string detailsString = (sniff.Details != "-1" ? (sniff.Details != result.Details ? " Details=" + AddDoubleQuotes(sniff.Details) : "") : "");
                 string objectivesString = (sniff.Objectives != "-1" ? (sniff.Objectives != result.Objectives ? " Objectives=" + AddDoubleQuotes(sniff.Objectives) : "") : "");
                 string offerRewardsString = (sniff.OfferRewardText != "-1" ? (sniff.OfferRewardText != result.OfferRewardText ? " OfferRewardText=" + AddDoubleQuotes(sniff.OfferRewardText) : "") : "");
+                string requestItemsText = (sniff.RequestItemsText != "-1" ? (sniff.RequestItemsText != result.RequestItemsText ? " RequestItemsText=" + AddDoubleQuotes(sniff.RequestItemsText) : "") : "");
 
                 string detailsEmote1String = (sniff.DetailsEmote1 != "-1" ? (sniff.DetailsEmote1 != result.DetailsEmote1 ? " DetailsEmote1=" + sniff.DetailsEmote1 : "") : "");
                 string detailsEmote2String = (sniff.DetailsEmote2 != "-1" ? (sniff.DetailsEmote2 != result.DetailsEmote2 ? " DetailsEmote2=" + sniff.DetailsEmote2 : "") : "");
@@ -619,6 +732,9 @@ namespace SpawnGenerator.Forms
                 string offerRewardEmoteDelay3String = (sniff.OfferRewardEmoteDelay3 != "-1" ? (sniff.OfferRewardEmoteDelay3 != result.OfferRewardEmoteDelay3 ? " OfferRewardEmoteDelay3=" + sniff.OfferRewardEmoteDelay3 : "") : "");
                 string offerRewardEmoteDelay4String = (sniff.OfferRewardEmoteDelay4 != "-1" ? (sniff.OfferRewardEmoteDelay4 != result.OfferRewardEmoteDelay4 ? " OfferRewardEmoteDelay4=" + sniff.OfferRewardEmoteDelay4 : "") : "");
                 
+                string inCompleteEmoteString = (sniff.IncompleteEmote != "-1" ? (sniff.IncompleteEmote != result.IncompleteEmote ? " IncompleteEmote=" + sniff.IncompleteEmote : "") : "");
+                string completeEmoteString = (sniff.CompleteEmote != "-1" ? (sniff.CompleteEmote != result.CompleteEmote ? " CompleteEmote=" + sniff.CompleteEmote : "") : "");
+
                 if (titleString + detailsString + objectivesString + offerRewardsString +
                     detailsEmote1String + detailsEmote2String + detailsEmote3String + detailsEmote4String +
                     detailsEmoteDelay1String + detailsEmoteDelay2String + detailsEmoteDelay3String + detailsEmoteDelay4String +
@@ -639,6 +755,8 @@ namespace SpawnGenerator.Forms
                         newOutput += newOutput == compareString ? objectivesString : "," + objectivesString;
                     if (offerRewardsString != "")
                         newOutput += newOutput == compareString ? offerRewardsString : "," + offerRewardsString;
+                    if (requestItemsText != "")
+                        newOutput += newOutput == compareString ? requestItemsText : "," + requestItemsText;
 
                     if (detailsEmote1String != "")
                         newOutput += newOutput == compareString ? detailsEmote1String : "," + detailsEmote1String;
@@ -675,6 +793,11 @@ namespace SpawnGenerator.Forms
                         newOutput += newOutput == compareString ? offerRewardEmoteDelay3String : "," + offerRewardEmoteDelay3String;
                     if (offerRewardEmoteDelay4String != "")
                         newOutput += newOutput == compareString ? offerRewardEmoteDelay4String : "," + offerRewardEmoteDelay4String;
+
+                    if (inCompleteEmoteString != "")
+                        newOutput += newOutput == compareString ? inCompleteEmoteString : "," + inCompleteEmoteString;
+                    if (completeEmoteString != "")
+                        newOutput += newOutput == compareString ? completeEmoteString : "," + completeEmoteString;
 
                     newOutput += " WHERE entry=" + sniff.Entry + ";\n";
 
