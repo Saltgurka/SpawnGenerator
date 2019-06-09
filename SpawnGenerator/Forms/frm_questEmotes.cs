@@ -217,10 +217,13 @@ namespace SpawnGenerator.Forms
                 questPacketsToCompare = questPacketsToCompare.Distinct().ToList(); // Remove exact duplicates
                 questPacketsToCompare.Sort(delegate (QuestPacket x, QuestPacket y) // Order by entry asc.
                 {
+                    int xInt = int.Parse(x.Entry);
+                    int yInt = int.Parse(y.Entry);
                     if (x.Entry == null && y.Entry == null) return 0;
                     else if (x.Entry == null) return -1;
                     else if (y.Entry == null) return 1;
-                    else return x.Entry.CompareTo(y.Entry);
+                    else if (xInt < yInt) return -1;
+                    else return 1;
                 });
                 CompareMassUppdate(questPacketsToCompare);
 
@@ -491,6 +494,19 @@ namespace SpawnGenerator.Forms
                                 sniff.RequestItemsText = line;
                             }
 
+                            // IncompleteEmoteDelay - Seems like these two are always the same
+                            if (lines[i].Contains("Emote:") && sniff.IncompleteEmoteDelay == "-1")
+                            {
+                                string[] line = lines[i].Split(' ');
+                                sniff.IncompleteEmoteDelay = line[1];
+                            }
+                            // CompleteEmoteDelay - Seems like these two are always the same
+                            if (lines[i].Contains("Emote:") && sniff.CompleteEmoteDelay == "-1")
+                            {
+                                string[] line = lines[i].Split(' ');
+                                sniff.CompleteEmoteDelay = line[1];
+                            }
+
                             // IncompleteEmote - Seems like these two are always the same
                             if (lines[i].Contains("Unk UInt32 1:") && sniff.IncompleteEmote == "-1")
                             {
@@ -503,8 +519,6 @@ namespace SpawnGenerator.Forms
                                 string[] line = lines[i].Split(' ');
                                 sniff.CompleteEmote = line[3];
                             }
-
-                            // Delays are either unused in tbc or is not sent
 
                         } while (lines[i + 1] != "");
 
@@ -723,9 +737,9 @@ namespace SpawnGenerator.Forms
                 string detailsEmoteDelay4String = (sniff.DetailsEmoteDelay4 != "-1" ? (sniff.DetailsEmoteDelay4 != result.DetailsEmoteDelay4 ? " DetailsEmoteDelay4=" + sniff.DetailsEmoteDelay4 : "") : "");
 
                 string offerRewardEmote1String = (sniff.OfferRewardEmote1 != "-1" ? (sniff.OfferRewardEmote1 != result.OfferRewardEmote1 ? " OfferRewardEmote1=" + sniff.OfferRewardEmote1 : "") : "");
-                string offerRewardEmote2String = (sniff.OfferRewardEmote2 != "-1" ? (sniff.OfferRewardEmote2 != result.OfferRewardEmote2 ? " OfferRewardEmote2=" + sniff.OfferRewardEmote1 : "") : "");
-                string offerRewardEmote3String = (sniff.OfferRewardEmote3 != "-1" ? (sniff.OfferRewardEmote3 != result.OfferRewardEmote3 ? " OfferRewardEmote3=" + sniff.OfferRewardEmote1 : "") : "");
-                string offerRewardEmote4String = (sniff.OfferRewardEmote4 != "-1" ? (sniff.OfferRewardEmote4 != result.OfferRewardEmote4 ? " OfferRewardEmote4=" + sniff.OfferRewardEmote1 : "") : "");
+                string offerRewardEmote2String = (sniff.OfferRewardEmote2 != "-1" ? (sniff.OfferRewardEmote2 != result.OfferRewardEmote2 ? " OfferRewardEmote2=" + sniff.OfferRewardEmote2 : "") : "");
+                string offerRewardEmote3String = (sniff.OfferRewardEmote3 != "-1" ? (sniff.OfferRewardEmote3 != result.OfferRewardEmote3 ? " OfferRewardEmote3=" + sniff.OfferRewardEmote3 : "") : "");
+                string offerRewardEmote4String = (sniff.OfferRewardEmote4 != "-1" ? (sniff.OfferRewardEmote4 != result.OfferRewardEmote4 ? " OfferRewardEmote4=" + sniff.OfferRewardEmote4 : "") : "");
 
                 string offerRewardEmoteDelay1String = (sniff.OfferRewardEmoteDelay1 != "-1" ? (sniff.OfferRewardEmoteDelay1 != result.OfferRewardEmoteDelay1 ? " OfferRewardEmoteDelay1=" + sniff.OfferRewardEmoteDelay1 : "") : "");
                 string offerRewardEmoteDelay2String = (sniff.OfferRewardEmoteDelay2 != "-1" ? (sniff.OfferRewardEmoteDelay2 != result.OfferRewardEmoteDelay2 ? " OfferRewardEmoteDelay2=" + sniff.OfferRewardEmoteDelay2 : "") : "");
@@ -733,13 +747,18 @@ namespace SpawnGenerator.Forms
                 string offerRewardEmoteDelay4String = (sniff.OfferRewardEmoteDelay4 != "-1" ? (sniff.OfferRewardEmoteDelay4 != result.OfferRewardEmoteDelay4 ? " OfferRewardEmoteDelay4=" + sniff.OfferRewardEmoteDelay4 : "") : "");
                 
                 string inCompleteEmoteString = (sniff.IncompleteEmote != "-1" ? (sniff.IncompleteEmote != result.IncompleteEmote ? " IncompleteEmote=" + sniff.IncompleteEmote : "") : "");
+                string inCompleteEmoteDelayString = (sniff.IncompleteEmoteDelay != "-1" ? (sniff.IncompleteEmoteDelay != result.IncompleteEmoteDelay ? " IncompleteEmoteDelay=" + sniff.IncompleteEmoteDelay : "") : "");
                 string completeEmoteString = (sniff.CompleteEmote != "-1" ? (sniff.CompleteEmote != result.CompleteEmote ? " CompleteEmote=" + sniff.CompleteEmote : "") : "");
+                string completeEmoteDelayString = (sniff.CompleteEmoteDelay != "-1" ? (sniff.CompleteEmoteDelay != result.CompleteEmoteDelay ? " CompleteEmoteDelay=" + sniff.CompleteEmoteDelay : "") : "");
 
-                if (titleString + detailsString + objectivesString + offerRewardsString +
+                if (
+                    titleString + detailsString + objectivesString + offerRewardsString +
                     detailsEmote1String + detailsEmote2String + detailsEmote3String + detailsEmote4String +
                     detailsEmoteDelay1String + detailsEmoteDelay2String + detailsEmoteDelay3String + detailsEmoteDelay4String +
                     offerRewardEmote1String + offerRewardEmote2String + offerRewardEmote3String + offerRewardEmote4String +
-                    offerRewardEmoteDelay1String + offerRewardEmoteDelay2String + offerRewardEmoteDelay3String + offerRewardEmoteDelay4String != "")
+                    offerRewardEmoteDelay1String + offerRewardEmoteDelay2String + offerRewardEmoteDelay3String + offerRewardEmoteDelay4String +
+                    inCompleteEmoteString + inCompleteEmoteDelayString + completeEmoteString + completeEmoteDelayString
+                    != "")
                     questValueToUpdate = true;
 
                 if (questValueToUpdate)
@@ -796,8 +815,12 @@ namespace SpawnGenerator.Forms
 
                     if (inCompleteEmoteString != "")
                         newOutput += newOutput == compareString ? inCompleteEmoteString : "," + inCompleteEmoteString;
+                    if (inCompleteEmoteDelayString != "")
+                        newOutput += newOutput == compareString ? inCompleteEmoteDelayString : "," + inCompleteEmoteDelayString;
                     if (completeEmoteString != "")
                         newOutput += newOutput == compareString ? completeEmoteString : "," + completeEmoteString;
+                    if (completeEmoteDelayString != "")
+                        newOutput += newOutput == compareString ? completeEmoteDelayString : "," + completeEmoteDelayString;
 
                     newOutput += " WHERE entry=" + sniff.Entry + ";\n";
 
