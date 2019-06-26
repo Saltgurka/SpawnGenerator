@@ -14,6 +14,7 @@ namespace SpawnGenerator.Forms
     {
         private List<Quest> quests = new List<Quest>();
         PacketFiltering filter = new PacketFiltering();
+        List<string> filteredPackets = new List<string>();
         public frm_questEmotes()
         {
             InitializeComponent();
@@ -207,37 +208,55 @@ namespace SpawnGenerator.Forms
             {
                 btn_loadFile.Enabled = false;
                 btn_loadFile.Text = "Loading...";
-                List<QuestPacket> questPacketsToCompare = new List<QuestPacket>();
+                btn_pasteResult.Enabled = false;
+                btn_pasteResult.Text = "Loading...";
 
                 foreach (String file in openFileDialog.FileNames)
                 {
                     List<string> filterList = new List<string>(new string[] { "SMSG_QUESTGIVER_QUEST_DETAILS", "SMSG_QUESTGIVER_REQUEST_ITEMS", "SMSG_QUESTGIVER_OFFER_REWARD" });
-                    questPacketsToCompare.AddRange(GetMassUpdate(filter.FilterSniffFile(file, false, filterList)));
+
+                    filteredPackets.AddRange(filter.FilterSniffFile(file, false, filterList));
                 }
-                questPacketsToCompare = questPacketsToCompare.Distinct().ToList(); // Remove exact duplicates
-                questPacketsToCompare.Sort(delegate (QuestPacket x, QuestPacket y) // Order by entry asc.
-                {
-                    int xInt = int.Parse(x.Entry);
-                    int yInt = int.Parse(y.Entry);
-                    if (x.Entry == null && y.Entry == null) return 0;
-                    else if (x.Entry == null) return -1;
-                    else if (y.Entry == null) return 1;
-                    else if (xInt < yInt) return -1;
-                    else return 1;
-                });
-                CompareMassUppdate(questPacketsToCompare);
 
                 btn_loadFile.Enabled = true;
                 btn_loadFile.Text = "Load File(s)";
+                btn_pasteResult.Enabled = true;
+                btn_pasteResult.Text = "Paste Result";
             }
             else
             {
                 // This code runs if the dialog was cancelled
                 return;
             }
+        }
 
-            //addedEntries.Clear();
-            //addedModels.Clear();
+        private void btn_pasteResult_Click(object sender, EventArgs e)
+        {
+            btn_loadFile.Enabled = false;
+            btn_loadFile.Text = "Loading...";
+            btn_pasteResult.Enabled = false;
+            btn_pasteResult.Text = "Loading...";
+
+            List<QuestPacket> questPacketsToCompare = new List<QuestPacket>();
+
+            questPacketsToCompare.AddRange(GetMassUpdate(filteredPackets));
+
+            questPacketsToCompare.Sort(delegate (QuestPacket x, QuestPacket y) // Order by entry asc.
+            {
+                int xInt = int.Parse(x.Entry);
+                int yInt = int.Parse(y.Entry);
+                if (x.Entry == null && y.Entry == null) return 0;
+                else if (x.Entry == null) return -1;
+                else if (y.Entry == null) return 1;
+                else if (xInt < yInt) return -1;
+                else return 1;
+            });
+            CompareMassUpdate(questPacketsToCompare);
+
+            btn_loadFile.Enabled = true;
+            btn_loadFile.Text = "Load File(s)";
+            btn_pasteResult.Enabled = true;
+            btn_pasteResult.Text = "Paste Result";
         }
 
         private List<QuestPacket> GetMassUpdate(List<string> filteredPackets)
@@ -709,8 +728,10 @@ namespace SpawnGenerator.Forms
             return questPackets;
         }
 
-        private void CompareMassUppdate(List<QuestPacket> questPackets)
+        private void CompareMassUpdate(List<QuestPacket> questPackets)
         {
+            rtb_output.Text = "";
+
             foreach (QuestPacket sniff in questPackets)
             {
                 bool questValueToUpdate = false;

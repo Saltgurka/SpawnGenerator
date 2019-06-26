@@ -31,13 +31,14 @@
             this.btn_loadFile = new System.Windows.Forms.Button();
             this.rtb_output = new System.Windows.Forms.RichTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btn_pasteResult = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_loadFile
             // 
             this.btn_loadFile.Location = new System.Drawing.Point(12, 12);
             this.btn_loadFile.Name = "btn_loadFile";
-            this.btn_loadFile.Size = new System.Drawing.Size(776, 68);
+            this.btn_loadFile.Size = new System.Drawing.Size(384, 68);
             this.btn_loadFile.TabIndex = 9;
             this.btn_loadFile.Text = "Load File(s)";
             this.btn_loadFile.UseVisualStyleBackColor = true;
@@ -55,11 +56,22 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
+            // btn_pasteResult
+            // 
+            this.btn_pasteResult.Location = new System.Drawing.Point(404, 12);
+            this.btn_pasteResult.Name = "btn_pasteResult";
+            this.btn_pasteResult.Size = new System.Drawing.Size(384, 68);
+            this.btn_pasteResult.TabIndex = 11;
+            this.btn_pasteResult.Text = "Paste Result";
+            this.btn_pasteResult.UseVisualStyleBackColor = true;
+            this.btn_pasteResult.Click += new System.EventHandler(this.btn_pasteResult_Click);
+            // 
             // frm_questEmotes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_pasteResult);
             this.Controls.Add(this.rtb_output);
             this.Controls.Add(this.btn_loadFile);
             this.Name = "frm_questEmotes";
@@ -74,5 +86,6 @@
         private System.Windows.Forms.Button btn_loadFile;
         private System.Windows.Forms.RichTextBox rtb_output;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Button btn_pasteResult;
     }
 }
